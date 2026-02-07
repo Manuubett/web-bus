@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BUS Party Youth Ambassadors | Twendane Muno</title>
+  <!-- BASIC SEO -->
+<meta name="description" content="BUS Party Youth Ambassadors – Twendane Muno. Empowering youth in Embu County through leadership, governance, and community development.">
+<meta name="keywords" content="BUS Party, Youth Ambassadors, Twendane Muno, Embu County, Kenya Youth Politics, Youth Leadership">
+<meta name="author" content="BUS Party Youth Ambassadors">
+<meta name="robots" content="index, follow">
+
+<!-- CANONICAL -->
+<link rel="canonical" href="https://busparty1.netlify.app/">
+
+<!-- OPEN GRAPH (Facebook, WhatsApp, LinkedIn) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="BUS Party Youth Ambassadors | Twendane Muno">
+<meta property="og:description" content="Empowering the youth of Embu County to lead, mobilize, and shape the future through inclusive leadership.">
+<meta property="og:url" content="https://busparty1.netlify.app/">
+<meta property="og:image" content="https://i.ibb.co/fzpg1r0P/Screenshot-20260129-194058.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<!-- WHATSAPP (uses Open Graph automatically) -->
+<meta property="og:site_name" content="BUS Party Youth Ambassadors">
+
+<!-- TWITTER (Optional but good) -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BUS Party Youth Ambassadors | Twendane Muno">
+<meta name="twitter:description" content="Empowering the youth of Embu County through leadership and civic engagement.">
+<meta name="twitter:image" content="https://i.ibb.co/fzpg1r0P/Screenshot-20260129-194058.png">
+
+<!-- FAVICON -->
+<link rel="icon" href="https://i.ibb.co/fzpg1r0P/Screenshot-20260129-194058.png" type="image/png">
+<link rel="apple-touch-icon" href="https://i.ibb.co/fzpg1r0P/Screenshot-20260129-194058.png">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <style>
+  
+  
+:root{
+  --green:#0B3D2E;
+  --gold:#E0B21B;
+  --dark:#0A1F16;
+  --light:#F6F4EF;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: var(--light);
+  color: var(--dark);
+  line-height: 1.6;
+}
+
+/* 🔹 WATERMARK */
+.watermark {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("https://i.ibb.co/fzpg1r0P/Screenshot-20260129-194058.png") center center no-repeat;
+  background-size: 350px;
+  opacity: 0.16;
+  pointer-events: none;
+  z-index: 1;
+}
+
+header, section, footer {
+  position: relative;
+  z-index: 2;
+}
+
+/* Bold text in gold */
+strong {
+  color: var(--gold);
+}
+
+/* Titles and subtitles in gold */
+header h1,
+.section-title h2,
+.card h3,
+.stat h3 {
+  color: var(--gold);
+}
+
+header {
+  background: linear-gradient(135deg, var(--green), var(--dark));
+  color: #fff;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+header img{
+  width:60px;
+  margin-bottom:1px;
+}
+
+header p {
+  font-size: 1.1rem;
+  max-width: 800px;
+  margin: auto;
+}
+
+.btn {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 12px 28px;
+  background: var(--gold);
+  color: var(--green);
+  font-weight: bold;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: 0.3s;
+  cursor: pointer;
+  border: none;
+  font-size: 1rem;
+}
+
+.btn:hover {
+  opacity: 0.85;
+}
+
+.btn-secondary {
+  background: var(--green);
+  color: var(--light);
+  margin-left: 10px;
+}
+
+.btn-secondary:hover {
+  background: var(--dark);
+}
+
+section {
+  padding: 60px 20px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+}
+
+.card {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+}
+
+.card i {
+  font-size: 2rem;
+  color: var(--green);
+  margin-bottom: 10px;
+}
+
+.stats {
+  background: var(--green);
+  color: #fff;
+  text-align: center;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.stat {
+  padding: 30px;
+}
+
+footer {
+  background: var(--dark);
+  color: var(--gold);
+  text-align: center;
+  padding: 25px 15px;
+}
+
+footer a {
+  color: var(--gold);
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+.footer-links {
+  margin-top: 15px;
+}
+
+@media(max-width:600px){
+  header h1{font-size:2rem}
+  .footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+header {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #fff;
+  padding: 60px 20px;
+  text-align: center;
+  transition: background-image 1s ease-in-out; /* smooth fade */
+}
+header::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.4); /* dark overlay */
+  z-index: 0;
+}
+
+header > * {
+  position: relative;
+  z-index: 1;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.modal-content {
+  background: #fff;
+  padding: 30px;
+  max-width: 400px;
+  margin: 15% auto;
+  border-radius: 10px;
+  text-align: center;
+  position: relative;
+}
+
+.modal-content h2 {
+  margin-bottom: 10px;
+  color: var(--green);
+}
+
+.modal-content p {
+  margin-bottom: 20px;
+  color: var(--dark);
+}
+
+.close {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  font-size: 22px;
+  cursor: pointer;
+  color: var(--green);
+}
+
+.top-nav{
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  display: flex;
+  gap: 20px;
+  z-index: 2;
+}
+
+.top-nav a{
+  color: var(--gold);
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.95rem;
+}
+
+.top-nav a:hover{
+  text-decoration: underline;
+}
+
+/* ===== PRIVACY MODAL ===== */
+.privacy-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.privacy-card {
+  background: #ffffff;
+  width: 92%;
+  max-width: 450px;
+  border-radius: 16px;
+  overflow: hidden;
+  animation: slideUp 0.4s ease;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.privacy-header {
+  background: var(--green);
+  color: #ffffff;
+  padding: 20px;
+  text-align: center;
+}
+
+.privacy-header h3 {
+  margin: 0;
+  color: var(--gold);
+}
+
+.privacy-body {
+  padding: 25px;
+  font-size: 14px;
+  color: #374151;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.privacy-body ul {
+  padding-left: 18px;
+  margin: 15px 0;
+}
+
+.privacy-body li {
+  margin-bottom: 8px;
+}
+
+.small-text {
+  font-size: 12px;
+  opacity: 0.7;
+  margin-top: 15px;
+}
+
+.privacy-actions {
+  display: flex;
+  gap: 10px;
+  padding: 20px;
+  border-top: 1px solid #eee;
+}
+
+.btn-primary {
+  flex: 1;
+  background: var(--green);
+  color: #ffffff;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-primary:hover {
+  background: var(--dark);
+}
+
+.btn-outline {
+  flex: 1;
+  background: transparent;
+  border: 1px solid #d1d5db;
+  padding: 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-outline:hover {
+  background: #f3f4f6;
+}
+
+.read-more-btn {
+  background: var(--gold);
+  color: var(--green);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.read-more-btn:hover {
+  opacity: 0.9;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Mobile adjustment */
+@media(max-width:600px){
+  .top-nav{
+    right: 15px;
+    gap: 12px;
+  }
+  
+  .privacy-actions {
+    flex-direction: column;
+  }
+  
+  .privacy-body {
+    max-height: 50vh;
+  }
+}
+  </style>
+</head>
+
+
+<body>
+
+<!-- PRIVACY & POLICY MODAL (Shows only on first visit) -->
+<div id="privacyModal" class="privacy-modal">
+  <div class="privacy-card">
+    <div class="privacy-header">
+      <h3><i class="fas fa-shield-alt"></i> Privacy & Terms Agreement</h3>
+    </div>
+
+    <div class="privacy-body">
+      <p>
+        Welcome to <strong>BusParty Youth Ambassadors</strong>. Before joining our movement, please review our
+        <strong>Privacy Policy</strong> and <strong>Terms of Service</strong>.
+      </p>
+
+      <ul>
+        <li><i class="fas fa-user-check"></i> We collect basic user data for membership management</li>
+        <li><i class="fas fa-cookie"></i> Essential cookies are used for functionality</li>
+        <li><i class="fas fa-ban"></i> No data is sold to third parties</li>
+        <li><i class="fas fa-lock"></i> Your information is protected with encryption</li>
+        <li><i class="fas fa-gavel"></i> We comply with data protection regulations</li>
+        <li><i class="fas fa-trash"></i> You can request data deletion at any time</li>
+      </ul>
+
+      <p class="small-text">
+        <i class="fas fa-info-circle"></i> By accepting, you agree to our terms and will be redirected to the main membership page.
+      </p>
+      
+      <button class="read-more-btn" id="readMoreBtn">
+        <i class="fas fa-book-open"></i> Read Full Privacy Policy
+      </button>
+    </div>
+
+    <div class="privacy-actions">
+      <button id="declineBtn" class="btn-outline">
+        <i class="fas fa-times"></i> Decline
+      </button>
+      <button id="acceptBtn" class="btn-primary">
+        <i class="fas fa-check"></i> Accept & Join
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- JOIN MODAL -->
+<div class="modal" id="joinModal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Join Our Movement 🚀</h2>
+    <p>To become part of our movement, you need to accept our privacy policy first.</p>
+    <button class="btn" id="joinNowBtn">Join Now</button>
+  </div>
+</div>
+
+<!-- WATERMARK -->
+<div class="watermark"></div>
+
+<!-- HERO -->
+<header>
+<nav class="top-nav">
+  <a href="about.html">About Us</a>
+  <a href="contact.html">Contact Us</a>
+  <a href="#" id="openPrivacyModal">Privacy Policy</a>
+</nav>
+  <img src="https://i.ibb.co/fzpg1r0P/Screenshot-20260129-194058.png" alt="BUS Party Logo">
+  <h1>BUS Party Youth Ambassadors</h1>
+  <p>
+    <strong>Twendane Muno</strong> – Empowering the youth of Embu County to lead,
+    mobilize, and shape the political, social, and economic future through
+    inclusive and accountable leadership.
+  </p>
+  
+  <button class="btn" id="openModal">Join the Movement</button>
+</header>
+
+<!-- ABOUT -->
+<section>
+  <div class="section-title">
+    <h2>About the Movement</h2>
+  </div>
+  <p style="text-align:center; max-width:900px; margin:auto;">
+    The BUS Party Youth Ambassadors is a grassroots movement established to empower
+    young people across Embu County to actively participate in leadership,
+    governance, and community development. We serve as a bridge between the youth
+    and the BUS Party, ensuring youth voices are heard and transformed into action.
+  </p>
+</section>
+
+<!-- OBJECTIVES -->
+<section>
+  <div class="section-title">
+    <h2>Our Core Objectives</h2>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <i class="fas fa-users"></i>
+      <h3>Youth Mobilization</h3>
+      <p>Recruit, organize, and engage youth across wards, institutions, and communities.</p>
+    </div>
+    <div class="card">
+      <i class="fas fa-chalkboard-teacher"></i>
+      <h3>Leadership Development</h3>
+      <p>Identify, mentor, and elevate young leaders into party and public leadership roles.</p>
+    </div>
+    <div class="card">
+      <i class="fas fa-scale-balanced"></i>
+      <h3>Good Governance</h3>
+      <p>Promote transparency, accountability, and ethical political participation.</p>
+    </div>
+    <div class="card">
+      <i class="fas fa-handshake"></i>
+      <h3>Community Impact</h3>
+      <p>Drive social, economic, and civic initiatives that directly benefit communities.</p>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="section-title">
+    <h2 style="color:#fff">Our Reach</h2>
+  </div>
+  <div class="stats-grid">
+    <div class="stat">
+      <h3>20+</h3>
+      <p>Wards Covered</p>
+    </div>
+    <div class="stat">
+      <h3>4</h3>
+      <p>Constituencies</p>
+    </div>
+    <div class="stat">
+      <h3>1000+</h3>
+      <p>Youth Targeted</p>
+    </div>
+    <div class="stat">
+      <h3>2025</h3>
+      <p>Movement Year</p>
+    </div>
+  </div>
+</section>
+
+<!-- JOIN -->
+<section id="join">
+  <div class="section-title">
+    <h2>Become an Ambassador</h2>
+  </div>
+  <p style="text-align:center; max-width:850px; margin:auto;">
+    Are you between 18–35 years and passionate about leadership and development?
+    Join the BUS Party Youth Ambassadors today and be part of the movement shaping
+    Embu County's future.
+  </p>
+  <div style="text-align:center">
+    <button class="btn" id="openRegisterModal">Register Now</button>
+    <button class="btn btn-secondary" id="openPrivacyFromJoin">Privacy Policy</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>&copy; 2025 BUS Party Youth Ambassadors | Twendane Muno</p>
+  <p>Powered by the BUS Party</p>
+  <div class="footer-links">
+    <a href="about.html">About Us</a>
+    <a href="contact.html">Contact Us</a>
+    <a href="#" id="footerPrivacyLink">Privacy Policy</a>
+    <a href="terms.html">Terms of Service</a>
+  </div>
+</footer>
+
+<script>
+  // Check if user has already accepted privacy policy
+  function hasAcceptedPrivacy() {
+    return localStorage.getItem('privacyAccepted') === 'true';
+  }
+
+  // Save acceptance to localStorage
+  function savePrivacyAcceptance() {
+    localStorage.setItem('privacyAccepted', 'true');
+    localStorage.setItem('privacyAcceptedDate', new Date().toISOString());
+  }
+
+  // Show privacy modal on first visit
+  function showPrivacyModalOnFirstVisit() {
+    if (!hasAcceptedPrivacy()) {
+      setTimeout(() => {
+        openPrivacyModal();
+      }, 1000);
+    }
+  }
+
+  // Redirect to signup.html after accepting privacy
+  function redirectToMainPage() {
+    window.location.href = 'signup.html';
+  }
+
+  // Background image rotation
+  const header = document.querySelector("header");
+  const images = [
+    "https://i.ibb.co/MyHYzrv0/people.webp",
+    "https://i.ibb.co/G4GP350v/campaign.webp",
+    "https://i.ibb.co/sp6WxLyL/croc.webp",
+    "IMAGE_URL_4" // add as many as you like
+  ];
+
+  let current = 0;
+
+  function changeBackground() {
+    header.style.backgroundImage = `url('${images[current]}')`;
+    current = (current + 1) % images.length;
+  }
+
+  // Initial background
+  changeBackground();
+
+  // Change every 5 seconds (5000ms)
+  setInterval(changeBackground, 5000);
+
+  // Modal functionality
+  const joinModal = document.getElementById("joinModal");
+  const openBtn = document.getElementById("openModal");
+  const closeBtn = document.querySelector(".close");
+  const openRegisterBtn = document.getElementById("openRegisterModal");
+  const joinNowBtn = document.getElementById("joinNowBtn");
+
+  // Privacy modal elements
+  const privacyModal = document.getElementById("privacyModal");
+  const openPrivacyBtn = document.getElementById("openPrivacyModal");
+  const footerPrivacyLink = document.getElementById("footerPrivacyLink");
+  const openPrivacyFromJoin = document.getElementById("openPrivacyFromJoin");
+  const acceptBtn = document.getElementById("acceptBtn");
+  const declineBtn = document.getElementById("declineBtn");
+  const readMoreBtn = document.getElementById("readMoreBtn");
+
+  // Join modal functions - Updated to show privacy modal first
+  openBtn.onclick = function () {
+    openPrivacyModal();
+  };
+
+  openRegisterBtn.onclick = function () {
+    openPrivacyModal();
+  };
+
+  joinNowBtn.onclick = function () {
+    joinModal.style.display = "none";
+    openPrivacyModal();
+  };
+
+  closeBtn.onclick = function () {
+    joinModal.style.display = "none";
+  };
+
+  // Privacy modal functions
+  function openPrivacyModal() {
+    privacyModal.style.display = "flex";
+  }
+
+  function closePrivacyModal() {
+    privacyModal.style.display = "none";
+  }
+
+  openPrivacyBtn.onclick = function (e) {
+    e.preventDefault();
+    openPrivacyModal();
+  };
+
+  footerPrivacyLink.onclick = function (e) {
+    e.preventDefault();
+    openPrivacyModal();
+  };
+
+  openPrivacyFromJoin.onclick = function (e) {
+    e.preventDefault();
+    openPrivacyModal();
+  };
+
+  acceptBtn.onclick = function () {
+    savePrivacyAcceptance();
+    closePrivacyModal();
+    
+    // Show acceptance message for 1 second, then redirect
+    showAcceptanceMessage("Welcome! Redirecting to main page...", "success");
+    
+    // Redirect to signup.html after 1 second
+    setTimeout(() => {
+      redirectToMainPage();
+    }, 1000);
+  };
+
+  declineBtn.onclick = function () {
+    // Even if declined, we save that they've seen it to not show again
+    localStorage.setItem('privacySeen', 'true');
+    closePrivacyModal();
+    showAcceptanceMessage("You must accept the privacy policy to join the movement.", "warning");
+  };
+
+  function showAcceptanceMessage(message, type = "success") {
+    // Create a temporary notification
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: ${type === 'warning' ? '#f59e0b' : '#10b981'};
+      color: white;
+      padding: 15px 20px;
+      border-radius: 8px;
+      z-index: 10000;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      animation: slideIn 0.3s ease;
+      max-width: 300px;
+    `;
+    
+    notification.innerHTML = `
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <i class="fas fa-${type === 'warning' ? 'exclamation-triangle' : 'check-circle'}"></i>
+        <span>${message}</span>
+      </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Remove after 3 seconds (or 1 second for redirect)
+    const duration = type === 'warning' ? 3000 : 1000;
+    setTimeout(() => {
+      notification.style.animation = 'slideOut 0.3s ease';
+      setTimeout(() => notification.remove(), 300);
+    }, duration);
+  }
+
+  readMoreBtn.onclick = function () {
+    // Open full privacy policy page
+    window.open("privacy-policy.html", "_blank");
+  };
+
+  // Close modals when clicking outside
+  window.onclick = function (event) {
+    if (event.target === joinModal) {
+      joinModal.style.display = "none";
+    }
+    if (event.target === privacyModal) {
+      closePrivacyModal();
+    }
+  };
+
+  // Close modal with Escape key
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+      joinModal.style.display = "none";
+      closePrivacyModal();
+    }
+  });
+
+  // Add CSS for notifications
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    @keyframes slideOut {
+      from {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(100%);
+        opacity: 0;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+
+  // Show privacy modal on first visit
+  document.addEventListener('DOMContentLoaded', function() {
+    showPrivacyModalOnFirstVisit();
+  });
+</script>
+</body>
+</html>
