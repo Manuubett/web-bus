@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BUS Party Youth Ambassadors | Twendane Muno</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <style>
+  
+  
+:root{
+  --green:#0B3D2E;
+  --gold:#E0B21B;
+  --dark:#0A1F16;
+  --light:#F6F4EF;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: var(--light);
+  color: var(--dark);
+  line-height: 1.6;
+}
+
+/* 🔹 WATERMARK */
+.watermark {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url("https://i.ibb.co/fzpg1r0P/Screenshot-20260129-194058.png") center center no-repeat;
+  background-size: 350px;
+  opacity: 0.16;
+  pointer-events: none;
+  z-index: 1;
+}
+
+header, section, footer {
+  position: relative;
+  z-index: 2;
+}
+
+/* Bold text in gold */
+strong {
+  color: var(--gold);
+}
+
+/* Titles and subtitles in gold */
+header h1,
+.section-title h2,
+.card h3,
+.stat h3 {
+  color: var(--gold);
+}
+
+header {
+  background: linear-gradient(135deg, var(--green), var(--dark));
+  color: #fff;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+header img{
+  width:60px;
+  margin-bottom:1px;
+}
+
+header p {
+  font-size: 1.1rem;
+  max-width: 800px;
+  margin: auto;
+}
+
+.btn {
+  display: inline-block;
+  margin-top: 25px;
+  padding: 12px 28px;
+  background: var(--gold);
+  color: var(--green);
+  font-weight: bold;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  opacity: 0.85;
+}
+
+section {
+  padding: 60px 20px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+}
+
+.card {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+}
+
+.card i {
+  font-size: 2rem;
+  color: var(--green);
+  margin-bottom: 10px;
+}
+
+.stats {
+  background: var(--green);
+  color: #fff;
+  text-align: center;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.stat {
+  padding: 30px;
+}
+
+footer {
+  background: var(--dark);
+  color: var(--gold);
+  text-align: center;
+  padding: 25px 15px;
+}
+
+footer a {
+  color: var(--gold);
+  text-decoration: none;
+}
+
+@media(max-width:600px){
+  header h1{font-size:2rem}
+}header {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #fff;
+  padding: 60px 20px;
+  text-align: center;
+  transition: background-image 1s ease-in-out; /* smooth fade */
+}
+header::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.4); /* dark overlay */
+  z-index: 0;
+}
+
+header > * {
+  position: relative;
+  z-index: 1;
+}
+  </style>
+</head>
+
+
+<body>
+
+<!-- WATERMARK -->
+<div class="watermark"></div>
+
+<!-- HERO -->
+<header>
+  <img src="https://i.ibb.co/fzpg1r0P/Screenshot-20260129-194058.png" alt="BUS Party Logo">
+  <h1>BUS Party Youth Ambassadors</h1>
+  <p>
+    <strong>Twendane Muno</strong> – Empowering the youth of Embu County to lead,
+    mobilize, and shape the political, social, and economic future through
+    inclusive and accountable leadership.
+  </p>
+  <a href="log.html" class="btn">Join the Movement</a>
+</header>
+
+<!-- rest of your page remains unchanged -->
+<!-- ABOUT -->
+<section>
+  <div class="section-title">
+    <h2>About the Movement</h2>
+  </div>
+  <p style="text-align:center; max-width:900px; margin:auto;">
+    The BUS Party Youth Ambassadors is a grassroots movement established to empower
+    young people across Embu County to actively participate in leadership,
+    governance, and community development. We serve as a bridge between the youth
+    and the BUS Party, ensuring youth voices are heard and transformed into action.
+  </p>
+</section>
+
+<!-- OBJECTIVES -->
+<section>
+  <div class="section-title">
+    <h2>Our Core Objectives</h2>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <i class="fas fa-users"></i>
+      <h3>Youth Mobilization</h3>
+      <p>Recruit, organize, and engage youth across wards, institutions, and communities.</p>
+    </div>
+    <div class="card">
+      <i class="fas fa-chalkboard-teacher"></i>
+      <h3>Leadership Development</h3>
+      <p>Identify, mentor, and elevate young leaders into party and public leadership roles.</p>
+    </div>
+    <div class="card">
+      <i class="fas fa-scale-balanced"></i>
+      <h3>Good Governance</h3>
+      <p>Promote transparency, accountability, and ethical political participation.</p>
+    </div>
+    <div class="card">
+      <i class="fas fa-handshake"></i>
+      <h3>Community Impact</h3>
+      <p>Drive social, economic, and civic initiatives that directly benefit communities.</p>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="section-title
+    <h2 style="color:#fff">Our Reach</h2>
+  </div>
+  <div class="stats-grid">
+    <div class="stat">
+      <h3>20+</h3>
+      <p>Wards Covered</p>
+    </div>
+    <div class="stat">
+      <h3>4</h3>
+      <p>Constituencies</p>
+    </div>
+    <div class="stat">
+      <h3>1000+</h3>
+      <p>Youth Targeted</p>
+    </div>
+    <div class="stat">
+      <h3>2025</h3>
+      <p>Movement Year</p>
+    </div>
+  </div>
+</section>
+
+<!-- JOIN -->
+<section id="join">
+  <div class="section-title">
+    <h2>Become an Ambassador</h2>
+  </div>
+  <p style="text-align:center; max-width:850px; margin:auto;">
+    Are you between 18–35 years and passionate about leadership and development?
+    Join the BUS Party Youth Ambassadors today and be part of the movement shaping
+    Embu County’s future.
+  </p>
+  <div style="text-align:center">
+    <a href="log.html" class="btn">Register Now</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>&copy; 2025 BUS Party Youth Ambassadors | Twendane Muno</p>
+  <p>Powered by the BUS Party</p>
+</footer>
+
+<script>
+  const header = document.querySelector("header");
+  
+  const images = [
+    "https://i.ibb.co/MyHYzrv0/people.webp",
+    "https://i.ibb.co/G4GP350v/campaign.webp",
+    "https://i.ibb.co/sp6WxLyL/croc.webp",
+    "IMAGE_URL_4" // add as many as you like
+  ];
+
+  let current = 0;
+
+  function changeBackground() {
+    header.style.backgroundImage = `url('${images[current]}')`;
+    current = (current + 1) % images.length;
+  }
+
+  // Initial background
+  changeBackground();
+
+  // Change every 5 seconds (5000ms)
+  setInterval(changeBackground, 5000);
+</script>
+</body>
+</html>

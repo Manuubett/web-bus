@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BUS Youth Ambassadors | News & Updates</title>
+
+<style>
+:root{
+  --primary:#0B3D2E;
+  --primary-dark:#0A1F16;
+  --accent:#E0B21B;
+  --bg:#F6F4EF;
+  --text:#333;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+/* ===== HEADER ===== */
+header{
+  background:linear-gradient(135deg,var(--primary),#145c45);
+  color:#fff;
+  padding:30px 15px;
+  text-align:center;
+}
+header h1{
+  margin:0;
+  color:var(--accent);
+  font-size:2.1rem;
+  letter-spacing:.5px;
+}
+header p{
+  margin-top:8px;
+  opacity:.9;
+}
+
+/* ===== FILTERS ===== */
+.filters{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin:25px 15px;
+}
+.filter-btn{
+  background:#fff;
+  border:2px solid var(--primary);
+  color:var(--primary);
+  padding:10px 18px;
+  border-radius:30px;
+  cursor:pointer;
+  font-weight:600;
+  transition:.25s;
+}
+.filter-btn:hover{
+  background:var(--primary);
+  color:#fff;
+}
+.filter-btn.active{
+  background:var(--primary);
+  color:#fff;
+}
+
+/* ===== NEWS LIST ===== */
+.news-container{
+  max-width:900px;
+  margin:auto;
+  padding:0 15px 50px;
+}
+
+.news-card{
+  background:#fff;
+  border-radius:14px;
+  padding:22px;
+  margin-bottom:26px;
+  box-shadow:0 10px 25px rgba(0,0,0,.08);
+  transition:.25s;
+}
+.news-card:hover{
+  transform:translateY(-3px);
+}
+
+.news-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:.85rem;
+  color:#666;
+  margin-bottom:10px;
+}
+
+.category{
+  background:var(--primary);
+  color:var(--accent);
+  padding:5px 12px;
+  border-radius:20px;
+  font-weight:700;
+  font-size:.75rem;
+  letter-spacing:.5px;
+}
+
+.news-title{
+  margin:10px 0 8px;
+  font-size:1.5rem;
+  color:var(--primary);
+}
+
+.news-snippet{
+  line-height:1.6;
+  margin-bottom:14px;
+  color:#444;
+}
+
+/* ===== LINKS DETECTED ===== */
+.news-snippet a,
+#modalContent a{
+  color:var(--primary);
+  font-weight:600;
+  text-decoration:underline;
+  word-break:break-word;
+}
+.news-snippet a:hover,
+#modalContent a:hover{
+  color:var(--accent);
+}
+
+/* ===== IMAGES ===== */
+.news-images{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:12px;
+  margin:14px 0;
+}
+.news-images img{
+  width:100%;
+  height:130px;
+  object-fit:cover;
+  border-radius:10px;
+}
+
+/* ===== BUTTON ===== */
+.read-more{
+  background:var(--primary);
+  color:var(--accent);
+  border:none;
+  padding:10px 22px;
+  border-radius:30px;
+  cursor:pointer;
+  font-weight:700;
+  letter-spacing:.4px;
+  transition:.25s;
+}
+.read-more:hover{
+  background:var(--primary-dark);
+}
+
+/* ===== MODAL ===== */
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.65);
+  z-index:999;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+
+.modal-content{
+  background:#fff;
+  max-width:750px;
+  width:100%;
+  border-radius:16px;
+  padding:30px;
+  position:relative;
+  max-height:85vh;
+  overflow-y:auto;
+  animation:scaleIn .25s ease;
+}
+
+@keyframes scaleIn{
+  from{transform:scale(.95);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+.close-btn{
+  position:absolute;
+  top:14px;
+  right:18px;
+  font-size:1.9rem;
+  cursor:pointer;
+  color:#666;
+}
+
+#modalTitle{
+  color:var(--primary);
+  margin-top:0;
+}
+
+.empty,.loading{
+  text-align:center;
+  padding:50px;
+  color:#666;
+  font-size:1.1rem;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>News & Updates</h1>
+  <p>Official communications, announcements & youth voices</p>
+</header>
+
+<div class="filters">
+  <button class="filter-btn active" data-category="All">All</button>
+  <button class="filter-btn" data-category="Announcements">Announcements</button>
+  <button class="filter-btn" data-category="Recruitment">Recruitment</button>
+  <button class="filter-btn" data-category="Statements">Statements</button>
+  <button class="filter-btn" data-category="Opinions">Youth Opinions</button>
+</div>
+
+<div class="news-container" id="newsContainer">
+  <div class="loading">Loading news...</div>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="newsModal">
+  <div class="modal-content">
+    <span class="close-btn" id="closeModal">&times;</span>
+    <h2 id="modalTitle"></h2>
+    <div id="modalDate" style="color:#777;margin-bottom:12px;"></div>
+    <div id="modalImages"></div>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import { getFirestore, collection, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC1zqdQ4toWB73hpxn-LwIRbB2QI3fw8q8",
+  authDomain: "bus-party.firebaseapp.com",
+  projectId: "bus-party",
+  storageBucket: "bus-party.firebasestorage.app",
+  messagingSenderId: "315543442057",
+  appId: "1:315543442057:web:25b4aa009050c4bfcaec58"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const newsContainer = document.getElementById('newsContainer');
+const modal = document.getElementById('newsModal');
+const modalTitle = document.getElementById('modalTitle');
+const modalDate = document.getElementById('modalDate');
+const modalContent = document.getElementById('modalContent');
+const modalImages = document.getElementById('modalImages');
+const closeModal = document.getElementById('closeModal');
+
+let currentCategory = "All";
+let allNews = [];
+
+/* ===== AUTO LINK FUNCTION ===== */
+function autoLink(text=''){
+  const escapeHtml = str =>
+    str.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  let safe = escapeHtml(text);
+
+  safe = safe.replace(/(https?:\/\/[^\s]+|www\.[^\s]+)/gi, m=>{
+    const url = m.startsWith('http') ? m : `https://${m}`;
+    return `<a href="${url}" target="_blank" rel="noopener">${m}</a>`;
+  });
+
+  safe = safe.replace(/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,})/gi,
+    `<a href="mailto:$1">$1</a>`);
+
+  safe = safe.replace(/(\+?\d{1,3}[\s.-]?)?\d{3}[\s.-]?\d{3}[\s.-]?\d{3,4}/g,
+    m=>`<a href="tel:${m.replace(/\s+/g,'')}">${m}</a>`);
+
+  return safe;
+}
+
+/* ===== FILTER ===== */
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    currentCategory = btn.dataset.category;
+    renderNews();
+  };
+});
+
+closeModal.onclick=()=>modal.style.display='none';
+window.onclick=e=>{if(e.target===modal)modal.style.display='none';};
+
+/* ===== RENDER ===== */
+function renderNews(){
+  newsContainer.innerHTML='';
+  const list = currentCategory==="All" ? allNews : allNews.filter(n=>n.category===currentCategory);
+
+  if(!list.length){
+    newsContainer.innerHTML='<div class="empty">No news available.</div>';
+    return;
+  }
+
+  list.forEach(n=>{
+    const date = n.timestamp?.seconds
+      ? new Date(n.timestamp.seconds*1000).toLocaleDateString('en-KE',{year:'numeric',month:'long',day:'numeric'})
+      : '';
+
+    const snippet = autoLink(
+      n.content?.slice(0,160)+(n.content?.length>160?'...':'')
+    );
+
+    const thumbs = n.photos?.length
+      ? `<div class="news-images">${n.photos.map(p=>`<img src="${p}">`).join('')}</div>`
+      : '';
+
+    const card=document.createElement('div');
+    card.className='news-card';
+    card.innerHTML=`
+      <div class="news-header">
+        <span class="category">${n.category||'General'}</span>
+        <span>${date}</span>
+      </div>
+      <h3 class="news-title">${n.title||'Untitled'}</h3>
+      <div class="news-snippet">${snippet}</div>
+      ${thumbs}
+      <button class="read-more">Read More</button>
+    `;
+
+    card.querySelector('.read-more').onclick=()=>{
+      modalTitle.textContent=n.title||'';
+      modalDate.textContent=date;
+      modalContent.innerHTML=autoLink(n.content||'');
+      modalImages.innerHTML=thumbs;
+      modal.style.display='flex';
+    };
+
+    newsContainer.appendChild(card);
+  });
+}
+
+onSnapshot(query(collection(db,'news'),orderBy('timestamp','desc')),snap=>{
+  allNews=snap.docs.map(d=>d.data());
+  renderNews();
+});
+</script>
+
+</body>
+</html>

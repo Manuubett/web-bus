@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BUS Youth Ambassadors – Membership</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0B3D2E;
+      --accent: #E0B21B;
+      --light: #F8F7F2;
+      --gray: #6B7280;
+      --error: #DC2626;
+      --success: #059669;
+    }
+    
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      font-family:'Inter', sans-serif;
+      background:var(--light);
+      color:#1F2937;
+      min-height:100vh;
+      line-height:1.5;
+    }
+    
+    .watermark {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(rgba(255,255,255,0.95), rgba(255,255,255,0.98));
+      z-index: -1;
+    }
+    
+    header{
+      background:var(--primary);
+      color:white;
+      padding:1.5rem;
+      text-align:center;
+      border-bottom: 4px solid var(--accent);
+    }
+    
+    header h1{
+      font-size:1.8rem;
+      margin-bottom:0.3rem;
+      font-weight:700;
+    }
+    
+    .payment-banner {
+      background: linear-gradient(135deg, var(--accent) 0%, #f0c24a 100%);
+      color: var(--primary);
+      padding: 0.8rem;
+      text-align: center;
+      font-weight: 600;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      font-size: 0.95rem;
+    }
+    
+    .container{
+      max-width:480px;
+      margin:2rem auto;
+      padding:1.5rem;
+      background:white;
+      border-radius:12px;
+      box-shadow:0 5px 15px rgba(0,0,0,0.08);
+    }
+    
+    .form-wrapper{
+      display: block;
+    }
+    
+    h2{
+      color:var(--primary);
+      text-align:center;
+      margin-bottom:1.5rem;
+      font-size:1.5rem;
+    }
+    
+    .form-group{
+      margin-bottom:1rem;
+    }
+    
+    label{
+      display:block;
+      margin-bottom:0.3rem;
+      font-weight:500;
+      font-size:0.9rem;
+    }
+    
+    input, select, button{
+      width:100%;
+      padding:0.8rem;
+      border-radius:8px;
+      border:1px solid #d1d5db;
+      font-size:1rem;
+      font-family:inherit;
+    }
+    
+    input:focus, select:focus{
+      outline:none;
+      border-color:var(--primary);
+      box-shadow:0 0 0 3px rgba(11, 61, 46, 0.1);
+    }
+    
+    button{
+      background:var(--primary);
+      color:white;
+      border:none;
+      font-weight:600;
+      cursor:pointer;
+      transition:all 0.2s ease;
+      margin-top:0.5rem;
+    }
+    
+    button:hover{
+      background:#08251c;
+      transform:translateY(-1px);
+    }
+    
+    button:active{
+      transform:translateY(0);
+    }
+    
+    .message{
+      padding:0.8rem;
+      margin-top:1rem;
+      border-radius:6px;
+      text-align:center;
+      font-size:0.9rem;
+      display:none;
+    }
+    
+    .success{
+      background:#ecfdf5;
+      color:var(--success);
+      border:1px solid #a7f3d0;
+    }
+    
+    .error{
+      background:#fef2f2;
+      color:var(--error);
+      border:1px solid #fecaca;
+    }
+    
+    .toggle-link{
+      text-align:center;
+      margin-top:1.5rem;
+      font-size:0.9rem;
+      color:var(--gray);
+    }
+    
+    .toggle-link a{
+      color:var(--primary);
+      text-decoration:none;
+      font-weight:600;
+      cursor:pointer;
+    }
+    
+    .toggle-link a:hover{
+      text-decoration:underline;
+    }
+    
+    small{
+      display:block;
+      margin-top:0.3rem;
+      font-size:0.75rem;
+      color:var(--gray);
+    }
+    
+    .spinner{
+      margin:1rem auto;
+      width:30px;
+      height:30px;
+      border:3px solid #f3f3f3;
+      border-top:3px solid var(--primary);
+      border-radius:50%;
+      animation:spin 1s linear infinite;
+    }
+    
+    @keyframes spin{
+      0%{transform:rotate(0deg);}
+      100%{transform:rotate(360deg);}
+    }
+    
+    footer{
+      text-align:center;
+      padding:2rem 1rem;
+      color:var(--gray);
+      font-size:0.85rem;
+      margin-top:2rem;
+    }
+    
+    @media (max-width:500px){
+      .container{
+        margin:1rem auto;
+        padding:1.2rem;
+        border-radius:8px;
+      }
+      
+      header{
+        padding:1.2rem;
+      }
+      
+      header h1{
+        font-size:1.5rem;
+      }
+      
+      .payment-banner{
+        font-size:0.85rem;
+        padding:0.7rem;
+      }
+    }
+    .site-footer{
+  text-align:center;
+  padding:2rem 1rem;
+  background:#ffffff;
+  border-top:1px solid #e5e7eb;
+  color:var(--gray);
+}
+
+.footer-profile{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:0.4rem;
+}
+
+.footer-profile img{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid var(--accent);
+}
+
+.footer-socials{
+  margin:0.8rem 0;
+}
+
+.footer-socials a{
+  margin:0 8px;
+  color:var(--primary);
+  font-size:1.2rem;
+  transition:0.2s;
+}
+
+.footer-socials a:hover{
+  color:var(--accent);
+}
+.watermark{
+  position: fixed;
+  inset: 0;
+  background-image: url("https://i.ibb.co/sp6WxLyL/croc.webp");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+  opacity: 0.17;
+  pointer-events: none; /* forms remain clickable */
+  z-index: 0;
+}
+  </style>
+</head>
+<body>
+  
+  <div class="watermark"></div>
+<div class="payment-banner">
+  Pay <strong>KSh 400</strong> (Membership + T-Shirt) to M-Pesa Till <strong>3628644</strong>
+</div>
+
+  <header>
+    <h1>BUS Youth Ambassadors</h1>
+    <p>Embu • Kenya</p>
+  </header>
+
+  <div class="container">
+    
+    <!-- Login Form -->
+    <div class="form-wrapper" id="loginContainer">
+      <h2>Welcome Back</h2>
+      
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="loginEmail">Email</label>
+          <input type="email" id="loginEmail" placeholder="email@example.com" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" placeholder="••••••••" required>
+        </div>
+        
+        <button type="submit">Login</button>
+        <div id="loginMsg" class="message"></div>
+      </form>
+      
+      <div class="toggle-link">
+        New user? <a id="showRegisterOptions">Register Here</a>
+      </div>
+    </div>
+
+    <!-- Registration Options -->
+    <div class="form-wrapper" id="registerOptionsContainer" style="display:none;">
+      <h2>Get Started</h2>
+      
+      <div style="margin:1.5rem 0;">
+        <button style="margin-bottom:0.8rem;" id="startNewRegistration">
+          New Registration
+        </button>
+        <button style="background:#f3f4f6;color:var(--primary);" id="continueRegistration">
+          Continue Registration
+        </button>
+      </div>
+      
+      <div class="toggle-link">
+        Have an account? <a id="showLogin">Login</a>
+      </div>
+    </div>
+
+    <!-- Pre-Verification -->
+    <div class="form-wrapper" id="preVerifyContainer" style="display:none;">
+      <h2>Verify ID</h2>
+      <form id="preVerifyForm">
+        <div class="form-group">
+          <label for="preVerifyId">National ID</label>
+          <input type="text" id="preVerifyId" placeholder="12345678" required>
+        </div>
+        <div class="form-group">
+          <label for="preVerifyYear">Year of Birth</label>
+          <input type="number" id="preVerifyYear" placeholder="YYYY" min="1990" max="2006" required>
+          <small>Must be between 1990 and 2006</small>
+        </div>
+        <button type="submit">Submit for Verification</button>
+        <div id="preVerifyMsg" class="message"></div>
+      </form>
+ <div class="toggle-link">
+        Already approved? <a id="showRegistration">Proceed to Registration</a>
+      </div>
+    </div>
+
+    <!-- Registration Form -->
+    <div class="form-wrapper" id="registrationContainer" style="display:none;">
+      <h2>Complete Registration</h2>
+      
+      <div style="background:#f0f9ff;padding:0.8rem;border-radius:8px;margin-bottom:1rem;font-size:0.9rem;">
+        Remember to pay <strong>KSh 400</strong> to Till <strong>3628644</strong>
+      </div>
+      
+      <form id="registrationForm">
+        <div class="form-group">
+          <label for="regNationalId">National ID</label>
+          <input type="text" id="regNationalId" placeholder="12345678" readonly>
+        </div>
+
+        <div class="form-group">
+          <label for="fullName">Full Name</label>
+          <input type="text" id="fullName" placeholder="John Kamau" required>
+        </div>
+
+        <div class="form-group">
+          <label for="dobYear">Year of Birth</label>
+          <input type="number" id="dobYear" placeholder="YYYY" readonly>
+          <small>Pre-verified by admin</small>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" placeholder="0712345678" required pattern="[0-9]{10}">
+          <small>10 digits starting with 07</small>
+        </div>
+
+        <div class="form-group">
+          <label for="constituency">Constituency</label>
+          <select id="constituency" required>
+            <option value="">Select</option>
+            <option value="Manyatta">Manyatta</option>
+            <option value="Runyenjes">Runyenjes</option>
+            <option value="Mbeere North">Mbeere North</option>
+            <option value="Mbeere South">Mbeere South</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="ward">Ward</label>
+          <select id="ward" required>
+            <option value="">Select Ward</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="tshirt">T-Shirt Size</label>
+          <select id="tshirt">
+            <option value="">Select Size</option>
+            <option value="S">Small</option>
+            <option value="M">Medium</option>
+            <option value="L">Large</option>
+            <option value="XL">XL</option>
+          </select>
+          <small>Included with registration</small>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="you@example.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="••••••••" required minlength="6">
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" id="confirmPassword" placeholder="••••••••" required minlength="6">
+        </div>
+
+        <button type="submit">Register & Proceed to Payment</button>
+        <div id="regMsg" class="message"></div>
+      </form>
+    </div>
+
+    <!-- Payment Step -->
+    <div class="form-wrapper" id="paymentContainer" style="display:none;">
+      <h2>Complete Payment</h2>
+      
+      <div style="text-align:center;margin-bottom:1.5rem;">
+        <div style="font-size:1.2rem;margin-bottom:0.5rem;color:var(--primary);">
+          <strong>KSh 400</strong>
+        </div>
+        <div style="background:#f0f9ff;padding:1rem;border-radius:8px;">
+          <div style="font-size:1.1rem;margin-bottom:0.5rem;">
+            <strong>M-Pesa Till: 3628644</strong>
+          </div>
+          <div style="font-size:0.9rem;color:var(--gray);">
+            Pay to activate your membership
+          </div>
+        </div>
+      </div>
+      
+      <div class="spinner" id="paymentSpinner"></div>
+      <button id="refreshStatus">Check Payment Status</button>
+      <div id="paymentMsg" class="message"></div>
+    </div>
+
+  </div><footer class="site-footer">
+  <div class="footer-profile">
+    <img src="https://i.ibb.co/XrWV0dbP/kivuti.webp" alt="Profile" />
+    <p>Powered by <strong>Lenny Kivuti</strong></p>
+  </div>
+
+  <div class="footer-socials">
+    <a href="https://www.facebook.com/share/p/1CuYqHMULi/" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+    <a href="#" title="Twitter / X"><i class="fab fa-x-twitter"></i></a>
+    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+    <a href="https://chat.whatsapp.com/CtWoN1znq1X2eiES81Eomm?mode=gi_t" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+  </div>
+
+  <small>BUS Youth Ambassadors • Embu, Kenya</small>
+</footer>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <script>
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyC1zqdQ4toWB73hpxn-LwIRbB2QI3fw8q8",
+      authDomain: "bus-party.firebaseapp.com",
+      projectId: "bus-party",
+      storageBucket: "bus-party.appspot.com",
+      messagingSenderId: "315543442057",
+      appId: "1:315543442057:web:25b4aa009050c4bfcaec58"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // DOM Elements
+    const loginContainer = document.getElementById('loginContainer');
+    const registerOptionsContainer = document.getElementById('registerOptionsContainer');
+    const preVerifyContainer = document.getElementById('preVerifyContainer');
+    const registrationContainer = document.getElementById('registrationContainer');
+    const paymentContainer = document.getElementById('paymentContainer');
+    
+    const loginForm = document.getElementById('loginForm');
+    const preVerifyForm = document.getElementById('preVerifyForm');
+    const registrationForm = document.getElementById('registrationForm');
+    
+    // Navigation elements
+    document.getElementById('showRegisterOptions').onclick = showRegisterOptionsScreen;
+    document.getElementById('showLogin').onclick = showLoginScreen;
+    document.getElementById('startNewRegistration').onclick = startNewRegistration;
+    document.getElementById('continueRegistration').onclick = handleContinueRegistration;
+    document.getElementById('showRegistration').onclick = showRegistrationScreen;
+    document.getElementById('refreshStatus').onclick = checkPaymentStatus;
+
+    // Ward data
+    const wardsData = {
+      "Manyatta": ["Kithimu", "Mbeti North", "Kirimari", "Nginda", "Ruguru Ngandori", "Gatu South"],
+      "Runyenjes": ["Kyeni South", "Kyeni North", "Gaturi North", "Kagaari North", "Kagaari South", "Runyenjes Central"],
+      "Mbeere North": ["Evurore", "Nthawa", "Muminji"],
+      "Mbeere South": ["Mavuria", "Makima", "Mbeti South", "Mwea", "Kiambere"]
+    };
+
+    // Ward dropdown logic
+    document.getElementById('constituency').addEventListener('change', function() {
+      const wardSelect = document.getElementById('ward');
+      wardSelect.innerHTML = '<option value="">Select Ward</option>';
+      const wards = wardsData[this.value] || [];
+      wards.forEach(ward => {
+        const option = document.createElement('option');
+        option.value = ward;
+        option.textContent = ward;
+        wardSelect.appendChild(option);
+      });
+    });
+
+    // ==================== LOCAL STORAGE FUNCTIONS ====================
+    
+    // Save form data to localStorage
+    function saveFormData(formId, data) {
+      localStorage.setItem(`form_${formId}`, JSON.stringify(data));
+      console.log(`Saved ${formId}:`, data);
+    }
+
+    // Load form data from localStorage
+    function loadFormData(formId) {
+      const data = localStorage.getItem(`form_${formId}`);
+      return data ? JSON.parse(data) : {};
+    }
+
+    // Save current step
+    function saveCurrentStep(step) {
+      localStorage.setItem('currentStep', step);
+      console.log('Saved step:', step);
+    }
+
+    // Load current step
+    function loadCurrentStep() {
+      return localStorage.getItem('currentStep') || 'login';
+    }
+
+    // Save pre-verification data
+    function savePreVerifyData(nationalId, yearOfBirth) {
+      localStorage.setItem('nationalId', nationalId);
+      localStorage.setItem('preVerifyYear', yearOfBirth);
+      localStorage.setItem('preVerifyTime', Date.now());
+    }
+
+    // Save registration form data as user types
+    function setupAutoSave() {
+      const registrationFields = ['fullName', 'phone', 'constituency', 'ward', 'tshirt', 'email'];
+      
+      registrationFields.forEach(fieldId => {
+        const element = document.getElementById(fieldId);
+        if (element) {
+          element.addEventListener('input', function() {
+            const formData = loadFormData('registration') || {};
+            formData[fieldId] = this.value;
+            saveFormData('registration', formData);
+          });
+        }
+      });
+    }
+
+    // ==================== SCREEN MANAGEMENT ====================
+    
+    function showLoginScreen() {
+      saveCurrentStep('login');
+      loginContainer.style.display = 'block';
+      registerOptionsContainer.style.display = 'none';
+      preVerifyContainer.style.display = 'none';
+      registrationContainer.style.display = 'none';
+      paymentContainer.style.display = 'none';
+    }
+
+    function showRegisterOptionsScreen() {
+      saveCurrentStep('registerOptions');
+      loginContainer.style.display = 'none';
+      registerOptionsContainer.style.display = 'block';
+      preVerifyContainer.style.display = 'none';
+      registrationContainer.style.display = 'none';
+      paymentContainer.style.display = 'none';
+    }
+
+    function showPreVerifyScreen() {
+      saveCurrentStep('preVerify');
+      loginContainer.style.display = 'none';
+      registerOptionsContainer.style.display = 'none';
+      preVerifyContainer.style.display = 'block';
+      registrationContainer.style.display = 'none';
+      paymentContainer.style.display = 'none';
+      
+      // Load saved pre-verify data if exists
+      const savedData = loadFormData('preVerify');
+      if (savedData.nationalId) {
+        document.getElementById('preVerifyId').value = savedData.nationalId;
+      }
+      if (savedData.yearOfBirth) {
+        document.getElementById('preVerifyYear').value = savedData.yearOfBirth;
+      }
+    }
+
+    function showRegistrationScreen() {
+      saveCurrentStep('registration');
+      loginContainer.style.display = 'none';
+      registerOptionsContainer.style.display = 'none';
+      preVerifyContainer.style.display = 'none';
+      registrationContainer.style.display = 'block';
+      paymentContainer.style.display = 'none';
+      
+      // Auto-fill from localStorage
+      const nationalId = localStorage.getItem('nationalId') || '';
+      const yearOfBirth = localStorage.getItem('preVerifyYear') || '';
+      
+      document.getElementById('regNationalId').value = nationalId;
+      document.getElementById('dobYear').value = yearOfBirth;
+      
+      // Load saved registration form data
+      const savedData = loadFormData('registration');
+      if (savedData) {
+        Object.keys(savedData).forEach(key => {
+          const element = document.getElementById(key);
+          if (element) {
+            element.value = savedData[key];
+            
+            // Update ward dropdown if constituency is set
+            if (key === 'constituency' && savedData[key]) {
+              setTimeout(() => {
+                const wardSelect = document.getElementById('ward');
+                wardSelect.innerHTML = '<option value="">Select Ward</option>';
+                const wards = wardsData[savedData[key]] || [];
+                wards.forEach(ward => {
+                  const option = document.createElement('option');
+                  option.value = ward;
+                  option.textContent = ward;
+                  wardSelect.appendChild(option);
+                });
+                
+                // Select saved ward
+                if (savedData.ward) {
+                  wardSelect.value = savedData.ward;
+                }
+              }, 100);
+            }
+          }
+        });
+      }
+      
+      // Check if already registered
+      if (nationalId) {
+        checkIfAlreadyRegistered(nationalId);
+      }
+    }
+
+    function showPaymentScreen() {
+      saveCurrentStep('payment');
+      loginContainer.style.display = 'none';
+      registerOptionsContainer.style.display = 'none';
+      preVerifyContainer.style.display = 'none';
+      registrationContainer.style.display = 'none';
+      paymentContainer.style.display = 'block';
+      
+      checkPaymentStatus();
+    }
+
+    function startNewRegistration() {
+      localStorage.clear();
+      showPreVerifyScreen();
+    }
+
+    async function handleContinueRegistration() {
+      const nationalId = localStorage.getItem('nationalId');
+      
+      if (!nationalId) {
+        showPreVerifyScreen();
+        return;
+      }
+      
+      // Check current status and redirect accordingly
+      const currentStep = loadCurrentStep();
+      const savedData = loadFormData('preVerify');
+      
+      if (!savedData || !savedData.nationalId) {
+        showPreVerifyScreen();
+        return;
+      }
+      
+      try {
+        // Check if pre-verified and approved
+        const preVerifyDoc = await db.collection('preVerifications').doc(nationalId).get();
+        
+        if (!preVerifyDoc.exists) {
+          // Not submitted for pre-verification
+          showPreVerifyScreen();
+          return;
+        }
+        
+        if (!preVerifyDoc.data().approved) {
+          // Submitted but not approved yet
+          showPreVerifyScreen();
+          
+          // Start auto-check for approval
+          startApprovalCheck(nationalId);
+          
+          const msg = document.getElementById('preVerifyMsg');
+          if (msg) {
+            msg.textContent = 'Waiting for admin approval... Your data is saved locally.';
+            msg.className = 'message success';
+            msg.style.display = 'block';
+          }
+          return;
+        }
+        
+        // Check if already registered
+        const memberQuery = await db.collection('members')
+          .where('nationalId', '==', nationalId)
+          .limit(1)
+          .get();
+        
+        if (memberQuery.empty) {
+          // Approved but not registered yet
+          showRegistrationScreen();
+        } else {
+          const userData = memberQuery.docs[0].data();
+          if (userData.paidTill) {
+            // Already registered and paid
+            window.location.href = 'main.html';
+          } else {
+            // Registered but not paid
+            showPaymentScreen();
+          }
+        }
+      } catch (error) {
+      
+        console.error('Error continuing registration:', error);
+        showPreVerifyScreen();
+      }
+    }
+
+    // ==================== MAIN FUNCTIONS ====================
+    
+    async function checkIfAlreadyRegistered(nationalId) {
+      try {
+        const query = await db.collection('members')
+          .where('nationalId', '==', nationalId)
+          .limit(1)
+          .get();
+        
+        if (!query.empty) {
+          const userData = query.docs[0].data();
+          if (userData.paidTill) {
+            alert('You are already registered. Redirecting...');
+            window.location.href = 'main.html';
+          } else {
+            showPaymentScreen();
+          }
+        }
+      } catch (error) {
+        console.error('Error checking registration:', error);
+      }
+    }
+
+    // Login form
+    // Login form
+loginForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const msg = document.getElementById('loginMsg');
+  msg.style.display = 'none';
+  
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  
+  // Save login credentials for convenience
+  localStorage.setItem('savedEmail', email);
+  
+  try {
+    const userCred = await auth.signInWithEmailAndPassword(email, password);
+    const user = userCred.user;
+    
+    // Get user data - check if user exists in members collection
+    const membersQuery = await db.collection('members')
+      .where('email', '==', email)
+      .limit(1)
+      .get();
+    
+    if (!membersQuery.empty) {
+      const userData = membersQuery.docs[0].data();
+      localStorage.setItem('nationalId', userData.nationalId || '');
+      
+      if (userData.paidTill) {
+        window.location.href = 'main.html';
+      } else {
+        showPaymentScreen();
+      }
+    } else {
+      // Check if user exists in auth but not in members (edge case)
+      // Try to find by UID as well
+      const userByUid = await db.collection('members').doc(user.uid).get();
+      
+      if (userByUid.exists) {
+        const userData = userByUid.data();
+        localStorage.setItem('nationalId', userData.nationalId || '');
+        
+        if (userData.paidTill) {
+          window.location.href = 'main.html';
+        } else {
+          showPaymentScreen();
+        }
+      } else {
+        // User doesn't exist in members collection at all
+        await auth.signOut();
+        msg.textContent = 'No registration found. Please complete your registration first.';
+        msg.className = 'message error';
+        msg.style.display = 'block';
+        
+        // Offer to continue registration
+        setTimeout(() => {
+          showRegisterOptionsScreen();
+        }, 2000);
+      }
+    }
+  } catch (error) {
+    console.error('Login error:', error);
+    
+    // More specific error messages
+    if (error.code === 'auth/user-not-found') {
+      msg.textContent = 'No account found with this email. Please register first.';
+      msg.className = 'message error';
+      msg.style.display = 'block';
+      
+      // Automatically show registration options
+      setTimeout(() => {
+        showRegisterOptionsScreen();
+      }, 1500);
+    } else if (error.code === 'auth/wrong-password') {
+      msg.textContent = 'Incorrect password. Please try again.';
+      msg.className = 'message error';
+      msg.style.display = 'block';
+    } else {
+      msg.textContent = getErrorMessage(error.code);
+      msg.className = 'message error';
+      msg.style.display = 'block';
+    }
+  }
+});
+
+    // Pre-verification form
+    preVerifyForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const msg = document.getElementById('preVerifyMsg');
+      msg.style.display = 'none';
+      
+      const nationalId = document.getElementById('preVerifyId').value.trim();
+      const yearOfBirth = document.getElementById('preVerifyYear').value.trim();
+      
+      // Save form data
+      saveFormData('preVerify', { nationalId, yearOfBirth });
+      
+      // Validate year
+      const currentYear = new Date().getFullYear();
+      if (yearOfBirth < 1990 || yearOfBirth > (currentYear - 18)) {
+        msg.textContent = `Year must be between 1990 and ${currentYear - 18}`;
+        msg.className = 'message error';
+        msg.style.display = 'block';
+        return;
+      }
+      
+      try {
+        await db.collection('preVerifications').doc(nationalId).set({
+  nationalId,
+  yearOfBirth,
+  verifiedByUser: true,
+  createdAt: firebase.firestore.FieldValue.serverTimestamp()
+});
+
+// immediately go to registration
+savePreVerifyData(nationalId, yearOfBirth);
+showRegistrationScreen();
+        // Save to localStorage
+        savePreVerifyData(nationalId, yearOfBirth);
+        msg.textContent = 'Submitted for verification by IEBC officials. You will be redirected when approved. This may take time due to traffic. Thanks for your time.';
+        
+        msg.className = 'message success';
+        msg.style.display = 'block';
+        
+        // Start checking for approval
+        startApprovalCheck(nationalId);
+      } catch (error) {
+        msg.textContent = 'Error: ' + error.message;
+        msg.className = 'message error';
+        msg.style.display = 'block';
+      }
+    });
+
+    // Check for approval
+    function startApprovalCheck(nationalId) {
+      const checkInterval = setInterval(async () => {
+        try {
+          const doc = await db.collection('preVerifications').doc(nationalId).get();
+          if (doc.exists && doc.data().approved) {
+            clearInterval(checkInterval);
+            saveCurrentStep('registration');
+            showRegistrationScreen();
+          }
+        } catch (error) {
+          console.error('Error checking approval:', error);
+        }
+      }, 5000);
+    }
+
+    // Registration form
+    registrationForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const msg = document.getElementById('regMsg');
+      msg.style.display = 'none';
+      
+      const nationalId = document.getElementById('regNationalId').value.trim();
+      const fullName = document.getElementById('fullName').value.trim();
+      const dobYear = document.getElementById('dobYear').value;
+      const phone = document.getElementById('phone').value.trim();
+      const constituency = document.getElementById('constituency').value;
+      const ward = document.getElementById('ward').value;
+      const tshirt = document.getElementById('tshirt').value;
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      
+      // Save all data before validation
+      const formData = {
+        nationalId, fullName, dobYear, phone, constituency, 
+        ward, tshirt, email, password: '' // Don't save password
+      };
+      saveFormData('registration', formData);
+      
+      // Validation
+      if (password !== confirmPassword) {
+        msg.textContent = 'Passwords do not match';
+        msg.className = 'message error';
+        msg.style.display = 'block';
+        return;
+      }
+      
+      if (!constituency || !ward) {
+        msg.textContent = 'Please select constituency and ward';
+        msg.className = 'message error';
+        msg.style.display = 'block';
+        return;
+      }
+      
+      if (!phone.match(/^07\d{8}$/)) {
+        msg.textContent = 'Please enter a valid phone number (0712345678)';
+        msg.className = 'message error';
+        msg.style.display = 'block';
+        return;
+      }
+      
+      // Check if approved
+      try {
+        // optional: check preVerify exists
+const preVerifyDoc = await db.collection('preVerifications').doc(nationalId).get();
+if (!preVerifyDoc.exists) {
+  msg.textContent = 'Please enter your ID first';
+  return;
+}
+
+// proceed to save registration
+      } catch (error) {
+        msg.textContent = 'Error checking approval status';
+        msg.className = 'message error';
+        msg.style.display = 'block';
+        return;
+      }
+      
+      try {
+        // Create user account
+        const userCred = await auth.createUserWithEmailAndPassword(email, password);
+        const user = userCred.user;
+        
+        // Generate membership ID
+        const year = new Date().getFullYear();
+        const snap = await db.collection('members').get();
+        const membershipId = `Y-${year}-${(snap.size + 1).toString().padStart(4, '0')}`;
+        
+        // Save to Firestore
+        await db.collection('members').doc(user.uid).set({
+          nationalId,
+          fullName,
+          dobYear,
+          phone,
+          constituency,
+          ward,
+          tshirt,
+          email,
+          membershipId,
+          membership: 'Youth',
+          paidTill: false,
+          registeredAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        
+        // Clear local registration data since it's now in Firestore
+        localStorage.removeItem('form_registration');
+        
+        showPaymentScreen();
+      } catch (error) {
+        if (error.code === 'auth/email-already-in-use') {
+          msg.textContent = 'Email already registered. Please login instead.';
+        } else {
+          msg.textContent = 'Error: ' + error.message;
+        }
+        msg.className = 'message error';
+        msg.style.display = 'block';
+      }
+    });
+
+    // Check payment status
+    async function checkPaymentStatus() {
+      const msg = document.getElementById('paymentMsg');
+      const spinner = document.getElementById('paymentSpinner');
+      msg.style.display = 'none';
+      spinner.style.display = 'block';
+      
+      const nationalId = localStorage.getItem('nationalId');
+      
+      try {
+        const query = await db.collection('members')
+          .where('nationalId', '==', nationalId)
+          .limit(1)
+          .get();
+        
+        spinner.style.display = 'none';
+        
+        if (!query.empty) {
+          const userData = query.docs[0].data();
+          
+          if (userData.paidTill) {
+            msg.textContent = 'Payment confirmed! Redirecting...';
+            msg.className = 'message success';
+            msg.style.display = 'block';
+            setTimeout(() => {
+              window.location.href = 'main.html';
+            }, 2000);
+          } else {
+            msg.textContent = 'Payment still pending. Please pay KSh 400 to Till 3628644.';
+            msg.className = 'message error';
+            msg.style.display = 'block';
+          }
+        } else {
+          msg.textContent = 'User not found. Please start over.';
+          msg.className = 'message error';
+          msg.style.display = 'block';
+        }
+      } catch (error) {
+        spinner.style.display = 'none';
+        msg.textContent = 'Error checking payment status';
+        msg.className = 'message error';
+        msg.style.display = 'block';
+      }
+    }
+
+    // Error message helper// Error message helper
+function getErrorMessage(errorCode) {
+  const messages = {
+    'auth/user-not-found': 'No account found with this email. Please register first.',
+    'auth/wrong-password': 'Incorrect password',
+    'auth/invalid-email': 'Invalid email address',
+    'auth/too-many-requests': 'Too many attempts. Try again later',
+    'auth/user-disabled': 'Account has been disabled',
+    'auth/operation-not-allowed': 'Email/password sign-in is not enabled',
+    'auth/network-request-failed': 'Network error. Please check your connection'
+  };
+  return messages[errorCode] || 'An error occurred. Please try again.';
+}
+
+
+    // ==================== INITIALIZATION ====================
+    
+    window.addEventListener('DOMContentLoaded', () => {
+      // Setup auto-save for registration form
+      setupAutoSave();
+      
+      // Check if user is already logged in
+      auth.onAuthStateChanged(async (user) => {
+        if (user) {
+          const userDoc = await db.collection('members').doc(user.uid).get();
+          if (userDoc.exists) {
+            const userData = userDoc.data();
+            localStorage.setItem('nationalId', userData.nationalId || '');
+            
+            if (userData.paidTill) {
+              window.location.href = 'main.html';
+            } else {
+              showPaymentScreen();
+            }
+          }
+        } else {
+          // Not logged in - check if we have saved progress
+          const currentStep = loadCurrentStep();
+          const nationalId = localStorage.getItem('nationalId');
+          
+          if (nationalId && currentStep !== 'login') {
+            // We have saved progress, show register options
+            showRegisterOptionsScreen();
+          } else {
+            // No saved progress, show login
+            showLoginScreen();
+          }
+          
+          // Auto-fill saved email if exists
+          const savedEmail = localStorage.getItem('savedEmail');
+          if (savedEmail) {
+            document.getElementById('loginEmail').value = savedEmail;
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

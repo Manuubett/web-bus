@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BUS Youth Admin – Members</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+
+<style>
+body{background:#f4f6f8}
+.navbar{background:#0B3D2E}
+.navbar-brand{color:#E0B21B;font-weight:700}
+.card{border-radius:12px}
+.table th{background:#0B3D2E;color:white}
+.badge{font-size:0.8rem}
+.modal-header{background:#0B3D2E;color:#E0B21B}
+.export-btn{margin-left:5px}
+.stats-card{transition:all 0.3s}
+.stats-card:hover{transform:translateY(-3px);box-shadow:0 5px 15px rgba(0,0,0,0.1)}
+.filter-group{margin-bottom:15px}
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-dark px-4 d-flex justify-content-between">
+  <span class="navbar-brand">BUS Youth Admin – Members Dashboard</span>
+  <div>
+    <button class="btn btn-outline-warning btn-sm me-2" onclick="showYearStats()">
+      <i class="bi bi-bar-chart"></i> Year Statistics
+    </button>
+    <button class="btn btn-outline-light btn-sm" onclick="exportAllData()">
+      <i class="bi bi-download"></i> Export All Data
+    </button>
+  </div>
+</nav>
+
+<div class="container-fluid my-4">
+
+<!-- Statistics Cards -->
+<div class="row mb-4" id="statsContainer">
+  <div class="col-md-3">
+    <div class="card stats-card bg-primary text-white">
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+          <div>
+            <h6 class="card-title">Total Members</h6>
+            <h2 id="totalMembers">0</h2>
+          </div>
+          <i class="bi bi-people fs-1 opacity-50"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card stats-card bg-success text-white">
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+          <div>
+            <h6 class="card-title">Paid Members</h6>
+            <h2 id="paidMembers">0</h2>
+          </div>
+          <i class="bi bi-currency-dollar fs-1 opacity-50"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card stats-card bg-warning text-dark">
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+          <div>
+            <h6 class="card-title">T-Shirt Given</h6>
+            <h2 id="tshirtMembers">0</h2>
+          </div>
+          <i class="bi bi-tshirt fs-1 opacity-50"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card stats-card bg-info text-white">
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+          <div>
+            <h6 class="card-title">Verified</h6>
+            <h2 id="verifiedMembers">0</h2>
+          </div>
+          <i class="bi bi-check-circle fs-1 opacity-50"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Filters -->
+<div class="card mb-4">
+  <div class="card-header">
+    <h5 class="mb-0">Filters</h5>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-3 filter-group">
+        <label class="form-label">T-Shirt Status</label>
+        <select id="filterTshirt" class="form-select form-select-sm">
+          <option value="all">All Members</option>
+          <option value="yes">With T-Shirt</option>
+          <option value="no">Without T-Shirt</option>
+        </select>
+      </div>
+      <div class="col-md-3 filter-group">
+        <label class="form-label">Payment Status</label>
+        <select id="filterPayment" class="form-select form-select-sm">
+          <option value="all">All</option>
+          <option value="paid">Paid</option>
+          <option value="pending">Pending</option>
+        </select>
+      </div>
+      <div class="col-md-3 filter-group">
+        <label class="form-label">Year Of Birth</label>
+        <select id="filterYear" class="form-select form-select-sm">
+          <option value="all">All Years</option>
+        </select>
+      </div>
+      <div class="col-md-3 filter-group">
+        <label class="form-label">Ward</label>
+        <select id="filterWard" class="form-select form-select-sm">
+          <option value="all">All Wards</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Main Table -->
+<div class="card">
+  <div class="card-header fw-bold d-flex justify-content-between align-items-center">
+    <div>
+      Registered Members
+      <span id="tableCount" class="badge bg-secondary ms-2">0</span>
+    </div>
+    <div class="d-flex gap-2">
+      <button class="btn btn-danger btn-sm" onclick="deleteSelected()">
+        <i class="bi bi-trash"></i> Delete Selected
+      </button>
+      <button class="btn btn-success btn-sm" onclick="downloadPDF()">
+        <i class="bi bi-file-earmark-pdf"></i> PDF
+      </button>
+      <button class="btn btn-info btn-sm" onclick="downloadExcel()">
+        <i class="bi bi-file-earmark-excel"></i> Excel
+      </button>
+    </div>
+  </div>
+
+  <div class="card-body table-responsive">
+    <table class="table table-bordered table-hover" id="membersTable">
+      <thead>
+        <tr>
+          <th width="30"><input type="checkbox" onclick="toggleAll(this)"></th>
+          <th>Name</th>
+          <th>National ID</th>
+          <th>Phone</th>
+          <th>Year Of Birth</th>
+          <th>Ward</th>
+          <th>T-Shirt</th>
+          <th>Size</th>
+          <th>Payment</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="membersTableBody"></tbody>
+    </table>
+  </div>
+</div>
+
+</div>
+
+<!-- View Member Modal -->
+<div class="modal fade" id="viewMemberModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Member Details</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="memberDetails">
+        <!-- Details will be loaded here -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Year Statistics Modal -->
+<div class="modal fade" id="yearStatsModal" tabindex="-1">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Year-wise Statistics</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row" id="yearStatsContainer">
+          <!-- Year stats will be loaded here -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- DataTables -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+<!-- jsPDF + AutoTable -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+
+<!-- SheetJS for Excel -->
+<script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+
+<script>
+const LOGO_URL = "https://i.ibb.co/fzpg1r0P/Screenshot-20260129-194058.png";
+const WATERMARK_URL = "https://i.ibb.co/fzpg1r0P/Screenshot-20260129-194058.png";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC1zqdQ4toWB73hpxn-LwIRbB2QI3fw8q8",
+  authDomain: "bus-party.firebaseapp.com",
+  projectId: "bus-party",
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+let membersData = [];
+let preVerificationsData = {};
+let dataTable = null;
+
+/* LOAD PRE-VERIFICATIONS */
+db.collection("preVerifications").onSnapshot(snapshot => {
+  preVerificationsData = {};
+  snapshot.forEach(doc => {
+    preVerificationsData[doc.id] = doc.data();
+  });
+  updateStats();
+});
+
+/* LOAD MEMBERS */
+db.collection("members").onSnapshot(snapshot => {
+  membersData = [];
+  snapshot.forEach(doc => {
+    const data = doc.data();
+    membersData.push({ 
+      id: doc.id, 
+      ...data,
+      registrationYear: data.timestamp ? new Date(data.timestamp.seconds * 1000).getFullYear() : new Date().getFullYear()
+    });
+  });
+  updateFilters();
+  updateStats();
+  renderTable();
+});
+
+/* UPDATE FILTERS */
+function updateFilters() {
+  const yearSelect = document.getElementById('filterYear');
+  const wardSelect = document.getElementById('filterWard');
+  
+  // Get unique years
+  const years = [...new Set(membersData.map(m => m.registrationYear))].sort((a, b) => b - a);
+  const wards = [...new Set(membersData.map(m => m.ward).filter(w => w))].sort();
+  
+  // Update year filter
+  yearSelect.innerHTML = '<option value="all">All Years</option>';
+  years.forEach(year => {
+    yearSelect.innerHTML += `<option value="${year}">${year}</option>`;
+  });
+  
+  // Update ward filter
+  wardSelect.innerHTML = '<option value="all">All Wards</option>';
+  wards.forEach(ward => {
+    wardSelect.innerHTML += `<option value="${ward}">${ward}</option>`;
+  });
+  
+  // Add event listeners
+  ['filterTshirt', 'filterPayment', 'filterYear', 'filterWard'].forEach(id => {
+    document.getElementById(id).addEventListener('change', renderTable);
+  });
+}
+
+/* UPDATE STATISTICS */
+function updateStats() {
+  const total = membersData.length;
+  const paid = membersData.filter(m => m.paidTill).length;
+  const tshirt = membersData.filter(m => m.tShirtProvided).length;
+  const verified = membersData.filter(m => preVerificationsData[m.nationalId]).length;
+  
+  document.getElementById('totalMembers').textContent = total;
+  document.getElementById('paidMembers').textContent = paid;
+  document.getElementById('tshirtMembers').textContent = tshirt;
+  document.getElementById('verifiedMembers').textContent = verified;
+}
+
+/* RENDER TABLE */
+function renderTable() {
+  const tshirtFilter = document.getElementById("filterTshirt").value;
+  const paymentFilter = document.getElementById("filterPayment").value;
+  const yearFilter = document.getElementById("filterYear").value;
+  const wardFilter = document.getElementById("filterWard").value;
+  
+  const tableBody = document.getElementById("membersTableBody");
+  tableBody.innerHTML = "";
+  
+  let filteredData = membersData.filter(m => {
+    // Apply filters
+    if (tshirtFilter === "yes" && !m.tShirtProvided) return false;
+    if (tshirtFilter === "no" && m.tShirtProvided) return false;
+    if (paymentFilter === "paid" && !m.paidTill) return false;
+    if (paymentFilter === "pending" && m.paidTill) return false;
+    if (yearFilter !== "all" && m.registrationYear != yearFilter) return false;
+    if (wardFilter !== "all" && m.ward !== wardFilter) return false;
+    return true;
+  });
+  
+  // Update table count
+  document.getElementById('tableCount').textContent = filteredData.length;
+  
+  // Render rows
+  filteredData.forEach((m, index) => {
+    tableBody.innerHTML += `
+      <tr>
+        <td><input type="checkbox" class="rowCheck" data-id="${m.id}"></td>
+        <td>
+          <strong>${m.fullName || m.name || 'N/A'}</strong>
+          ${m.nationalId ? `<br><small class="text-muted">ID: ${m.nationalId}</small>` : ''}
+        </td>
+        <td>${m.nationalId || "—"}</td>
+        <td>${m.phone || "—"}</td>
+        <td>
+          <span class="badge bg-secondary">${m.registrationYear}</span>
+        </td>
+        <td>${m.ward || "—"}</td>
+        <td>
+          <span class="badge ${m.tShirtProvided ? 'bg-success' : 'bg-warning'}">
+            ${m.tShirtProvided ? 'Yes' : 'No'}
+          </span>
+        </td>
+        <td>${m.tshirt || "—"}</td>
+        <td>
+          <span class="badge ${m.paidTill ? 'bg-success' : 'bg-danger'}">
+            ${m.paidTill ? 'Paid' : 'Pending'}
+          </span>
+        </td>
+        <td>
+          <button class="btn btn-sm btn-outline-primary" onclick="viewMemberDetails('${m.id}')" title="View Details">
+            <i class="bi bi-eye"></i>
+          </button>
+          ${!m.paidTill ? `<button class="btn btn-sm btn-success" onclick="markPaid('${m.id}')" title="Mark as Paid">
+            <i class="bi bi-check-circle"></i>
+          </button>` : ''}
+          ${!m.tShirtProvided ? `<button class="btn btn-sm btn-warning" onclick="giveShirt('${m.id}')" title="Give T-Shirt">
+            <i class="bi bi-tshirt"></i>
+          </button>` : ''}
+        </td>
+      </tr>
+    `;
+  });
+  
+  // Initialize DataTables if not already
+  if (!dataTable) {
+    dataTable = $('#membersTable').DataTable({
+      pageLength: 25,
+      order: [[1, 'asc']],
+      language: {
+        search: "Search members:"
+      }
+    });
+  }
+}
+
+/* VIEW MEMBER DETAILS */
+function viewMemberDetails(memberId) {
+  const member = membersData.find(m => m.id === memberId);
+  const pre = preVerificationsData[member?.nationalId];
+  
+  let details = `
+    <div class="row">
+      <div class="col-md-6">
+        <h6>Personal Information</h6>
+        <table class="table table-sm">
+          <tr><th>Full Name:</th><td>${member.fullName || member.name || 'N/A'}</td></tr>
+          <tr><th>National ID:</th><td>${member.nationalId || '—'}</td></tr>
+          <tr><th>Phone:</th><td>${member.phone || '—'}</td></tr>
+          <tr><th>Email:</th><td>${member.email || '—'}</td></tr>
+          <tr><th>Date of Birth:</th><td>${member.dob || '—'}</td></tr>
+          <tr><th>Age:</th><td>${member.dob ? new Date().getFullYear() - new Date(member.dob).getFullYear() : '—'}</td></tr>
+        </table>
+      </div>
+      <div class="col-md-6">
+        <h6>Registration Details</h6>
+        <table class="table table-sm">
+          <tr><th>Registration ID:</th><td><small>${member.id}</small></td></tr>
+          <tr><th>Year:</th><td>${member.registrationYear}</td></tr>
+          <tr><th>Registration Date:</th><td>${member.timestamp ? new Date(member.timestamp.seconds * 1000).toLocaleDateString() : '—'}</td></tr>
+          <tr><th>Ward:</th><td>${member.ward || '—'}</td></tr>
+          <tr><th>Institution:</th><td>${member.institution || member.school || '—'}</td></tr>
+          <tr><th>Member Type:</th><td>${member.type || '—'}</td></tr>
+        </table>
+      </div>
+    </div>
+  `;
+  
+  if (pre) {
+    details += `
+      <div class="row mt-3">
+        <div class="col-md-12">
+          <h6>Verification Details</h6>
+          <table class="table table-sm">
+            <tr><th>Polling Station:</th><td>${pre.polling?.station || '—'}</td></tr>
+            <tr><th>Voter ID:</th><td>${pre.voterId || '—'}</td></tr>
+            <tr><th>KRA Pin:</th><td>${pre.kraPin || '—'}</td></tr>
+            <tr><th>Verified:</th><td><span class="badge bg-success">Yes</span></td></tr>
+          </table>
+        </div>
+      </div>
+    `;
+  }
+  
+  document.getElementById('memberDetails').innerHTML = details;
+  const modal = new bootstrap.Modal(document.getElementById('viewMemberModal'));
+  modal.show();
+}
+
+/* SHOW YEAR STATISTICS */
+function showYearStats() {
+  const statsContainer = document.getElementById('yearStatsContainer');
+  const years = [...new Set(membersData.map(m => m.registrationYear))].sort((a, b) => b - a);
+  
+  let statsHTML = '';
+  
+  years.forEach(year => {
+    const yearMembers = membersData.filter(m => m.registrationYear === year);
+    const paid = yearMembers.filter(m => m.paidTill).length;
+    const tshirt = yearMembers.filter(m => m.tShirtProvided).length;
+    const verified = yearMembers.filter(m => preVerificationsData[m.nationalId]).length;
+    
+    statsHTML += `
+      <div class="col-md-4 mb-3">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">${year}</h5>
+          </div>
+          <div class="card-body">
+            <div class="d-flex justify-content-between mb-2">
+              <span>Total Members:</span>
+              <strong>${yearMembers.length}</strong>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+              <span>Paid:</span>
+              <strong class="text-success">${paid}</strong>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+              <span>T-Shirt Given:</span>
+              <strong class="text-warning">${tshirt}</strong>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span>Verified:</span>
+              <strong class="text-info">${verified}</strong>
+            </div>
+            <div class="progress mt-3" style="height: 8px;">
+              <div class="progress-bar bg-success" style="width: ${(paid/yearMembers.length)*100 || 0}%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+  
+  statsContainer.innerHTML = statsHTML;
+  const modal = new bootstrap.Modal(document.getElementById('yearStatsModal'));
+  modal.show();
+}
+
+/* ACTIONS */
+function markPaid(id) {
+  db.collection("members").doc(id).update({ paidTill: true });
+}
+
+function giveShirt(id) {
+  db.collection("members").doc(id).update({ tShirtProvided: true });
+}
+
+function toggleAll(source) {
+  document.querySelectorAll(".rowCheck").forEach(cb => cb.checked = source.checked);
+}
+
+function deleteSelected() {
+  const selected = [...document.querySelectorAll(".rowCheck:checked")];
+  if (!selected.length) return alert("No members selected");
+  if (!confirm("Are you sure you want to delete selected members?")) return;
+
+  selected.forEach(cb => {
+    db.collection("members").doc(cb.dataset.id).delete();
+  });
+}
+
+/* EXPORT FUNCTIONS */
+function exportAllData() {
+  const data = membersData.map(m => {
+    const pre = preVerificationsData[m.nationalId];
+    return {
+      'Name': m.fullName || m.name || '',
+      'National ID': m.nationalId || '',
+      'Phone': m.phone || '',
+      'Email': m.email || '',
+      'Date of Birth': m.dob || '',
+      'Year': m.registrationYear,
+      'Ward': m.ward || '',
+      'Institution': m.institution || m.school || '',
+      'Member Type': m.type || '',
+      'Voter ID': pre?.voterId || '',
+      'KRA Pin': pre?.kraPin || '',
+      'T-Shirt Given': m.tShirtProvided ? 'Yes' : 'No',
+      'T-Shirt Size': m.tshirt || '',
+      'Payment Status': m.paidTill ? 'Paid' : 'Pending',
+      'Registration Date': m.timestamp ? new Date(m.timestamp.seconds * 1000).toLocaleDateString() : '',
+      'Verified': pre ? 'Yes' : 'No'
+    };
+  });
+
+  const worksheet = XLSX.utils.json_to_sheet(data);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Members");
+  
+  // Auto-size columns
+  const wscols = [
+    {wch: 25}, {wch: 15}, {wch: 15}, {wch: 25},
+    {wch: 12}, {wch: 8}, {wch: 15}, {wch: 20},
+    {wch: 15}, {wch: 15}, {wch: 15}, {wch: 12},
+    {wch: 12}, {wch: 15}, {wch: 15}, {wch: 10}
+  ];
+  worksheet['!cols'] = wscols;
+  
+  XLSX.writeFile(workbook, `BUS_Members_All_Data_${new Date().toISOString().split('T')[0]}.xlsx`);
+}
+
+function downloadExcel() {
+  const tshirtFilter = document.getElementById("filterTshirt").value;
+  const paymentFilter = document.getElementById("filterPayment").value;
+  const yearFilter = document.getElementById("filterYear").value;
+  const wardFilter = document.getElementById("filterWard").value;
+  
+  const filteredData = membersData.filter(m => {
+    if (tshirtFilter === "yes" && !m.tShirtProvided) return false;
+    if (tshirtFilter === "no" && m.tShirtProvided) return false;
+    if (paymentFilter === "paid" && !m.paidTill) return false;
+    if (paymentFilter === "pending" && m.paidTill) return false;
+    if (yearFilter !== "all" && m.registrationYear != yearFilter) return false;
+    if (wardFilter !== "all" && m.ward !== wardFilter) return false;
+    return true;
+  });
+
+  const data = filteredData.map((m, i) => {
+    return {
+      '#': i + 1,
+      'Name': m.fullName || m.name || '',
+      'Phone': m.phone || '',
+      'National ID': m.nationalId || '',
+      'Year': m.registrationYear,
+      'Ward': m.ward || '',
+      'T-Shirt': m.tShirtProvided ? 'Yes' : 'No',
+      'Size': m.tshirt || '',
+      'Payment': m.paidTill ? 'Paid' : 'Pending'
+    };
+  });
+
+  const worksheet = XLSX.utils.json_to_sheet(data);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Members");
+  XLSX.writeFile(workbook, `BUS_Members_Filtered_${new Date().toISOString().split('T')[0]}.xlsx`);
+}
+
+async function downloadPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  const tshirtFilter = document.getElementById("filterTshirt").value;
+  const paymentFilter = document.getElementById("filterPayment").value;
+  const yearFilter = document.getElementById("filterYear").value;
+  const wardFilter = document.getElementById("filterWard").value;
+  
+  const data = membersData.filter(m => {
+    if (tshirtFilter === "yes" && !m.tShirtProvided) return false;
+    if (tshirtFilter === "no" && m.tShirtProvided) return false;
+    if (paymentFilter === "paid" && !m.paidTill) return false;
+    if (paymentFilter === "pending" && m.paidTill) return false;
+    if (yearFilter !== "all" && m.registrationYear != yearFilter) return false;
+    if (wardFilter !== "all" && m.ward !== wardFilter) return false;
+    return true;
+  });
+
+  const logo = await loadImage(LOGO_URL);
+  const watermark = await loadImage(WATERMARK_URL);
+
+  doc.setGState(new doc.GState({ opacity: 0.1 }));
+  doc.addImage(watermark, "PNG", 30, 80, 150, 150);
+
+  doc.setGState(new doc.GState({ opacity: 1 }));
+  doc.addImage(logo, "PNG", 15, 10, 30, 30);
+
+  doc.setFontSize(14);
+  doc.text("BUS Youth Members Report", 55, 20);
+  doc.setFontSize(10);
+  
+  let filterText = [];
+  if (tshirtFilter !== 'all') filterText.push(`T-Shirt: ${tshirtFilter === 'yes' ? 'With' : 'Without'}`);
+  if (paymentFilter !== 'all') filterText.push(`Payment: ${paymentFilter}`);
+  if (yearFilter !== 'all') filterText.push(`Year: ${yearFilter}`);
+  if (wardFilter !== 'all') filterText.push(`Ward: ${wardFilter}`);
+  
+  doc.text(`Filters: ${filterText.join(', ') || 'All Members'}`, 55, 26);
+  doc.text(`Total: ${data.length} members | Generated: ${new Date().toLocaleDateString()}`, 55, 32);
+
+  const rows = data.map((m, i) => {
+    return [
+      i + 1,
+      m.fullName || m.name || 'N/A',
+      m.nationalId || '—',
+      m.phone || '—',
+      m.registrationYear,
+      m.ward || '—',
+      m.tShirtProvided ? "Yes" : "No",
+      m.tshirt || '—',
+      m.paidTill ? "Paid" : "Pending"
+    ];
+  });
+
+  doc.autoTable({
+    startY: 45,
+    head: [["#", "Name", "National ID", "Phone", "Year", "Ward", "T-Shirt", "Size", "Payment"]],
+    body: rows,
+    theme: "grid",
+    headStyles: { fillColor: [11, 61, 46], textColor: 255 },
+    styles: { fontSize: 8 },
+    columnStyles: {
+      0: { cellWidth: 10 },
+      1: { cellWidth: 30 },
+      2: { cellWidth: 25 },
+      3: { cellWidth: 25 },
+      4: { cellWidth: 15 },
+      5: { cellWidth: 20 },
+      6: { cellWidth: 15 },
+      7: { cellWidth: 15 },
+      8: { cellWidth: 15 }
+    }
+  });
+
+  const pages = doc.internal.getNumberOfPages();
+  for (let i = 1; i <= pages; i++) {
+    doc.setPage(i);
+    doc.setFontSize(8);
+    doc.text(`Page ${i} of ${pages} - BUS Youth Organization`, 14, doc.internal.pageSize.height - 10);
+  }
+
+  doc.save(`BUS_Members_${new Date().toISOString().split('T')[0]}.pdf`);
+}
+
+function loadImage(url) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = url;
+  });
+}
+</script>
+</body>
+</html>

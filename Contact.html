@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us | BUS Party Youth Ambassadors</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+<style>
+  :root {
+    --primary-dark: #0B3D2E;
+    --primary-gold: #E0B21B;
+    --light-bg: #F6F4EF;
+    --white: #ffffff;
+    --gray-light: #f0f0f0;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background-color: var(--light-bg);
+    color: #0A1F16;
+    line-height: 1.7;
+    position: relative;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: url("https://images.unsplash.com/photo-1551135049-8a33b2e2c5a5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80") center/cover no-repeat;
+    opacity: 0.05;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body > * { position: relative; z-index: 1; }
+
+  header {
+    background: var(--primary-dark);
+    color: var(--primary-gold);
+    padding: 70px 20px;
+    text-align: center;
+  }
+
+  header h1 { 
+    font-size: 2.6rem; 
+    margin-bottom: 15px; 
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  }
+  
+  header p { 
+    max-width: 900px; 
+    margin: auto; 
+    font-size: 1.2rem; 
+    opacity: 0.9; 
+  }
+
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 20px;
+  }
+
+  .section-title { 
+    text-align: center; 
+    margin-bottom: 40px; 
+    position: relative; 
+    padding-bottom: 1rem; 
+  }
+  
+  .section-title h2 { 
+    color: var(--primary-dark); 
+    font-size: 2rem; 
+    font-weight: 700; 
+  }
+  
+  .section-title:after { 
+    content: ''; 
+    position: absolute; 
+    bottom: 0; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    width: 80px; 
+    height: 4px; 
+    background-color: var(--primary-gold); 
+    border-radius: 2px; 
+  }
+
+  .contact-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 60px;
+  }
+
+  @media (max-width: 900px) {
+    .contact-container {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .contact-info {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  }
+
+  .contact-form {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--primary-dark);
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+  }
+
+  .form-control:focus {
+    outline: none;
+    border-color: var(--primary-gold);
+  }
+
+  textarea.form-control {
+    min-height: 150px;
+    resize: vertical;
+  }
+
+  .btn {
+    display: inline-block;
+    background: var(--primary-dark);
+    color: var(--white);
+    border: none;
+    padding: 14px 30px;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .btn:hover {
+    background: var(--primary-gold);
+    color: var(--primary-dark);
+    transform: translateY(-2px);
+  }
+
+  .btn i {
+    margin-right: 8px;
+  }
+
+  .values { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+    gap: 25px; 
+    margin-bottom: 50px;
+  }
+  
+  .value-box {
+    background: var(--white);
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+  }
+  
+  .value-box:hover { 
+    transform: translateY(-6px); 
+    box-shadow: 0 12px 25px rgba(0,0,0,0.12); 
+  }
+  
+  .value-box i { 
+    font-size: 2.5rem; 
+    color: var(--primary-dark); 
+    margin-bottom: 15px; 
+  }
+
+  .value-box h4 {
+    color: var(--primary-dark);
+    margin-bottom: 10px;
+    font-size: 1.3rem;
+  }
+
+  .value-box p {
+    margin: 0;
+    color: #555;
+  }
+
+  .value-box a {
+    color: var(--primary-dark);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
+  }
+
+  .value-box a:hover {
+    color: var(--primary-gold);
+  }
+
+  .social-connect {
+    text-align: center;
+    padding: 40px 20px;
+    background: var(--primary-dark);
+    color: var(--white);
+    border-radius: 12px;
+    margin-bottom: 60px;
+  }
+
+  .social-connect h2 {
+    color: var(--white);
+    margin-bottom: 20px;
+  }
+
+  .social-connect p {
+    max-width: 700px;
+    margin: 0 auto 30px;
+    opacity: 0.9;
+  }
+
+  .social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    flex-wrap: wrap;
+  }
+
+  .social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background: var(--primary-gold);
+    color: var(--primary-dark);
+    border-radius: 50%;
+    font-size: 1.8rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .social-icon:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+  }
+
+  .location {
+    margin-top: 60px;
+    text-align: center;
+  }
+
+  .location iframe {
+    width: 100%;
+    height: 400px;
+    border: none;
+    border-radius: 12px;
+    margin-top: 20px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  }
+
+  footer { 
+    background: var(--primary-dark); 
+    color: var(--primary-gold); 
+    text-align: center; 
+    padding: 30px 15px; 
+    font-size: 0.9rem; 
+  }
+
+  footer p {
+    margin: 5px 0;
+  }
+
+  .footer-logo {
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: var(--white);
+  }
+
+  /* Success message styling */
+  #successMessage {
+    display: none;
+    background: #d4edda;
+    color: #155724;
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 20px;
+    border: 1px solid #c3e6cb;
+  }
+
+  @media (max-width: 768px) { 
+    .values { gap: 20px; } 
+    header h1 { font-size: 2rem; }
+    header p { font-size: 1rem; }
+    .social-icons { gap: 15px; }
+    .social-icon { width: 50px; height: 50px; font-size: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Contact BUS Party Youth Ambassadors</h1>
+  <p>Reach out to us for inquiries, membership registration, or to connect with our leadership team. We're here to empower youth through devolution and community engagement.</p>
+</header>
+
+<main>
+  <div class="contact-container">
+    <!-- Contact Information Section -->
+    <div class="contact-info">
+      <div class="section-title"><h2>Contact Information</h2></div>
+      <div class="values">
+        <div class="value-box">
+          <i class="fas fa-envelope"></i>
+          <h4>Email Address</h4>
+          <p><a href="mailto:devolutionempowermentparty014@gmail.com">devolutionempowermentparty014@gmail.com</a></p>
+          <p>We typically respond within 24 hours</p>
+        </div>
+        <div class="value-box">
+          <i class="fas fa-phone"></i>
+          <h4>Phone Number</h4>
+          <p><a href="tel:+254703828941">+254 703 828 941</a></p>
+          <p>Mon-Fri, 8:00 AM - 5:00 PM</p>
+        </div>
+        <div class="value-box">
+          <i class="fas fa-location-dot"></i>
+          <h4>Postal Address</h4>
+          <p>61071-00200,<br>Embu, Kenya</p>
+          <p>Headquarters Location</p>
+        </div>
+      </div>
+      
+      <div class="section-title" style="margin-top: 40px;"><h2>Our Mission</h2></div>
+      <p>The BUS Party Youth Ambassadors are dedicated to empowering young people through active participation in devolution processes, community development, and political engagement. We believe in creating opportunities for youth to lead and transform society.</p>
+    </div>
+    
+    <!-- Contact Form Section -->
+    <div class="contact-form">
+      <div class="section-title"><h2>Send Us a Message</h2></div>
+      <form id="contactForm">
+        <div class="form-group">
+          <label for="name">Full Name *</label>
+          <input type="text" id="name" class="form-control" placeholder="Your full name" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email Address *</label>
+          <input type="email" id="email" class="form-control" placeholder="Your email address" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" class="form-control" placeholder="Your phone number">
+        </div>
+        
+        <div class="form-group">
+          <label for="subject">Subject *</label>
+          <select id="subject" class="form-control" required>
+            <option value="" disabled selected>Select inquiry type</option>
+            <option value="membership">Membership Registration</option>
+            <option value="partnership">Partnership Opportunity</option>
+            <option value="event">Event Information</option>
+            <option value="volunteer">Volunteer Opportunity</option>
+            <option value="other">Other Inquiry</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="message">Your Message *</label>
+          <textarea id="message" class="form-control" placeholder="Type your message here..." required></textarea>
+        </div>
+        
+        <button type="submit" class="btn"><i class="fas fa-paper-plane"></i> Send Message</button>
+        
+        <div id="successMessage">
+          <i class="fas fa-check-circle"></i> Thank you! Your message has been sent successfully. We'll respond soon.
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Social Media Section -->
+  <div class="social-connect">
+    <h2>Connect With Us</h2>
+    <p>Join our official platforms and stay engaged with the movement. Follow us for updates on events, initiatives, and youth empowerment opportunities.</p>
+    
+    <div class="social-icons">
+      <a href="https://wa.me/254703828941" target="_blank" class="social-icon" title="Join our WhatsApp Group">
+        <i class="fab fa-whatsapp"></i>
+      </a>
+      <a href="https://www.facebook.com/share/p/1CuYqHMULi/" class="social-icon" title="Follow us on Facebook">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="#" class="social-icon" title="Follow us on Twitter">
+        <i class="fab fa-twitter"></i>
+      </a>
+      <a href="#" class="social-icon" title="Follow us on Instagram">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="#" class="social-icon" title="Subscribe to our YouTube">
+        <i class="fab fa-youtube"></i>
+      </a>
+    </div>
+    
+    <p style="margin-top: 25px; font-size: 0.9rem;">
+      <i class="fas fa-info-circle"></i> Click the WhatsApp icon to join our official group for real-time updates
+    </p>
+  </div>
+  
+  <!-- Location Section -->
+  <div class="location">
+    <div class="section-title"><h2>Our Location</h2></div>
+    <p>Find us in Embu, Kenya. We work across the county to empower youth and promote devolution.</p>
+    
+    <!-- Embedded Google Map for Embu, Kenya -->
+    <iframe 
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.752074654581!2d37.45021677474599!3d-0.538567435254397!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1827a4c7ac4d83fd%3A0x54b31f9a5a3fd8ea!2sEmbu%2C%20Kenya!5e0!3m2!1sen!2sus!4v1649872345678!5m2!1sen!2sus" 
+      allowfullscreen="" 
+      loading="lazy" 
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-logo">BUS Party Youth Ambassadors</div>
+  <p>&copy; 2026 BUS Party Youth Ambassadors | Twendane Muno</p>
+  <p>Powered by the BUS Party | Empowering Youth Through Devolution</p>
+  <p style="margin-top: 15px; font-size: 0.8rem;">
+    <i class="fas fa-heart" style="color: #ff6b6b;"></i> Building a better future for Kenyan youth
+  </p>
+</footer>
+
+<script>
+  // Form submission handler
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // In a real implementation, you would send the form data to a server
+    // For this demo, we'll just show a success message
+    
+    // Get form values
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const subject = document.getElementById('subject').value;
+    
+    // Show success message
+    const successMessage = document.getElementById('successMessage');
+    successMessage.style.display = 'block';
+    
+    // Reset form after 5 seconds
+    setTimeout(function() {
+      document.getElementById('contactForm').reset();
+      successMessage.style.display = 'none';
+    }, 5000);
+    
+    // Log form data (in a real app, this would be sent to a server)
+    console.log('Form submitted:', { name, email, subject });
+  });
+  
+  // Social media link handlers
+  document.querySelectorAll('.social-icon').forEach(icon => {
+    icon.addEventListener('click', function(e) {
+      // If it's the placeholder link (href="#"), prevent default and show message
+      if (this.getAttribute('href') === '#') {
+        e.preventDefault();
+        alert('This social media link will be added soon. Currently, only WhatsApp is active.');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

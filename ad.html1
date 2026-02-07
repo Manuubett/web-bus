@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BUS Admin Panel</title>
+<style>
+  body { font-family: Arial, sans-serif; margin:0; background:#F6F4EF; color:#333; }
+  header { background:#0B3D2E; color:#E0B21B; text-align:center; padding:25px 15px; }
+  h1 { margin:0; font-size:2rem; }
+  .nav { display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin:20px 15px; }
+  .nav button { background:#0B3D2E; color:#E0B21B; border:none; padding:10px 18px; border-radius:6px; cursor:pointer; font-weight:bold; transition:all 0.2s; }
+  .nav button.active { background:#0A1F16; transform:scale(1.05); }
+  .section { max-width:900px; margin:20px auto; padding:20px; display:none; background:#fff; border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
+  .section.active { display:block; }
+  input, textarea, select { width:100%; padding:10px; margin:8px 0 12px; border-radius:6px; border:1px solid #ccc; box-sizing:border-box; }
+  button.submit-btn, button.login-btn { background:#0B3D2E; color:#E0B21B; border:none; padding:12px 24px; border-radius:6px; cursor:pointer; font-weight:bold; transition:all 0.2s; }
+  button.submit-btn:hover, button.login-btn:hover { background:#0A1F16; }
+  .item-card { border:1px solid #ddd; padding:12px; margin-bottom:12px; border-radius:8px; display:flex; justify-content:space-between; align-items:center; background:#f9f9f9; transition: all 0.4s; }
+  .item-card button { background:#c0392b; color:white; border:none; padding:6px 12px; border-radius:4px; cursor:pointer; }
+  .item-card.deleting { opacity:0.4; background:#ffebee; }
+  .status, .login-status { margin:15px 0; font-weight:bold; text-align:center; min-height:1.5em; }
+  #loginSection { max-width:450px; margin:60px auto; padding:30px; background:#fff; border-radius:10px; box-shadow:0 4px 15px rgba(0,0,0,0.15); }
+  #loginSection h2 { color:#0B3D2E; text-align:center; margin-bottom:25px; }
+  #adminContent { display:none; }
+  .hidden { display:none !important; }
+</style>
+</head>
+<body>
+
+<header><h1>BUS Admin Panel</h1></header>
+
+<!-- Login Form -->
+<div id="loginSection">
+  <h2>Admin Login</h2>
+  <input type="email" id="loginEmail" placeholder="Email" required autocomplete="email">
+  <input type="password" id="loginPassword" placeholder="Password" required autocomplete="current-password">
+  <button class="login-btn" id="loginBtn">Sign In</button>
+  <div id="loginStatus" class="login-status"></div>
+</div>
+
+<!-- Admin Content -->
+<div id="adminContent">
+  <div class="nav">
+    <button class="nav-btn active" data-section="News">News & Updates</button>
+    <button class="nav-btn" data-section="Activities">Activities & Programs</button>
+    <button class="nav-btn" data-section="Media">Media Gallery</button>
+    <button class="nav-btn" data-section="Members">Members</button>
+    <button class="nav-btn" id="signOutBtn">Sign Out</button>
+  </div>
+
+  <!-- News Section -->
+  <div class="section active" id="News">
+    <h2>Add News / Update</h2>
+    <input type="text" id="newsTitle" placeholder="Title" required>
+    <select id="newsCategory">
+      <option value="Announcements">Announcements</option>
+      <option value="Recruitment">Recruitment</option>
+      <option value="Statements">Statements</option>
+      <option value="Opinions">Youth Opinions</option>
+    </select>
+    <textarea id="newsContent" placeholder="Full content..." rows="6" required></textarea>
+    <label>Upload Photos (ImgBB):</label>
+    <input type="file" id="newsPhotos" accept="image/*" multiple>
+    <button class="submit-btn" id="addNewsBtn">Add News</button>
+    <div id="newsStatus" class="status"></div>
+    <div id="newsList"></div>
+  </div>
+
+  <!-- Activities Section -->
+  <div class="section" id="Activities">
+    <h2>Add Activity / Program</h2>
+    <input type="text" id="activityTitle" placeholder="Title" required>
+    <textarea id="activityDesc" placeholder="Description..." rows="5" required></textarea>
+    <input type="date" id="activityDate" required>
+    <select id="activityType">
+      <option value="Upcoming">Upcoming</option>
+      <option value="Past">Past</option>
+      <option value="Training">Training</option>
+    </select>
+    <label>Upload Photos (ImgBB):</label>
+    <input type="file" id="activityPhotos" accept="image/*" multiple>
+    <button class="submit-btn" id="addActivityBtn">Add Activity</button>
+    <div id="activityStatus" class="status"></div>
+    <div id="activityList"></div>
+  </div>
+
+  <!-- Media Section -->
+  <div class="section" id="Media">
+    <h2>Add Media Item</h2>
+    <input type="text" id="mediaTitle" placeholder="Title" required>
+    <select id="mediaType">
+      <option value="Photo">Photo</option>
+      <option value="Video">Video</option>
+      <option value="Poster">Poster</option>
+      <option value="Download">Download</option>
+    </select>
+    <label>Upload Image (for Photo/Poster - ImgBB):</label>
+    <input type="file" id="mediaImage" accept="image/*">
+    <input type="text" id="mediaThumbnail" placeholder="Thumbnail URL (optional)">
+    <input type="text" id="mediaURL" placeholder="Full URL / Video / Download link (if no file)">
+    <button class="submit-btn" id="addMediaBtn">Add Media</button>
+    <div id="mediaStatus" class="status"></div>
+    <div id="mediaList"></div>
+  </div>
+
+  <!-- Members Section -->
+  <div class="section" id="Members">
+    <h2>Add Member</h2>
+    <input type="text" id="memberName" placeholder="Name" required>
+    <input type="number" id="memberAge" placeholder="Age" min="10">
+    <input type="text" id="memberWard" placeholder="Ward" required>
+    <input type="text" id="memberInstitution" placeholder="Institution / School">
+    <select id="memberType">
+      <option value="Youth">Youth</option>
+      <option value="Associate">Associate</option>
+    </select>
+    <button class="submit-btn" id="addMemberBtn">Add Member</button>
+    <div id="memberList"></div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import {
+  getFirestore, collection, addDoc, onSnapshot, query,
+  orderBy, serverTimestamp, doc, deleteDoc, getDocs
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import {
+  getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut
+} from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+/* ─── FIREBASE CONFIG ─── */
+const firebaseConfig = {
+  apiKey: "AIzaSyC1zqdQ4toWB73hpxn-LwIRbB2QI3fw8q8",
+  authDomain: "bus-party.firebaseapp.com",
+  projectId: "bus-party",
+  storageBucket: "bus-party.firebasestorage.app",
+  messagingSenderId: "315543442057",
+  appId: "1:315543442057:web:25b4aa009050c4bfcaec58",
+  measurementId: "G-HP25FYHRQY"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+const IMGBB_API_KEY = 'e26f20d023a0094ee31c68ded33ab41d';
+
+/* ─── ADMIN EMAILS ─── */
+const ADMIN_EMAILS = [
+  "admin54@bus.com",
+  "it@bus.com",
+  "management@bus.com"
+];
+
+/* ─── DOM ELEMENTS ─── */
+const loginSection = document.getElementById('loginSection');
+const adminContent = document.getElementById('adminContent');
+const loginStatus = document.getElementById('loginStatus');
+const loginBtn = document.getElementById('loginBtn');
+const signOutBtn = document.getElementById('signOutBtn');
+const addNewsBtn = document.getElementById('addNewsBtn');
+const addActivityBtn = document.getElementById('addActivityBtn');
+const addMediaBtn = document.getElementById('addMediaBtn');
+const addMemberBtn = document.getElementById('addMemberBtn');
+
+/* ─── AUTH GUARD ─── */
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    loginSection.classList.remove('hidden');
+    adminContent.style.display = 'none';
+    loginStatus.textContent = '';
+    return;
+  }
+
+  // Case-insensitive check
+  const allowed = ADMIN_EMAILS.map(e => e.toLowerCase());
+  if (allowed.includes(user.email.toLowerCase())) {
+    loginSection.classList.add('hidden');
+    adminContent.style.display = 'block';
+    loginStatus.textContent = '';
+  } else {
+    await signOut(auth); // kick non-admin
+    loginSection.classList.remove('hidden');
+    adminContent.style.display = 'none';
+    loginStatus.textContent = 'Access denied: Admins only';
+    loginStatus.style.color = 'red';
+  }
+});
+
+/* ─── LOGIN FUNCTION ─── */
+loginBtn.addEventListener('click', async () => {
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value.trim();
+  loginStatus.textContent = 'Signing in...';
+  loginStatus.style.color = 'blue';
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (err) {
+    loginStatus.textContent = err.code === 'auth/wrong-password' ? 'Incorrect password' :
+      err.code === 'auth/user-not-found' ? 'User not found' :
+      err.message;
+    loginStatus.style.color = 'red';
+  }
+});
+
+/* ─── SIGN OUT ─── */
+signOutBtn.addEventListener('click', () => signOut(auth));
+
+/* ─── TABS ─── */
+document.querySelectorAll('.nav-btn:not(#signOutBtn)').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.section).classList.add('active');
+  });
+});
+
+/* ─── IMGBB UPLOADS ─── */
+async function uploadToImgBB(file) {
+  if (!file) return null;
+  const fd = new FormData();
+  fd.append('image', file);
+  fd.append('key', IMGBB_API_KEY);
+  const res = await fetch('https://api.imgbb.com/1/upload', { method: 'POST', body: fd });
+  const data = await res.json();
+  if (!data.success) throw new Error('ImgBB upload failed');
+  return data.data.url;
+}
+
+async function uploadMultipleFiles(files) {
+  const urls = [];
+  for (const f of files) {
+    try { urls.push(await uploadToImgBB(f)); }
+    catch (e) { console.error(e); }
+  }
+  return urls;
+}
+
+/* ─── ADD NEWS ─── */
+addNewsBtn.addEventListener('click', async () => {
+  const title = document.getElementById('newsTitle').value.trim();
+  const category = document.getElementById('newsCategory').value;
+  const content = document.getElementById('newsContent').value.trim();
+  const files = document.getElementById('newsPhotos').files;
+  const status = document.getElementById('newsStatus');
+  
+  if (!title || !content) {
+    status.textContent = 'Please fill all required fields';
+    status.style.color = 'red';
+    return;
+  }
+  
+  status.textContent = 'Adding news...';
+  status.style.color = 'blue';
+  
+  try {
+    let imageUrls = [];
+    if (files.length > 0) {
+      imageUrls = await uploadMultipleFiles(files);
+    }
+    
+    await addDoc(collection(db, 'news'), {
+      title,
+      category,
+      content,
+      images: imageUrls,
+      timestamp: serverTimestamp(),
+      expiryDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString() // 30 days from now
+    });
+    
+    // Clear form
+    document.getElementById('newsTitle').value = '';
+    document.getElementById('newsContent').value = '';
+    document.getElementById('newsPhotos').value = '';
+    
+    status.textContent = 'News added successfully!';
+    status.style.color = 'green';
+    
+    setTimeout(() => {
+      status.textContent = '';
+    }, 3000);
+    
+  } catch (error) {
+    console.error(error);
+    status.textContent = 'Error: ' + error.message;
+    status.style.color = 'red';
+  }
+});
+
+/* ─── ADD ACTIVITY ─── */
+addActivityBtn.addEventListener('click', async () => {
+  const title = document.getElementById('activityTitle').value.trim();
+  const description = document.getElementById('activityDesc').value.trim();
+  const date = document.getElementById('activityDate').value;
+  const type = document.getElementById('activityType').value;
+  const files = document.getElementById('activityPhotos').files;
+  const status = document.getElementById('activityStatus');
+  
+  if (!title || !description || !date) {
+    status.textContent = 'Please fill all required fields';
+    status.style.color = 'red';
+    return;
+  }
+  
+  status.textContent = 'Adding activity...';
+  status.style.color = 'blue';
+  
+  try {
+    let imageUrls = [];
+    if (files.length > 0) {
+      imageUrls = await uploadMultipleFiles(files);
+    }
+    
+    await addDoc(collection(db, 'activities'), {
+      title,
+      description,
+      date,
+      type,
+      images: imageUrls,
+      timestamp: serverTimestamp(),
+      expiryDate: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString() // 90 days from now
+    });
+    
+    // Clear form
+    document.getElementById('activityTitle').value = '';
+    document.getElementById('activityDesc').value = '';
+    document.getElementById('activityDate').value = '';
+    document.getElementById('activityPhotos').value = '';
+    
+    status.textContent = 'Activity added successfully!';
+    status.style.color = 'green';
+    
+    setTimeout(() => {
+      status.textContent = '';
+    }, 3000);
+    
+  } catch (error) {
+    console.error(error);
+    status.textContent = 'Error: ' + error.message;
+    status.style.color = 'red';
+  }
+});
+
+/* ─── ADD MEDIA ─── */
+addMediaBtn.addEventListener('click', async () => {
+  const title = document.getElementById('mediaTitle').value.trim();
+  const type = document.getElementById('mediaType').value;
+  const thumbnail = document.getElementById('mediaThumbnail').value.trim();
+  const url = document.getElementById('mediaURL').value.trim();
+  const file = document.getElementById('mediaImage').files[0];
+  const status = document.getElementById('mediaStatus');
+  
+  if (!title) {
+    status.textContent = 'Please enter a title';
+    status.style.color = 'red';
+    return;
+  }
+  
+  status.textContent = 'Adding media...';
+  status.style.color = 'blue';
+  
+  try {
+    let imageUrl = null;
+    let finalUrl = url;
+    
+    // Upload image if provided
+    if (file) {
+      imageUrl = await uploadToImgBB(file);
+    }
+    
+    // For media that needs a URL (like videos or downloads)
+    if (!finalUrl && type !== 'Photo' && type !== 'Poster') {
+      status.textContent = 'URL is required for ' + type + ' type';
+      status.style.color = 'red';
+      return;
+    }
+    
+    await addDoc(collection(db, 'media'), {
+      title,
+      type,
+      thumbnail: thumbnail || imageUrl,
+      url: finalUrl || imageUrl,
+      timestamp: serverTimestamp()
+    });
+    
+    // Clear form
+    document.getElementById('mediaTitle').value = '';
+    document.getElementById('mediaThumbnail').value = '';
+    document.getElementById('mediaURL').value = '';
+    document.getElementById('mediaImage').value = '';
+    
+    status.textContent = 'Media added successfully!';
+    status.style.color = 'green';
+    
+    setTimeout(() => {
+      status.textContent = '';
+    }, 3000);
+    
+  } catch (error) {
+    console.error(error);
+    status.textContent = 'Error: ' + error.message;
+    status.style.color = 'red';
+  }
+});
+
+/* ─── ADD MEMBER ─── */
+addMemberBtn.addEventListener('click', async () => {
+  const name = document.getElementById('memberName').value.trim();
+  const age = document.getElementById('memberAge').value;
+  const ward = document.getElementById('memberWard').value.trim();
+  const institution = document.getElementById('memberInstitution').value.trim();
+  const type = document.getElementById('memberType').value;
+  
+  if (!name || !ward) {
+    alert('Please fill all required fields');
+    return;
+  }
+  
+  try {
+    await addDoc(collection(db, 'members'), {
+      name,
+      age: age ? parseInt(age) : null,
+      ward,
+      institution,
+      type,
+      timestamp: serverTimestamp()
+    });
+    
+    // Clear form
+    document.getElementById('memberName').value = '';
+    document.getElementById('memberAge').value = '';
+    document.getElementById('memberWard').value = '';
+    document.getElementById('memberInstitution').value = '';
+    
+    alert('Member added successfully!');
+    
+  } catch (error) {
+    console.error(error);
+    alert('Error adding member: ' + error.message);
+  }
+});
+
+/* ─── FETCH LISTS + DELETE ─── */
+function fetchList(coll, containerId) {
+  const el = document.getElementById(containerId);
+  if (!el) {
+    console.error('Element not found:', containerId);
+    return;
+  }
+  
+  onSnapshot(query(collection(db, coll), orderBy('timestamp','desc')), snap => {
+    el.innerHTML = '';
+    snap.forEach(d => {
+      const div = document.createElement('div');
+      div.className = 'item-card';
+      
+      // Display appropriate field based on collection
+      let displayText = '';
+      if (coll === 'members') {
+        displayText = `${d.data().name} - ${d.data().ward} (${d.data().type})`;
+      } else if (coll === 'media') {
+        displayText = `${d.data().title} - ${d.data().type}`;
+      } else {
+        displayText = d.data().title || d.data().name || 'Untitled';
+      }
+      
+      div.innerHTML = `<span>${displayText}</span>`;
+      const btn = document.createElement('button');
+      btn.textContent = 'Delete';
+      btn.addEventListener('click', () => deleteDoc(doc(db, coll, d.id)));
+      div.appendChild(btn);
+      el.appendChild(div);
+    });
+  });
+}
+
+// Initialize lists after DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  fetchList('news', 'newsList');
+  fetchList('activities', 'activityList');
+  fetchList('media', 'mediaList');
+  fetchList('members', 'memberList');
+});
+
+/* ─── AUTO REMOVE EXPIRED ITEMS ─── */
+async function removeExpired(coll) {
+  const now = new Date().toISOString();
+  const snap = await getDocs(collection(db, coll));
+  snap.forEach(d => {
+    if (d.data().expiryDate && d.data().expiryDate <= now) {
+      deleteDoc(doc(db, coll, d.id));
+    }
+  });
+}
+
+// Initial cleanup
+['news','activities'].forEach(removeExpired);
+
+// Periodic cleanup every 10 minutes
+setInterval(() => ['news','activities'].forEach(removeExpired), 600000);
+
+</script>
+
+</body>
+        </html>

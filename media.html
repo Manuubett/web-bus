@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BUS Youth Ambassadors | Media Gallery</title>
+<style>
+  /* Consistent with Admin Panel Styles */
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #F6F4EF;
+    color: #333;
+  }
+
+  header {
+    background: #0B3D2E;
+    color: #E0B21B;
+    text-align: center;
+    padding: 25px 15px;
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+
+  /* Tabs matching admin panel */
+  .nav {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 20px 15px;
+  }
+
+  .nav button {
+    background: #0B3D2E;
+    color: #E0B21B;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s;
+  }
+
+  .nav button.active, .nav button:hover {
+    background: #0A1F16;
+    transform: scale(1.05);
+  }
+
+  /* Gallery Container */
+  .media-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 15px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  /* Media Card matching admin style */
+  .media-card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+
+  .media-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  }
+
+  .media-thumb {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .media-info {
+    padding: 15px;
+  }
+
+  .media-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #0B3D2E;
+    margin-bottom: 5px;
+  }
+
+  .media-type {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+  }
+
+  .media-date {
+    font-size: 12px;
+    color: #888;
+  }
+
+  /* Multi-image indicator */
+  .multi-image-indicator {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0,0,0,0.7);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+
+  /* Video Social Media Section */
+  .video-social-section {
+    text-align: center;
+    padding: 40px 20px;
+    margin: 30px auto;
+    max-width: 800px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+
+  .video-social-section h2 {
+    color: #0B3D2E;
+    margin-bottom: 25px;
+    font-size: 24px;
+  }
+
+  .social-platforms {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+  }
+
+  .social-platform {
+    text-align: center;
+    transition: transform 0.3s;
+  }
+
+  .social-platform:hover {
+    transform: translateY(-5px);
+  }
+
+  .social-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+    font-size: 36px;
+    color: white;
+  }
+
+  .facebook-icon {
+    background: linear-gradient(135deg, #1877F2, #0A5CC2);
+  }
+
+  .youtube-icon {
+    background: linear-gradient(135deg, #FF0000, #CC0000);
+  }
+
+  .tiktok-icon {
+    background: linear-gradient(135deg, #000000, #333333);
+  }
+
+  .social-platform h3 {
+    color: #0B3D2E;
+    margin-bottom: 8px;
+    font-size: 18px;
+  }
+
+  .social-platform p {
+    color: #666;
+    font-size: 14px;
+    max-width: 200px;
+  }
+
+  .watch-here-btn {
+    background: #0B3D2E;
+    color: #E0B21B;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
+  }
+
+  .watch-here-btn:hover {
+    background: #0A1F16;
+    transform: scale(1.05);
+  }
+
+  /* Empty state */
+  .empty {
+    text-align: center;
+    color: #777;
+    padding: 60px 20px;
+    font-size: 18px;
+    grid-column: 1 / -1;
+  }
+
+  /* FULLSCREEN MODAL */
+  .fullscreen-modal {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+  }
+
+  /* Fullscreen image container */
+  .fullscreen-image-container {
+    width: 100%;
+    height: calc(100% - 80px); /* Leave space for buttons */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .fullscreen-image-container img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  /* Navigation buttons at the bottom */
+  .fullscreen-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    z-index: 10000;
+  }
+
+  .fullscreen-nav button {
+    background: #0B3D2E;
+    color: #E0B21B;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    min-width: 120px;
+    transition: all 0.2s;
+  }
+
+  .fullscreen-nav button:hover {
+    background: #0A1F16;
+    transform: scale(1.05);
+  }
+
+  /* Close button (top right) */
+  .close-fullscreen {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.5);
+    color: white;
+    border: 2px solid white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10001;
+    transition: all 0.2s;
+  }
+
+  .close-fullscreen:hover {
+    background: rgba(255,255,255,0.2);
+    transform: scale(1.1);
+  }
+
+  /* Image counter */
+  .image-counter {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 18px;
+    background: rgba(0,0,0,0.5);
+    padding: 8px 16px;
+    border-radius: 20px;
+    z-index: 10001;
+  }
+
+  /* Thumbnail strip for multi-image items */
+  .thumbnail-strip {
+    position: absolute;
+    bottom: 90px; /* Above the nav buttons */
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    background: rgba(0,0,0,0.5);
+    overflow-x: auto;
+    z-index: 10000;
+  }
+
+  .thumbnail-strip img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+    border: 2px solid transparent;
+  }
+
+  .thumbnail-strip img.active {
+    opacity: 1;
+    border-color: #E0B21B;
+  }
+
+  /* Prev/Next arrows for image navigation */
+  .nav-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    font-size: 28px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10001;
+    transition: all 0.2s;
+  }
+
+  .nav-arrow:hover {
+    background: rgba(255,255,255,0.2);
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  .nav-arrow.prev {
+    left: 20px;
+  }
+
+  .nav-arrow.next {
+    right: 20px;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .media-container {
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 15px;
+    }
+    
+    header {
+      font-size: 1.5rem;
+      padding: 20px 15px;
+    }
+    
+    .social-platforms {
+      gap: 20px;
+    }
+    
+    .social-icon {
+      width: 70px;
+      height: 70px;
+      font-size: 32px;
+    }
+    
+    .fullscreen-nav {
+      flex-wrap: wrap;
+      height: auto;
+      padding: 10px;
+    }
+    
+    .fullscreen-nav button {
+      min-width: 100px;
+      padding: 10px 15px;
+      font-size: 14px;
+    }
+    
+    .fullscreen-image-container {
+      height: calc(100% - 120px);
+    }
+    
+    .nav-arrow {
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .media-container {
+      grid-template-columns: 1fr;
+    }
+    
+    .nav {
+      gap: 8px;
+    }
+    
+    .nav button {
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+    
+    .social-platforms {
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+    }
+    
+    .social-icon {
+      width: 60px;
+      height: 60px;
+      font-size: 28px;
+    }
+    
+    .fullscreen-nav {
+      gap: 10px;
+    }
+    
+    .fullscreen-nav button {
+      min-width: 80px;
+      padding: 8px 12px;
+      font-size: 13px;
+    }
+    
+    .thumbnail-strip {
+      bottom: 80px;
+    }
+    
+    .thumbnail-strip img {
+      width: 50px;
+      height: 50px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  BUS Youth Ambassadors | Media Gallery
+</header>
+
+<!-- Navigation Tabs -->
+<div class="nav">
+  <button class="tab-btn active" data-type="All">All Media</button>
+  <button class="tab-btn" data-type="Photo">Photos</button>
+  <button class="tab-btn" data-type="Video">Videos</button>
+  <button class="tab-btn" data-type="Poster">Posters</button>
+  <button class="tab-btn" data-type="Download">Downloads</button>
+</div>
+
+<!-- Video Social Media Section (Visible only in Videos tab) -->
+<div class="video-social-section" id="videoSocialSection" style="display: none;">
+  <h2>Watch Our Videos</h2>
+  <p style="color: #666; margin-bottom: 30px; font-size: 16px;">
+    Our video content is available on our social media platforms. Click below to watch our latest videos and stay updated with BUS Youth Ambassadors!
+  </p>
+  
+  <div class="social-platforms">
+    <div class="social-platform">
+      <div class="social-icon facebook-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="white">
+          <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+        </svg>
+      </div>
+      <h3>Facebook</h3>
+      <p>Watch videos, live streams, and connect with our community</p>
+      <a href="https://www.facebook.com/BUSYouth" target="_blank" class="watch-here-btn">
+        Watch Here
+      </a>
+    </div>
+    
+    <div class="social-platform">
+      <div class="social-icon youtube-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="white">
+          <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
+        </svg>
+      </div>
+      <h3>YouTube</h3>
+      <p>Subscribe to our channel for interviews, events, and highlights</p>
+      <a href="https://www.youtube.com/@BUSYouth" target="_blank" class="watch-here-btn">
+        Watch Here
+      </a>
+    </div>
+    
+    <div class="social-platform">
+      <div class="social-icon tiktok-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="white">
+          <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.3.045.6.088.9.13v-3.2a6.11 6.11 0 0 0-1-.05A6.07 6.07 0 0 0 4.2 12.9a6.05 6.05 0 0 0 8.2 5.67v3.33a9.33 9.33 0 0 1-8.2-4.61v4.81H.5v-4.81A9.34 9.34 0 0 1 10.71.5v4.81a4.82 4.82 0 0 0-3.77 4.25v.01c0 2.67 2.16 4.83 4.83 4.83s4.83-2.16 4.83-4.83V6.69h3.45v11.9a6.07 6.07 0 0 1-6.07 6.07c-1.17 0-2.31-.31-3.33-.89v3.33a9.33 9.33 0 0 0 9.33-9.33V6.69h-1.85z"/>
+        </svg>
+      </div>
+      <h3>TikTok</h3>
+      <p>Short-form videos, behind-the-scenes, and youth perspectives</p>
+      <a href="https://www.tiktok.com/@BUSYouth" target="_blank" class="watch-here-btn">
+        Watch Here
+      </a>
+    </div>
+  </div>
+  
+  <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee;">
+    <p style="color: #0B3D2E; font-weight: bold; font-size: 18px; margin-bottom: 15px;">
+      Follow us on social media for daily updates!
+    </p>
+    <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+      <a href="https://www.facebook.com/BUSYouth" target="_blank" style="color: #1877F2; text-decoration: none; font-weight: bold;">@BUSYouth</a>
+      <a href="https://www.youtube.com/@BUSYouth" target="_blank" style="color: #FF0000; text-decoration: none; font-weight: bold;">@BUSYouth</a>
+      <a href="https://www.tiktok.com/@BUSYouth" target="_blank" style="color: #000000; text-decoration: none; font-weight: bold;">@BUSYouth</a>
+    </div>
+  </div>
+</div>
+
+<!-- Media Gallery Container -->
+<div class="media-container" id="mediaContainer">
+  <div class="empty">Loading media...</div>
+</div>
+
+<!-- FULLSCREEN MODAL -->
+<div class="fullscreen-modal" id="fullscreenModal">
+  <button class="close-fullscreen" id="closeFullscreen">×</button>
+  <div class="image-counter" id="imageCounter">1 / 1</div>
+  
+  <button class="nav-arrow prev" id="prevArrow">‹</button>
+  <button class="nav-arrow next" id="nextArrow">›</button>
+  
+  <div class="fullscreen-image-container">
+    <img id="fullscreenImg" src="" alt="">
+  </div>
+  
+  <div class="thumbnail-strip" id="thumbnailStrip"></div>
+  
+  <div class="fullscreen-nav">
+    <button id="prevBtnFullscreen">← Previous</button>
+    <button id="downloadBtnFullscreen">Download</button>
+    <button id="nextBtnFullscreen">Next →</button>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import { getFirestore, collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+// Firebase Configuration (matches admin panel)
+const firebaseConfig = {
+  apiKey: "AIzaSyC1zqdQ4toWB73hpxn-LwIRbB2QI3fw8q8",
+  authDomain: "bus-party.firebaseapp.com",
+  projectId: "bus-party",
+  storageBucket: "bus-party.firebasestorage.app",
+  messagingSenderId: "315543442057",
+  appId: "1:315543442057:web:25b4aa009050c4bfcaec58"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// DOM Elements
+const container = document.getElementById('mediaContainer');
+const tabButtons = document.querySelectorAll('.tab-btn');
+const videoSocialSection = document.getElementById('videoSocialSection');
+const fullscreenModal = document.getElementById('fullscreenModal');
+const fullscreenImg = document.getElementById('fullscreenImg');
+const closeFullscreen = document.getElementById('closeFullscreen');
+const imageCounter = document.getElementById('imageCounter');
+const thumbnailStrip = document.getElementById('thumbnailStrip');
+const prevArrow = document.getElementById('prevArrow');
+const nextArrow = document.getElementById('nextArrow');
+const prevBtnFullscreen = document.getElementById('prevBtnFullscreen');
+const downloadBtnFullscreen = document.getElementById('downloadBtnFullscreen');
+const nextBtnFullscreen = document.getElementById('nextBtnFullscreen');
+
+// State
+let currentType = "All";
+let mediaData = [];
+let filteredData = [];
+let currentIndex = 0;
+let currentImageIndex = 0;
+let currentItemImages = [];
+
+// Tab Navigation
+tabButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    tabButtons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentType = btn.dataset.type;
+    
+    // Show/hide video social section
+    if (currentType === 'Video') {
+      videoSocialSection.style.display = 'block';
+    } else {
+      videoSocialSection.style.display = 'none';
+    }
+    
+    filterAndRenderMedia();
+  });
+});
+
+// Fetch media data from Firebase
+const q = query(collection(db, 'media'), orderBy('timestamp', 'desc'));
+onSnapshot(q, (snap) => {
+  mediaData = [];
+  snap.forEach(doc => {
+    const data = doc.data();
+    mediaData.push({
+      id: doc.id,
+      ...data
+    });
+  });
+  filterAndRenderMedia();
+});
+
+function filterAndRenderMedia() {
+  filteredData = currentType === "All" 
+    ? mediaData 
+    : mediaData.filter(m => m.type === currentType);
+  
+  container.innerHTML = '';
+  
+  if (filteredData.length === 0 && currentType !== 'Video') {
+    container.innerHTML = `
+      <div class="empty">
+        No ${currentType === "All" ? "media" : currentType.toLowerCase()} available yet.
+      </div>
+    `;
+    return;
+  }
+  
+  // For Videos tab, we might still show video thumbnails if they exist in database
+  // Or we can just show the social media section
+  if (currentType === 'Video' && filteredData.length === 0) {
+    // If no video data in Firebase, just show social media section
+    return;
+  }
+  
+  filteredData.forEach((item, index) => {
+    // Skip video items from showing as cards since we have social media section
+    if (currentType === 'Video') {
+      return;
+    }
+    const card = createMediaCard(item, index);
+    container.appendChild(card);
+  });
+}
+
+function createMediaCard(item, index) {
+  const card = document.createElement('div');
+  card.className = 'media-card';
+  
+  // Determine thumbnail - use first image from array if available
+  let thumbnailUrl = item.thumbnail || 
+                    (item.images && item.images.length > 0 ? item.images[0] : '') ||
+                    (item.url && (item.type === 'Photo' || item.type === 'Poster') ? item.url : '');
+  
+  // Default placeholder for missing thumbnails
+  if (!thumbnailUrl) {
+    thumbnailUrl = `https://via.placeholder.com/280x200/0B3D2E/E0B21B?text=${item.type}`;
+  }
+  
+  const date = item.timestamp?.toDate 
+    ? item.timestamp.toDate().toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      })
+    : 'Recent';
+  
+  card.innerHTML = `
+    <div style="position: relative;">
+      <img src="${thumbnailUrl}" class="media-thumb" alt="${item.title}" onerror="this.src='https://via.placeholder.com/280x200/ccc/333?text=Image+Not+Found'">
+      ${item.images && item.images.length > 1 ? `<span class="multi-image-indicator">${item.images.length} photos</span>` : ''}
+    </div>
+    <div class="media-info">
+      <div class="media-title">${item.title}</div>
+      <div class="media-type">${item.type}</div>
+      <div class="media-date">${date}</div>
+    </div>
+  `;
+  
+  // Only make clickable for Photo, Poster, Download types
+  if (item.type !== 'Video') {
+    card.addEventListener('click', () => openFullscreen(index));
+    card.style.cursor = 'pointer';
+  } else {
+    card.style.cursor = 'default';
+    // For videos, maybe show a different hover effect or disable click
+    card.style.opacity = '0.7';
+  }
+  
+  return card;
+}
+
+function openFullscreen(index) {
+  currentIndex = index;
+  currentImageIndex = 0;
+  
+  const item = filteredData[currentIndex];
+  currentItemImages = getImagesFromItem(item);
+  
+  if (currentItemImages.length === 0) {
+    alert('No image available for this item');
+    return;
+  }
+  
+  updateFullscreenView();
+  fullscreenModal.style.display = 'block';
+  document.body.style.overflow = 'hidden'; // Prevent scrolling
+  
+  // Update image counter
+  updateImageCounter();
+  
+  // Update thumbnail strip
+  updateThumbnailStrip();
+}
+
+function getImagesFromItem(item) {
+  // For videos, we don't show in fullscreen - they go to social media
+  if (item.type === 'Video') {
+    return [];
+  }
+  
+  // For photos/posters, use images array if available, otherwise use url
+  if (item.images && item.images.length > 0) {
+    return item.images;
+  } else if (item.url && (item.type === 'Photo' || item.type === 'Poster')) {
+    return [item.url];
+  } else if (item.thumbnail) {
+    return [item.thumbnail];
+  }
+  
+  return [];
+}
+
+function updateFullscreenView() {
+  const item = filteredData[currentIndex];
+  const currentImageUrl = currentItemImages[currentImageIndex];
+  
+  if (currentImageUrl) {
+    fullscreenImg.src = currentImageUrl;
+    fullscreenImg.alt = `${item.title} - Image ${currentImageIndex + 1}`;
+  }
+  
+  // Update image counter
+  updateImageCounter();
+  
+  // Update active thumbnail
+  document.querySelectorAll('#thumbnailStrip img').forEach((thumb, idx) => {
+    thumb.classList.toggle('active', idx === currentImageIndex);
+  });
+}
+
+function updateImageCounter() {
+  const totalImages = currentItemImages.length;
+  imageCounter.textContent = `${currentImageIndex + 1} / ${totalImages}`;
+}
+
+function updateThumbnailStrip() {
+  thumbnailStrip.innerHTML = '';
+  
+  if (currentItemImages.length <= 1) {
+    thumbnailStrip.style.display = 'none';
+    return;
+  }
+  
+  thumbnailStrip.style.display = 'flex';
+  
+  currentItemImages.forEach((imgUrl, index) => {
+    const thumb = document.createElement('img');
+    thumb.src = imgUrl;
+    thumb.alt = `Thumbnail ${index + 1}`;
+    thumb.classList.toggle('active', index === currentImageIndex);
+    
+    thumb.addEventListener('click', () => {
+      currentImageIndex = index;
+      updateFullscreenView();
+    });
+    
+    thumbnailStrip.appendChild(thumb);
+  });
+}
+
+// Navigation functions
+function navigateNextImage() {
+  if (currentItemImages.length > 0) {
+    currentImageIndex = (currentImageIndex + 1) % currentItemImages.length;
+    updateFullscreenView();
+  }
+}
+
+function navigatePrevImage() {
+  if (currentItemImages.length > 0) {
+    currentImageIndex = (currentImageIndex - 1 + currentItemImages.length) % currentItemImages.length;
+    updateFullscreenView();
+  }
+}
+
+function navigateNextItem() {
+  currentIndex = (currentIndex + 1) % filteredData.length;
+  currentImageIndex = 0;
+  const item = filteredData[currentIndex];
+  currentItemImages = getImagesFromItem(item);
+  updateFullscreenView();
+  updateThumbnailStrip();
+}
+
+function navigatePrevItem() {
+  currentIndex = (currentIndex - 1 + filteredData.length) % filteredData.length;
+  currentImageIndex = 0;
+  const item = filteredData[currentIndex];
+  currentItemImages = getImagesFromItem(item);
+  updateFullscreenView();
+  updateThumbnailStrip();
+}
+
+// Event Listeners for Fullscreen Navigation
+
+// Arrow buttons
+prevArrow.addEventListener('click', navigatePrevImage);
+nextArrow.addEventListener('click', navigateNextImage);
+
+// Bottom navigation buttons
+prevBtnFullscreen.addEventListener('click', navigatePrevItem);
+nextBtnFullscreen.addEventListener('click', navigateNextItem);
+
+// Download button
+downloadBtnFullscreen.addEventListener('click', () => {
+  const item = filteredData[currentIndex];
+  const downloadUrl = currentItemImages[currentImageIndex] || item.url;
+  
+  if (downloadUrl) {
+    const a = document.createElement('a');
+    a.href = downloadUrl;
+    a.download = `${item.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_${currentImageIndex + 1}.jpg`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+});
+
+// Close fullscreen
+closeFullscreen.addEventListener('click', () => {
+  fullscreenModal.style.display = 'none';
+  document.body.style.overflow = 'auto';
+});
+
+// Click outside image to close
+fullscreenModal.addEventListener('click', (e) => {
+  if (e.target === fullscreenModal) {
+    fullscreenModal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+  }
+});
+
+// Keyboard navigation in fullscreen
+document.addEventListener('keydown', (e) => {
+  if (fullscreenModal.style.display === 'block') {
+    e.preventDefault();
+    
+    switch(e.key) {
+      case 'ArrowLeft':
+        navigatePrevImage();
+        break;
+      case 'ArrowRight':
+        navigateNextImage();
+        break;
+      case 'Escape':
+        fullscreenModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+        break;
+      case 'ArrowUp':
+        navigatePrevItem();
+        break;
+      case 'ArrowDown':
+        navigateNextItem();
+        break;
+      case ' ':
+      case 'Enter':
+        // Toggle between items on space/enter
+        navigateNextItem();
+        break;
+    }
+  }
+});
+
+// Error handling for images
+window.addEventListener('error', function(e) {
+  if (e.target.tagName === 'IMG') {
+    e.target.src = 'https://via.placeholder.com/800x600/ccc/333?text=Image+Not+Found';
+    e.target.onerror = null; // Prevent infinite loop
+  }
+}, true);
+
+// Handle image loading errors in fullscreen
+fullscreenImg.addEventListener('error', function() {
+  this.src = 'https://via.placeholder.com/800x600/ccc/333?text=Image+Not+Found';
+});
+
+</script>
+</body>
+</html>

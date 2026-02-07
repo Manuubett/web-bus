@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>BUS | Activities</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{font-family:Arial;background:#F6F4EF;margin:0}
+header{background:#0B3D2E;color:#E0B21B;padding:20px;text-align:center}
+.container{max-width:900px;margin:auto;padding:15px}
+.activity{background:#fff;padding:15px;margin-bottom:12px;border-radius:10px}
+.badge{display:inline-block;background:#E0B21B;color:#0B3D2E;padding:3px 8px;border-radius:5px;font-size:12px}
+</style>
+</head>
+<body>
+
+<header><h1>Activities & Programs</h1></header>
+<div class="container" id="activityList"></div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import { getFirestore, collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+const app = initializeApp({
+  apiKey:"AIzaSyC1zqdQ4toWB73hpxn-LwIRbB2QI3fw8q8",
+  authDomain:"bus-party.firebaseapp.com",
+  projectId:"bus-party"
+});
+const db = getFirestore(app);
+
+const list = document.getElementById('activityList');
+
+onSnapshot(query(collection(db,'activities'),orderBy('timestamp','desc')), snap=>{
+  list.innerHTML='';
+  snap.forEach(doc=>{
+    const a = doc.data();
+
+    // Build HTML for photos if they exist
+    let photosHTML = '';
+    if (a.photos && a.photos.length) {
+      photosHTML = '<div style="margin:10px 0; display:flex; gap:10px; flex-wrap:wrap;">';
+      a.photos.forEach(url=>{
+        photosHTML += `<img src="${url}" style="width:120px; height:80px; object-fit:cover; border-radius:6px;">`;
+      });
+      photosHTML += '</div>';
+    }
+
+    list.innerHTML += `
+      <div class="activity">
+        <h3>${a.title}</h3>
+        <span class="badge">${a.type}</span>
+        <p>${a.description}</p>
+        ${photosHTML}
+        <small>Date: ${a.date || ''}</small>
+      </div>`;
+  });
+});
+</script>
+</body>
+  </html>

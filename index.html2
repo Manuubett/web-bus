@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BUS Youth Ambassadors – Membership</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #0B3D2E;
+      --accent: #E0B21B;
+      --light: #F8F7F2;
+      --gray: #6B7280;
+      --footer-bg: #08251c;
+    }
+    
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      font-family:'Inter', sans-serif;
+      background:var(--light);
+      color:#1F2937;
+      min-height:100vh;
+      line-height:1.6;
+      position: relative;
+    }
+    
+    /* Background watermark */
+    .watermark {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('https://i.ibb.co/ZzQ8TQhZ/IMG-20260203-WA0009.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0.8;
+      z-index: -1;
+      pointer-events: none;
+    }
+    
+    /* Header styling */
+    header{
+      background:var(--primary);
+      color:white;
+      padding:1.5rem;
+      text-align:center;
+      position: relative;
+      border-bottom: 4px solid var(--accent);
+    }
+    
+    header h1{
+      font-family:'Playfair Display', serif;
+      font-size:2rem;
+      margin-bottom:0.3rem;
+    }
+    
+    /* Payment banner at top */
+    .payment-banner {
+      background: linear-gradient(135deg, var(--accent) 0%, #f0c24a 100%);
+      color: var(--primary);
+      padding: 0.8rem;
+      text-align: center;
+      font-weight: 600;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .payment-banner p {
+      margin: 0;
+      font-size: 1.1rem;
+    }
+    
+    .payment-banner strong {
+      background: white;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      margin: 0 0.2rem;
+    }
+    
+    .payment-banner i {
+      margin-right: 0.5rem;
+    }
+    
+    /* Main container */
+    .container{
+      max-width:480px;
+      margin:2rem auto;
+      padding:2rem;
+      background:white;
+      border-radius:12px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 1;
+    }
+    
+    /* T-shirt display section */
+    .tshirt-display {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 1.5rem 0;
+      padding: 1.5rem;
+      background: linear-gradient(to right, #f8f7f2, #e8f5e9);
+      border-radius: 10px;
+      border: 1px solid #d1d5db;
+    }
+    
+    .tshirt-img {
+      width: 150px;
+      height: 150px;
+      background: linear-gradient(45deg, var(--primary) 30%, #156c53 100%);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-right: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .tshirt-img:before {
+      content: "BUS";
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2.5rem;
+      font-weight: 800;
+      opacity: 0.2;
+    }
+    
+    .tshirt-img:after {
+      content: "Youth Ambassadors";
+      position: absolute;
+      bottom: 15%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.7rem;
+      opacity: 0.3;
+    }
+    
+    .tshirt-info {
+      flex: 1;
+    }
+    
+    .tshirt-info h3 {
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+      font-family: 'Playfair Display', serif;
+    }
+    
+    /* Form styling */
+    .form-wrapper{margin-top:1rem;}
+    h2{color:var(--primary);text-align:center;margin-bottom:1rem;font-family:'Playfair Display', serif;}
+    .form-group{margin-bottom:1rem;}
+    label{display:block;margin-bottom:0.3rem;font-weight:500;}
+    input, select, button{width:100%;padding:0.8rem;border-radius:8px;border:1px solid #d1d5db;font-size:1rem;}
+    button{background:var(--primary);color:var(--accent);border:none;font-weight:600;cursor:pointer;transition: all 0.3s ease;}
+    button:hover{background:#08251c;transform: translateY(-2px);}
+    .message{display:none;padding:0.8rem;margin-top:1rem;border-radius:6px;text-align:center;}
+    .success{background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0;}
+    .error{background:#fef2f2;color:#991b1b;border:1px solid #fecaca;}
+    .toggle-link{text-align:center;margin-top:1rem;font-size:0.9rem;}
+    .toggle-link a{color:var(--primary);text-decoration:none;cursor:pointer;}
+    .toggle-link a:hover{text-decoration:underline;}
+    
+    /* Login specific styles */
+    .login-options {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    
+    .login-btn {
+      background: var(--primary);
+      color: var(--accent);
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .login-btn:hover {
+      background: #08251c;
+      transform: translateY(-2px);
+    }
+    
+    .login-btn.secondary {
+      background: #f0f0f0;
+      color: var(--primary);
+    }
+    
+    .forgot-password {
+      text-align: right;
+      margin-top: -0.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .forgot-password a {
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+    
+    .forgot-password a:hover {
+      text-decoration: underline;
+    }
+    
+    /* Spinner */
+    .spinner {
+      margin: 1rem auto;
+      width: 50px;
+      height: 50px;
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% {transform: rotate(0deg);}
+      100% {transform: rotate(360deg);}
+    }
+    
+    small {
+      display: block;
+      margin-top: 0.3rem;
+      font-size: 0.8rem;
+      color: var(--gray);
+    }
+    
+    /* Footer styling */
+    footer {
+      background: var(--footer-bg);
+      color: white;
+      padding: 2.5rem 1.5rem 1.5rem;
+      margin-top: 3rem;
+      text-align: center;
+    }
+    
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .footer-powered {
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+      color: rgba(255,255,255,0.7);
+    }
+    
+    .footer-powered strong {
+      color: var(--accent);
+      font-weight: 600;
+    }
+    
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .social-icons a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+      color: white;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+    
+    .social-icons a:hover {
+      background: var(--accent);
+      color: var(--primary);
+      transform: translateY(-3px);
+    }
+    
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+    }
+    
+    .footer-links a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+    
+    .copyright {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.5);
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      .container {
+        margin: 1.5rem auto;
+        padding: 1.5rem;
+      }
+      
+      .tshirt-display {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .tshirt-img {
+        margin-right: 0;
+        margin-bottom: 1rem;
+      }
+      
+      .social-icons {
+        gap: 1rem;
+      }
+      
+      .footer-links {
+        gap: 1rem;
+      }
+      
+      .login-options {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <!-- Background watermark -->
+  <div class="watermark"></div>
+
+  <!-- Payment banner at top -->
+  <div class="payment-banner">
+    <p><i class="fas fa-money-bill-wave"></i> Complete Registration: Pay <strong>KSh 400</strong> to M-Pesa Till Number <strong>3628645</strong> to activate membership</p>
+  </div>
+
+  <header>
+    <h1>BUS Party Youth Ambassadors</h1>
+    <p>Empowering the Next Generation • Embu • Kenya</p>
+  </header>
+
+  <div class="container">
+    
+    <!-- Login Form -->
+    <div class="form-wrapper" id="loginContainer">
+      <h2>Welcome Back!</h2>
+      <p style="text-align:center;margin-bottom:1.5rem;color:var(--gray);">
+        Login to access your membership dashboard
+      </p>
+      
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="loginEmail">Email Address</label>
+          <input type="email" id="loginEmail" placeholder="your.email@example.com" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" placeholder="Enter your password" required>
+        </div>
+        
+        <div class="forgot-password">
+          <a href="#" id="forgotPasswordLink">Forgot Password?</a>
+        </div>
+        
+        <button type="submit" id="loginBtn">
+          <i class="fas fa-sign-in-alt"></i> Login
+        </button>
+        
+        <div id="loginMsg" class="message"></div>
+      </form>
+      
+      <div class="toggle-link">
+        Don't have an account? <a id="showRegisterOptions">Register Here</a>
+      </div>
+    </div>
+
+    <!-- Registration Options -->
+    <div class="form-wrapper" id="registerOptionsContainer" style="display:none;">
+      <h2>Get Started</h2>
+      <p style="text-align:center;margin-bottom:1.5rem;color:var(--gray);">
+        Choose how you want to register
+      </p>
+      
+      <div class="login-options">
+        <button class="login-btn" id="startNewRegistration">
+          <i class="fas fa-user-plus"></i> New Registration
+        </button>
+        <button class="login-btn secondary" id="continueRegistration">
+          <i class="fas fa-edit"></i> Continue Registration
+        </button>
+      </div>
+      
+      <div class="toggle-link">
+        Already have an account? <a id="showLogin">Login Here</a>
+      </div>
+    </div>
+
+    <!-- Pre-Verification -->
+    <div class="form-wrapper" id="preVerifyContainer" style="display:none;">
+      <h2>Verify ID with IEBC</h2>
+      <form id="preVerifyForm">
+        <div class="form-group">
+          <label for="preVerifyId">National ID</label>
+          <input type="text" id="preVerifyId" placeholder="12345678" required>
+        </div>
+        <div class="form-group">
+          <label for="preVerifyYear">Year of Birth</label>
+          <input type="number" id="preVerifyYear" placeholder="YYYY" required>
+        </div>
+        <button type="submit">Submit for Verification</button>
+        <div id="preVerifyMsg" class="message"></div>
+      </form>
+      <div class="toggle-link">
+        Already approved? <a id="showRegistration">Proceed to Registration</a>
+      </div>
+    </div>
+
+    <!-- Registration - Updated with new form -->
+    <div class="form-wrapper" id="registrationContainer" style="display:none;">
+      <h2>Membership Registration</h2>
+      <form id="registrationForm">
+        
+        <!-- Payment reminder at top of form -->
+        <div class="payment-banner" style="margin-bottom: 1.5rem; padding: 0.7rem; border-radius: 6px;">
+          <p><i class="fas fa-info-circle"></i> Remember to pay <strong>KSh 400</strong> to Till <strong>3628645</strong> after registration</p>
+        </div>
+        
+        <!-- National ID -->
+        <div class="form-group">
+          <label for="regNationalId">National ID (Approved by Admin)</label>
+          <input type="text" id="regNationalId" placeholder="12345678" required>
+        </div>
+
+        <!-- Full Name -->
+        <div class="form-group">
+          <label for="fullName">Full Name</label>
+          <input type="text" id="fullName" placeholder="John Kamau" required>
+        </div>
+
+        <!-- DOB -->
+        <div class="form-group">
+          <label for="dob">Date of Birth</label>
+          <input type="date" id="dob" required max="">
+          <small>You must be at least 18 years old and born after 1990</small>
+        </div>
+
+        <!-- Phone -->
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" placeholder="07XXXXXXXX" required pattern="[0-9]{9,12}">
+        </div>
+
+        <!-- Constituency -->
+        <div class="form-group">
+          <label for="constituency">Constituency</label>
+          <select id="constituency" required>
+            <option value="">Select Constituency</option>
+            <option value="Embu North">Embu North</option>
+            <option value="Embu Central">Embu Central</option>
+            <option value="Embu South">Embu South</option>
+            <option value="Manyatta">Manyatta</option>
+          </select>
+        </div>
+
+        <!-- Ward -->
+        <div class="form-group">
+          <label for="ward">Ward</label>
+          <select id="ward" required>
+            <option value="">Select Ward</option>
+          </select>
+        </div>
+
+        <!-- T-Shirt -->
+        <div class="form-group">
+          <label for="tshirt">T-Shirt Size (Included with registration)</label>
+          <select id="tshirt">
+            <option value="">Select Size</option>
+            <option value="S">Small</option>
+            <option value="M">Medium</option>
+            <option value="L">Large</option>
+            <option value="XL">XL</option>
+          </select>
+        </div>
+
+        <!-- Registration Fee -->
+        <div class="form-group">
+          <label>Registration Fee: KSh 400 (Includes T-Shirt)</label>
+          <p style="background: #f0f9ff; padding: 0.8rem; border-radius: 6px; margin-top: 0.5rem;">
+            <i class="fas fa-mobile-alt"></i> Pay via M-Pesa Till Number <strong style="font-size: 1.1rem;">3628645</strong>
+          </p>
+        </div>
+
+        <!-- Email & Password -->
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="you@example.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="At least 6 characters" required minlength="6">
+        </div>
+
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" id="confirmPassword" placeholder="Confirm password" required minlength="6">
+        </div>
+
+        <button type="submit" id="registerBtn">Register & Pay</button>
+        <div id="regMsg" class="message"></div>
+      </form>
+    </div>
+
+    <!-- Payment Reminder -->
+    <div class="form-wrapper" id="paymentContainer" style="display:none;">
+      <h2>Payment Pending</h2>
+      <div style="background: #f0f9ff; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+        <p style="font-size: 1.1rem; margin-bottom: 0.5rem;"><i class="fas fa-exclamation-circle"></i> <strong>Important:</strong> Your registration is successful, but payment of KSh 400 is required to activate membership.</p>
+        <p style="font-size: 1.2rem;"><i class="fas fa-mobile-alt"></i> Pay via M-Pesa Till Number <strong style="font-size: 1.3rem;">3628645</strong></p>
+      </div>
+      <div class="spinner" id="paymentSpinner"></div>
+      <button id="refreshStatus">Refresh Payment Status</button>
+      <div id="paymentMsg" class="message"></div>
+    </div>
+
+  </div>
+
+  <!-- Footer Section -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-powered">
+        <p>Powered by <strong>Lenny Kivuti</strong></p>
+      </div>
+      
+      <div class="social-icons">
+        <a href="https://www.facebook.com/share/p/1CuYqHMULi/" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+        <a href="https://chat.whatsapp.com/CtWoN1znq1X2eiES81Eomm?mode=gi_t" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+      </div>
+      
+      <div class="footer-links">
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Membership</a>
+        <a href="#">Events</a>
+        <a href="#">Resources</a>
+        <a href="#">Contact</a>
+      </div>
+      
+      <div class="copyright">
+        <p>&copy; 2023 BUS Party Youth Ambassadors. All rights reserved. | Embu, Kenya</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <script>
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyC1zqdQ4toWB73hpxn-LwIRbB2QI3fw8q8",
+      authDomain: "bus-party.firebaseapp.com",
+      projectId: "bus-party",
+      storageBucket: "bus-party.appspot.com",
+      messagingSenderId: "315543442057",
+      appId: "1:315543442057:web:25b4aa009050c4bfcaec58"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // DOM Elements
+    const loginContainer = document.getElementById('loginContainer');
+    const registerOptionsContainer = document.getElementById('registerOptionsContainer');
+    const preVerifyContainer = document.getElementById('preVerifyContainer');
+    const registrationContainer = document.getElementById('registrationContainer');
+    const paymentContainer = document.getElementById('paymentContainer');
+    
+    const loginForm = document.getElementById('loginForm');
+    const preVerifyForm = document.getElementById('preVerifyForm');
+    const registrationForm = document.getElementById('registrationForm');
+    
+    // Navigation elements
+    const showRegisterOptions = document.getElementById('showRegisterOptions');
+    const showLogin = document.getElementById('showLogin');
+    const startNewRegistration = document.getElementById('startNewRegistration');
+    const continueRegistration = document.getElementById('continueRegistration');
+    const showRegistrationLink = document.getElementById('showRegistration');
+
+    // ───────── Ward Dropdown Logic ─────────
+    const wardsPerConstituency = {
+      "Embu North": ["Kithimu","Nginda","Mbeti North"],
+      "Embu Central": ["Kirimari","Gaturi North","Gaturi South"],
+      "Embu South": ["Kagaari North","Kagaari South","Runyenjes Central"],
+      "Manyatta": ["Kyeni North","Kyeni South","Mwea"]
+    };
+
+    const constituencySelect = document.getElementById('constituency');
+    const wardSelect = document.getElementById('ward');
+
+    const updateWards = () => {
+      wardSelect.innerHTML = '<option value="">Select Ward</option>';
+      const wards = wardsPerConstituency[constituencySelect.value] || [];
+      wards.forEach(w => {
+        const opt = document.createElement('option');
+        opt.value = w;
+        opt.textContent = w;
+        wardSelect.appendChild(opt);
+      });
+    };
+
+    if (constituencySelect) {
+      constituencySelect.addEventListener('change', updateWards);
+    }
+
+    // ───────── DOB max date ─────────
+    const dobInput = document.getElementById('dob');
+    if (dobInput) {
+      const today = new Date();
+      const minYear = 1990;
+      const maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+      dobInput.max = maxDate.toISOString().split("T")[0];
+    }
+
+    // ───────── Step Management Functions ─────────
+    function showLoginScreen() {
+      loginContainer.style.display = 'block';
+      registerOptionsContainer.style.display = 'none';
+      preVerifyContainer.style.display = 'none';
+      registrationContainer.style.display = 'none';
+      paymentContainer.style.display = 'none';
+    }
+
+    function showRegisterOptionsScreen() {
+      loginContainer.style.display = 'none';
+      registerOptionsContainer.style.display = 'block';
+      preVerifyContainer.style.display = 'none';
+      registrationContainer.style.display = 'none';
+      paymentContainer.style.display = 'none';
+    }
+
+    function showPreVerifyScreen() {
+      loginContainer.style.display = 'none';
+      registerOptionsContainer.style.display = 'none';
+      preVerifyContainer.style.display = 'block';
+      registrationContainer.style.display = 'none';
+      paymentContainer.style.display = 'none';
+    }
+
+    function showRegistrationScreen() {
+      loginContainer.style.display = 'none';
+      registerOptionsContainer.style.display = 'none';
+      preVerifyContainer.style.display = 'none';
+      registrationContainer.style.display = 'block';
+      paymentContainer.style.display = 'none';
+
+      // auto-fill National ID
+      document.getElementById("regNationalId").value = localStorage.getItem("nationalId") || "";
+    }
+
+    function showPaymentScreen() {
+      loginContainer.style.display = 'none';
+      registerOptionsContainer.style.display = 'none';
+      preVerifyContainer.style.display = 'none';
+      registrationContainer.style.display = 'none';
+      paymentContainer.style.display = 'block';
+    }
+
+    // ───────── Spinner Creation ─────────
+    function addSpinner(container){
+      let spinner = document.createElement("div");
+      spinner.className = "spinner";
+      spinner.id = "waitingSpinner";
+      container.appendChild(spinner);
+      return spinner;
+    }
+
+    function removeSpinner(){
+      const spinner = document.getElementById("waitingSpinner");
+      if(spinner) spinner.remove();
+    }
+
+    // ───────── Check Pre-Approval ─────────
+    async function checkPreApproval(nationalId){
+      const doc = await db.collection('preVerifications').doc(nationalId).get();
+      return doc.exists && doc.data().approved;
+    }
+
+    // ───────── Auto-check if user is already logged in ─────────
+    function checkAuthState() {
+      auth.onAuthStateChanged(async (user) => {
+        if (user) {
+          // User is logged in, check their registration status
+          const userDoc = await db.collection('members').doc(user.uid).get();
+          
+          if (userDoc.exists) {
+            const userData = userDoc.data();
+            
+            if (userData.paidTill) {
+              // User is fully registered and paid, redirect to main page
+              window.location.href = 'main.html';
+            } else {
+              // User registered but not paid
+              localStorage.setItem("nationalId", userData.nationalId || "");
+              localStorage.setItem("currentStep", "payment");
+              showPaymentScreen();
+            }
+          } else {
+            // User logged in but no member record found
+            await auth.signOut();
+            showLoginScreen();
+          }
+        } else {
+          // No user logged in, show login screen
+          showLoginScreen();
+        }
+      });
+    }
+
+    // ───────── Check Registration Status ─────────
+    async function checkRegistrationStatus(nationalId) {
+      const currentStep = localStorage.getItem("currentStep");
+
+      if(!nationalId){
+        showPreVerifyScreen();
+        return;
+      }
+
+      // ───────── Pre-Verification Step ─────────
+      if(currentStep === "preVerification"){
+        showPreVerifyScreen();
+        const spinner = addSpinner(preVerifyContainer);
+
+        const doc = await db.collection("preVerifications").doc(nationalId).get();
+        removeSpinner();
+
+        if(doc.exists){
+          if(doc.data().approved){
+            localStorage.setItem("currentStep","registration");
+            showRegistrationScreen();
+          } else {
+            const msg = document.getElementById("preVerifyMsg");
+            msg.textContent = "Waiting for  approval...";
+            msg.className = "message success";
+            msg.style.display="block";
+          }
+        }
+
+      // ───────── Registration Step ─────────
+      } else if(currentStep === "registration"){
+        showRegistrationScreen();
+        const spinner = addSpinner(registrationContainer);
+
+        const approved = await checkPreApproval(nationalId);
+        removeSpinner();
+
+        if(!approved){
+          const msg = document.getElementById("regMsg");
+          msg.textContent = "Your ID is not approved by admin yet.";
+          msg.className = "message error";
+          msg.style.display='block';
+        } else {
+          const userQuery = await db.collection('members').where('nationalId','==',nationalId).limit(1).get();
+          if(!userQuery.empty){
+            const data = userQuery.docs[0].data();
+            if(data.paidTill){
+              localStorage.setItem("currentStep","completed");
+              window.location.href='main.html';
+            } else {
+              showPaymentScreen();
+            }
+          }
+        }
+
+      // ───────── Payment Step ─────────
+      } else if(currentStep === "payment"){
+        showPaymentScreen();
+        const spinner = addSpinner(paymentContainer);
+
+        const userQuery = await db.collection('members').where('nationalId','==',nationalId).limit(1).get();
+        removeSpinner();
+
+        if(!userQuery.empty){
+          const data = userQuery.docs[0].data();
+          if(data.paidTill){
+            localStorage.setItem("currentStep","completed");
+            window.location.href='main.html';
+          } else {
+            const msg = document.getElementById("paymentMsg");
+            msg.textContent = "Payment pending. Please pay KSh 400 to Till 3628645.";
+            msg.className="message error";
+            msg.style.display='block';
+          }
+        }
+
+      } else {
+        showPreVerifyScreen();
+      }
+
+      // ───────── Auto-refresh pre-verification approval ─────────
+      setInterval(async ()=>{
+        if(localStorage.getItem("currentStep")==="preVerification"){
+          const approved = await checkPreApproval(nationalId);
+          if(approved){
+            localStorage.setItem("currentStep","registration");
+            showRegistrationScreen();
+          }
+        }
+      }, 5000);
+    }
+
+    // ───────── Initialize on page load ─────────
+    window.addEventListener("DOMContentLoaded", () => {
+      // Check if user is already logged in
+      checkAuthState();
+      
+      // Setup navigation event listeners
+      setupNavigation();
+    });
+
+    // ───────── Setup Navigation Event Listeners ─────────
+    function setupNavigation() {
+      // Login/Register navigation
+      if (showRegisterOptions) {
+        showRegisterOptions.addEventListener('click', showRegisterOptionsScreen);
+      }
+      
+      if (showLogin) {
+        showLogin.addEventListener('click', showLoginScreen);
+      }
+      
+      if (startNewRegistration) {
+        startNewRegistration.addEventListener('click', () => {
+          localStorage.clear();
+          showPreVerifyScreen();
+        });
+      }
+      
+      if (continueRegistration) {
+        continueRegistration.addEventListener('click', () => {
+          const nationalId = localStorage.getItem("nationalId");
+          if (nationalId) {
+            checkRegistrationStatus(nationalId);
+          } else {
+            showPreVerifyScreen();
+          }
+        });
+      }
+
+      if (showRegistrationLink) {
+        showRegistrationLink.addEventListener('click', () => {
+          const nationalId = localStorage.getItem("nationalId");
+          if (nationalId) {
+            showRegistrationScreen();
+          } else {
+            alert("Please complete pre-verification first.");
+          }
+        });
+      }
+    }
+
+    // ───────── Login Form Submission ─────────
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const loginMsg = document.getElementById('loginMsg');
+      loginMsg.style.display = 'none';
+      
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      
+      try {
+        const userCred = await auth.signInWithEmailAndPassword(email, password);
+        const user = userCred.user;
+        
+        // Get user data from Firestore
+        const userDoc = await db.collection('members').doc(user.uid).get();
+        
+        if (userDoc.exists) {
+          const userData = userDoc.data();
+          
+          if (userData.paidTill) {
+            // Redirect to main page
+            window.location.href = 'main.html';
+          } else {
+            // Show payment screen
+            localStorage.setItem("nationalId", userData.nationalId || "");
+            localStorage.setItem("currentStep", "payment");
+            showPaymentScreen();
+          }
+        } else {
+          // User doesn't have a member record
+          await auth.signOut();
+          loginMsg.textContent = "No registration found. Please register first.";
+          loginMsg.className = "message error";
+          loginMsg.style.display = 'block';
+        }
+        
+      } catch (error) {
+        console.error('Login error:', error);
+        loginMsg.textContent = getErrorMessage(error.code);
+        loginMsg.className = "message error";
+        loginMsg.style.display = 'block';
+      }
+    });
+
+    // ───────── Forgot Password ─────────
+    document.getElementById('forgotPasswordLink').addEventListener('click', async (e) => {
+      e.preventDefault();
+      const email = prompt("Please enter your email address to reset password:");
+      
+      if (email) {
+        try {
+          await auth.sendPasswordResetEmail(email);
+          alert("Password reset email sent. Please check your inbox.");
+        } catch (error) {
+          alert("Error sending reset email: " + getErrorMessage(error.code));
+        }
+      }
+    });
+
+    // ───────── Pre-Verification Submit ─────────
+    preVerifyForm.addEventListener('submit', async e => {
+      e.preventDefault();
+      const nationalId = document.getElementById('preVerifyId').value.trim();
+      const yearOfBirth = document.getElementById('preVerifyYear').value.trim();
+
+      try {
+        await db.collection('preVerifications').doc(nationalId).set({
+          nationalId, yearOfBirth, approved:false, requestedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        localStorage.setItem("nationalId", nationalId);
+        localStorage.setItem("currentStep","preVerification");
+
+        const msg = document.getElementById("preVerifyMsg");
+        msg.textContent = "Submitted for verification. Wait for admin approval.";
+        msg.className="message success"; 
+        msg.style.display="block";
+        preVerifyForm.reset();
+      } catch(err){
+        const msg = document.getElementById("preVerifyMsg");
+        msg.textContent = err.message; 
+        msg.className="message error"; 
+        msg.style.display="block";
+      }
+    });
+
+    // ───────── Registration Submit (Updated with new fields) ─────────
+    registrationForm.addEventListener('submit', async e => {
+      e.preventDefault();
+      const regMsg = document.getElementById('regMsg');
+      regMsg.style.display='none';
+
+      const nationalId = document.getElementById('regNationalId').value.trim();
+      const fullName = document.getElementById('fullName').value.trim();
+      const dob = document.getElementById('dob').value;
+      
+      // Age validation
+      const today = new Date();
+      const dobDate = new Date(dob);
+      const age = Math.floor((today - dobDate) / (365.25 * 24 * 60 * 60 * 1000));
+      const minYear = 1990;
+      
+      if(dobDate.getFullYear() < minYear || age < 18){
+        regMsg.textContent = "You must be at least 18 years old and born after 1990.";
+        regMsg.className = "message error";
+        regMsg.style.display='block';
+        return;
+      }
+
+      const phone = document.getElementById('phone').value.trim();
+      const constituency = document.getElementById('constituency').value;
+      const ward = document.getElementById('ward').value;
+      const tshirt = document.getElementById('tshirt').value;
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      // Check if approved
+      const approved = await checkPreApproval(nationalId);
+      if(!approved){
+        regMsg.textContent = "Your ID is not approved by admin yet.";
+        regMsg.className = "message error";
+        regMsg.style.display='block';
+        return;
+      }
+
+      if(password !== confirmPassword){
+        regMsg.textContent = "Passwords do not match.";
+        regMsg.className = "message error";
+        regMsg.style.display='block';
+        return;
+      }
+
+      if(!constituency || !ward){
+        regMsg.textContent = "Please select constituency and ward.";
+        regMsg.className = "message error";
+        regMsg.style.display='block';
+        return;
+      }
+
+      try{
+        // Create Firebase Auth User
+        const userCred = await auth.createUserWithEmailAndPassword(email,password);
+        const user = userCred.user;
+
+        // Generate Membership ID
+        const year = new Date().getFullYear();
+        const prefix = "Y"; // Youth
+        const snap = await db.collection('members').where('membership','==','Youth').get();
+        const next = snap.size + 1;
+        const membershipId = `${prefix}-${year}-${next.toString().padStart(4,'0')}`;
+
+        // Save user in Firestore
+        await db.collection('members').doc(user.uid).set({
+          nationalId, 
+          fullName, 
+          dob, 
+          age, 
+          phone, 
+          constituency, 
+          ward, 
+          tshirt,
+          membership: "Youth",
+          membershipId,
+          email,
+          paidTill: false,
+          tShirtProvided: tshirt ? true : false,
+          registeredAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        // Show payment step
+        localStorage.setItem("currentStep","payment");
+        localStorage.setItem("nationalId", nationalId);
+        showPaymentScreen();
+      } catch(err){
+        regMsg.textContent = err.message.includes("email-already-in-use") ? 
+          "This email is already registered. Please login instead." : err.message;
+        regMsg.className="message error";
+        regMsg.style.display='block';
+      }
+    });
+
+    // ───────── Payment Refresh ─────────
+    document.getElementById('refreshStatus').addEventListener('click', async ()=>{
+      const nationalId = localStorage.getItem("nationalId");
+      const userQuery = await db.collection('members').where('nationalId','==',nationalId).limit(1).get();
+      if(!userQuery.empty){
+        const data = userQuery.docs[0].data();
+        if(data.paidTill){
+          localStorage.setItem("currentStep","completed");
+          window.location.href='main.html';
+        } else {
+          const msg = document.getElementById("paymentMsg");
+          msg.textContent="Payment still pending. Please pay KSh 400 to Till 3628645."; 
+          msg.className="message error"; 
+          msg.style.display='block';
+        }
+      }
+    });
+
+    // ───────── Error Message Helper ─────────
+    function getErrorMessage(errorCode) {
+      switch(errorCode) {
+        case 'auth/user-not-found':
+          return 'No account found with this email.';
+        case 'auth/wrong-password':
+          return 'Incorrect password.';
+        case 'auth/invalid-email':
+          return 'Invalid email address.';
+        case 'auth/user-disabled':
+          return 'This account has been disabled.';
+        case 'auth/too-many-requests':
+          return 'Too many login attempts. Please try again later.';
+        case 'auth/email-already-in-use':
+          return 'Email is already registered.';
+        case 'auth/weak-password':
+          return 'Password is too weak. Use at least 6 characters.';
+        default:
+          return 'An error occurred. Please try again.';
+      }
+    }
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BUS Youth Ambassadors | Media Gallery</title>
+
+<style>
+body{
+  font-family: Arial, sans-serif;
+  background:#F6F4EF;
+  margin:0;
+}
+
+/* Header */
+header{
+  background:#0B3D2E;
+  color:#E0B21B;
+  text-align:center;
+  padding:20px 15px;
+}
+header h1{margin:0;font-size:24px}
+
+/* Tabs */
+.tabs{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:15px;
+}
+.tab-btn{
+  background:#0B3D2E;
+  color:#E0B21B;
+  border:none;
+  padding:8px 14px;
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:bold;
+}
+.tab-btn.active{
+  background:#0A1F16;
+  transform:scale(1.05);
+}
+
+/* Grid */
+.media-container{
+  max-width:1000px;
+  margin:20px auto;
+  padding:0 15px 20px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:16px;
+}
+.media-card{
+  background:#fff;
+  border-radius:10px;
+  box-shadow:0 4px 10px rgba(0,0,0,.1);
+  overflow:hidden;
+  cursor:pointer;
+}
+.media-card:hover{transform:translateY(-3px)}
+.media-thumb{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+}
+.media-info{text-align:center;padding:10px}
+.media-title{font-size:14px;font-weight:bold;color:#0B3D2E}
+.media-type{font-size:12px;color:#777}
+
+.empty{text-align:center;color:#777;margin:40px 0}
+
+/* Modal */
+#mediaModal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.9);
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  z-index:9999;
+}
+#mediaModal img{
+  max-width:90%;
+  max-height:80%;
+}
+#mediaModal span{
+  position:absolute;
+  top:20px;
+  right:30px;
+  font-size:40px;
+  color:#fff;
+  cursor:pointer;
+}
+.modal-actions{
+  margin-top:10px;
+}
+.modal-actions button,
+.modal-actions a{
+  padding:10px 18px;
+  border:none;
+  border-radius:5px;
+  margin:5px;
+  cursor:pointer;
+}
+#prevBtn,#nextBtn{
+  background:#0B3D2E;
+  color:#E0B21B;
+}
+#downloadBtn{
+  background:#E0B21B;
+  color:#000;
+  text-decoration:none;
+}
+#downloadBtn.hidden{
+  display:none;
+}
+#ytConfirm{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:10000;
+}
+.yt-box{
+  background:#fff;
+  padding:25px;
+  width:90%;
+  max-width:400px;
+  border-radius:10px;
+  text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+.yt-box h3{
+  margin-top:0;
+  color:#0B3D2E;
+}
+.yt-box p{
+  color:#555;
+  font-size:14px;
+}
+.yt-actions{
+  margin-top:20px;
+  display:flex;
+  justify-content:center;
+  gap:10px;
+}
+#ytCancel{
+  background:#ccc;
+  border:none;
+  padding:10px 16px;
+  border-radius:6px;
+  cursor:pointer;
+}
+#ytProceed{
+  background:#E0B21B;
+  border:none;
+  padding:10px 16px;
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Media Gallery</h1>
+  <div class="tabs">
+    <button class="tab-btn active" data-type="All">All</button>
+    <button class="tab-btn" data-type="Photo">Photos</button>
+    <button class="tab-btn" data-type="Video">Videos</button>
+    <button class="tab-btn" data-type="Poster">Posters</button>
+    <button class="tab-btn" data-type="Download">Downloads</button>
+  </div>
+</header>
+<!-- YouTube Confirm Modal -->
+<div id="ytConfirm" style="display:none;">
+  <div class="yt-box">
+    <h3>Open Video on YouTube</h3>
+    <p>This video is hosted on YouTube. Do you want to continue?</p>
+    <div class="yt-actions">
+      <button id="ytCancel">Cancel</button>
+      <button id="ytProceed">Watch on YouTube</button>
+    </div>
+  </div>
+</div>
+<div class="media-container" id="mediaContainer"></div>
+
+<!-- Modal -->
+<div id="mediaModal">
+  <span id="closeModal">&times;</span>
+  <img id="modalImage">
+  <div class="modal-actions">
+    <button id="prevBtn">Prev</button>
+    <button id="nextBtn">Next</button>
+    <a id="downloadBtn" download>Download</a>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import { getFirestore, collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC1zqdQ4toWB73hpxn-LwIRbB2QI3fw8q8",
+  authDomain: "bus-party.firebaseapp.com",
+  projectId: "bus-party",
+  storageBucket: "bus-party.firebasestorage.app",
+  messagingSenderId: "315543442057",
+  appId: "1:315543442057:web:25b4aa009050c4bfcaec58"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const container = document.getElementById("mediaContainer");
+const buttons = document.querySelectorAll(".tab-btn");
+
+const modal = document.getElementById("mediaModal");
+const modalImg = document.getElementById("modalImage");
+const downloadBtn = document.getElementById("downloadBtn");
+
+let mediaData = [];
+let currentType = "All";
+let currentIndex = 0;
+
+/* Tabs */
+buttons.forEach(btn=>{
+  btn.onclick=()=>{
+    buttons.forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    currentType = btn.dataset.type;
+    renderMedia();
+  };
+});
+
+/* Fetch */
+const q = query(collection(db,"media"), orderBy("timestamp","desc"));
+onSnapshot(q,snap=>{
+  mediaData=[];
+  snap.forEach(d=>mediaData.push(d.data()));
+  renderMedia();
+});
+
+/* Render */
+function renderMedia(){
+  container.innerHTML="";
+  const list = currentType==="All"
+    ? mediaData
+    : mediaData.filter(m=>m.type===currentType);
+
+  if(!list.length){
+    container.innerHTML=`<div class="empty">No media available</div>`;
+    return;
+  }
+
+  list.forEach((m,i)=>{
+    const card=document.createElement("div");
+    card.className="media-card";
+    card.innerHTML=`
+      <img class="media-thumb" src="${m.thumbnail || m.image || m.fullUrl}">
+      <div class="media-info">
+        <div class="media-title">${m.title}</div>
+        <div class="media-type">${m.type}</div>
+      </div>`;
+    
+    card.onclick=()=>{
+      if(m.type==="Video"){
+        if(confirm("This video will open on YouTube. Continue?")){
+          window.open(m.youtubeUrl,"_blank");
+        }
+      } else {
+        openModal(i);
+      }
+    };
+    container.appendChild(card);
+  });
+}
+
+/* Modal */
+function openModal(index){
+  const list = currentType==="All"
+    ? mediaData
+    : mediaData.filter(m=>m.type===currentType);
+
+  const m = list[index];
+  currentIndex=index;
+  modalImg.src = m.url || m.fullUrl || m.image;
+
+  if(m.type==="Video"){
+    downloadBtn.classList.add("hidden");
+  } else {
+    downloadBtn.classList.remove("hidden");
+    downloadBtn.href = m.url || m.fullUrl || m.image;
+  }
+
+  modal.style.display="flex";
+}
+
+document.getElementById("closeModal").onclick=()=>modal.style.display="none";
+document.getElementById("nextBtn").onclick=()=>navigate(1);
+document.getElementById("prevBtn").onclick=()=>navigate(-1);
+
+function navigate(step){
+  const list = currentType==="All"
+    ? mediaData
+    : mediaData.filter(m=>m.type===currentType);
+  currentIndex=(currentIndex+step+list.length)%list.length;
+  openModal(currentIndex);
+}
+</script>
+
+</body>
+  </html>
