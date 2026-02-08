@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard | Bus Party Ambassadors</title>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+  <style>
+    body { margin: 0; font-family: Arial, sans-serif; background-color: #f8f9f7; position: relative; min-height: 100vh; }
+    body::before { content: ""; position: fixed; inset: 0; background: url("https://i.ibb.co/fzpg1r0P/Screenshot-20260129-194058.png") no-repeat center; background-size: 250px; opacity: 0.16; pointer-events: none; z-index: 0;background-size:600px; }
+    header { background: #0b4d2b; color: #f5c400; padding: 18px; display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1; }
+    .header-left h2 { margin: 0; font-size: 20px; letter-spacing: 1px; }
+    .header-right { display: flex; align-items: center; gap: 15px; }
+    .user-info { color: white; font-size: 14px; }
+    .logout-btn { background: #f5c400; color: #0b4d2b; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+    .logout-btn:hover { background: #ffd700; }
+    .dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; padding: 25px; position: relative; z-index: 1; }
+    .card { background: rgba(255,255,255,0.97); border-radius: 10px; padding: 22px; text-align: center; border-left: 6px solid #f5c400; box-shadow: 0 6px 15px rgba(0,0,0,0.08); cursor: pointer; transition: all 0.25s ease; }
+    .card:hover { transform: translateY(-6px); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+    .card h3 { margin: 10px 0; color: #0b4d2b; font-size: 18px; }
+    .card p { font-size: 14px; color: #444; }
+    .admin-only { border-left-color: #dc3545; }
+    .editor-only { border-left-color: #28a745; }
+    .card.disabled { opacity: 0.5; cursor: not-allowed; }
+    .card.disabled:hover { transform: none; box-shadow: 0 6px 15px rgba(0,0,0,0.08); }
+    @media(max-width: 500px){ .dashboard { grid-template-columns: 1fr; gap: 15px; padding: 15px; } header { flex-direction: column; gap: 10px; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <h2>BUS PARTY AMBASSADORS – ADMIN PANEL</h2>
+    </div>
+    <div class="header-right">
+      <div class="user-info">
+        Welcome, <span id="userEmail">Loading...</span>
+        <div id="userRole" style="font-size: 12px; opacity: 0.8;"></div>
+      </div>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+  </header>
+
+  <div class="dashboard">
+    <div class="card admin-only" onclick="goToPage('admin-news.html')">
+      <h3>Upload News</h3>
+      <p>Post official news and updates</p>
+      <small>Admin Only</small>
+    </div>
+    
+    
+    
+
+    
+    <div class="card admin-only" onclick="goToPage('admin-treasurer.html')">
+      <h3>Treasurer Approval</h3>
+      <p>Approve financial records</p>
+      <small>Admin Only</small>
+    </div>
+    
+
+  <script>
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyC1zqdQ4toWB73hpxn-LwIRbB2QI3fw8q8",
+      authDomain: "bus-party.firebaseapp.com",
+      projectId: "bus-party",
+    };
+    
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // Check authentication
+    auth.onAuthStateChanged(async (user) => {
+      if (!user) {
+        // Not logged in, redirect to login
+        window.location.href = 'index.html';
+        return;
+      }
+
+      try {
+        // Get user data from Firestore
+        const userDoc = await db.collection('users').doc(user.uid).get();
+        
+        if (!userDoc.exists) {
+          throw new Error('User account not found');
+        }
+
+        const userData = userDoc.data();
+        
+        // Update UI with user info
+        document.getElementById('userEmail').textContent = user.email;
+        document.getElementById('userRole').textContent = `Role: ${userData.role}`;
+        
+        // Set permissions based on role
+        setPermissions(userData.role);
+        
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Error loading user data. Please login again.');
+        logout();
+      }
+    });
+
+    // Set permissions based on role
+    function setPermissions(role) {
+      const adminOnlyCards = document.querySelectorAll('.admin-only');
+      
+      if (role === 'admin') {
+        // Admin has full access
+        adminOnlyCards.forEach(card => {
+          card.classList.remove('disabled');
+        });
+      } else if (role === 'editor') {
+        // Editor has limited access - disable admin-only features
+        adminOnlyCards.forEach(card => {
+          card.classList.add('disabled');
+          card.onclick = () => {
+            alert('Access denied: Administrator privileges required');
+          };
+        });
+      } else {
+        // No access - should not happen
+        logout();
+      }
+    }
+
+    // Navigate to page
+    function goToPage(page) {
+      window.location.href = page;
+    }
+
+    // Logout
+    async function logout() {
+      try {
+        await auth.signOut();
+        window.location.href = 'index.html';
+      } catch (error) {
+        console.error('Logout error:', error);
+      }
+    }
+  </script>
+</body>
+  </html>
