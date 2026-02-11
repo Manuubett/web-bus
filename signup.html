@@ -18,12 +18,12 @@
       --success: #059669;
     }
     :root {
-  --safe-top: env(safe-area-inset-top, 24px);
-}
+      --safe-top: env(safe-area-inset-top, 24px);
+    }
 
-body {
-  padding-top: var(--safe-top);
-}
+    body {
+      padding-top: var(--safe-top);
+    }
     
     *{margin:0;padding:0;box-sizing:border-box;}
     body{
@@ -36,12 +36,14 @@ body {
     
     .watermark {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(rgba(255,255,255,0.95), rgba(255,255,255,0.98));
-      z-index: -1;
+      inset: 0;
+      background-image: url("https://i.ibb.co/sp6WxLyL/croc.webp");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 100%;
+      opacity: 0.17;
+      pointer-events: none;
+      z-index: 0;
     }
     
     header{
@@ -92,6 +94,7 @@ body {
     
     .form-group{
       margin-bottom:1rem;
+      position: relative;
     }
     
     label{
@@ -116,6 +119,40 @@ body {
       box-shadow:0 0 0 3px rgba(11, 61, 46, 0.1);
     }
     
+    .password-toggle {
+      position: absolute;
+      right: 12px;
+      top: 38px;
+      background: none;
+      border: none;
+      color: var(--gray);
+      cursor: pointer;
+      width: auto;
+      padding: 0;
+      font-size: 1rem;
+    }
+    
+    .password-toggle:hover {
+      color: var(--primary);
+    }
+    
+    .forgot-password {
+      text-align: right;
+      margin-top: -0.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .forgot-password a {
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+    
+    .forgot-password a:hover {
+      text-decoration: underline;
+    }
+    
     button{
       background:var(--primary);
       color:white;
@@ -133,6 +170,14 @@ body {
     
     button:active{
       transform:translateY(0);
+    }
+    
+    button.secondary {
+      background: var(--gray);
+    }
+    
+    button.secondary:hover {
+      background: #4B5563;
     }
     
     .message{
@@ -196,12 +241,90 @@ body {
       100%{transform:rotate(360deg);}
     }
     
+    /* Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      display: none;
+    }
+    
+    .modal {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      max-width: 400px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    
+    .modal h3 {
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+    
+    .modal-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    
+    .modal-actions button {
+      flex: 1;
+    }
+    
     footer{
       text-align:center;
       padding:2rem 1rem;
       color:var(--gray);
       font-size:0.85rem;
       margin-top:2rem;
+    }
+    
+    .site-footer{
+      text-align:center;
+      padding:2rem 1rem;
+      background:#ffffff;
+      border-top:1px solid #e5e7eb;
+      color:var(--gray);
+    }
+
+    .footer-profile{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:0.4rem;
+    }
+
+    .footer-profile img{
+      width:45px;
+      height:45px;
+      border-radius:50%;
+      object-fit:cover;
+      border:2px solid var(--accent);
+    }
+
+    .footer-socials{
+      margin:0.8rem 0;
+    }
+
+    .footer-socials a{
+      margin:0 8px;
+      color:var(--primary);
+      font-size:1.2rem;
+      transition:0.2s;
+    }
+
+    .footer-socials a:hover{
+      color:var(--accent);
     }
     
     @media (max-width:500px){
@@ -223,145 +346,29 @@ body {
         font-size:0.85rem;
         padding:0.7rem;
       }
+      
+      .modal {
+        padding: 1.5rem;
+      }
     }
-    .site-footer{
-  text-align:center;
-  padding:2rem 1rem;
-  background:#ffffff;
-  border-top:1px solid #e5e7eb;
-  color:var(--gray);
-}
-
-.footer-profile{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:0.4rem;
-}
-
-.footer-profile img{
-  width:45px;
-  height:45px;
-  border-radius:50%;
-  object-fit:cover;
-  border:2px solid var(--accent);
-}
-
-.footer-socials{
-  margin:0.8rem 0;
-}
-
-.footer-socials a{
-  margin:0 8px;
-  color:var(--primary);
-  font-size:1.2rem;
-  transition:0.2s;
-}
-
-.footer-socials a:hover{
-  color:var(--accent);
-}
-.watermark{
-  position: fixed;
-  inset: 0;
-  background-image: url("https://i.ibb.co/sp6WxLyL/croc.webp");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 100%;
-  opacity: 0.17;
-  pointer-events: none; /* forms remain clickable */
-  z-index: 0;
-}
-
-/* ===== CONSENT MODAL STYLES ===== */
-.consent-modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5); /* lighter overlay for readability */
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 10000;
-}
-
-.consent-card {
-  background: #ffffff;
-  max-width: 420px;
-  width: 92%;
-  border-radius: 14px;
-  padding: 1.5rem 1.6rem; /* slightly more padding for comfort */
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); /* softer shadow */
-  color: #111827; /* darker text for better readability */
-}
-
-.consent-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.consent-header h3 {
-  color: var(--primary);
-  font-size: 1.2rem;
-  font-weight: 600;
-}
-
-.consent-header button {
-  background: #f3f4f6;
-  color: var(--primary);
-  border: none;
-  padding: 0.4rem 0.8rem;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  cursor: pointer;
-}
-
-.consent-card p {
-  font-size: 0.95rem; /* slightly bigger for readability */
-  margin-bottom: 0.75rem;
-  color: #1f2937; /* good contrast with white background */
-  line-height: 1.5; /* better line spacing */
-}
-
-.consent-check {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-  margin: 1.2rem 0;
-  font-size: 0.9rem;
-  color: #111827;
-}
-
-.consent-check input {
-  width: auto;
-}
-
-#confirmConsentBtn {
-  width: 100%;
-  background: var(--primary);
-  color: white;
-  border: none;
-  padding: 0.8rem;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-#confirmConsentBtn:disabled {
-  background: #9ca3af;
-  cursor: not-allowed;
-}
-
   </style>
 </head>
 <body>
-  
+<iframe
+  id="footerFrame"
+  src=""
+  style="
+    width:100%;
+    height:80vh;
+    border:none;
+    display:none;
+    background:#fff;
+  ">
+</iframe>
   <div class="watermark"></div>
-<div class="payment-banner">
-  Pay <strong>KSh 400</strong> (Membership + T-Shirt) to M-Pesa Till <strong>3628644</strong>
-</div>
+  <div class="payment-banner">
+    Pay <strong>KSh 400</strong> (Membership + T-Shirt) to M-Pesa Till <strong>3628644</strong>
+  </div>
 
   <header>
     <h1>BUS Youth Ambassadors</h1>
@@ -383,6 +390,13 @@ body {
         <div class="form-group">
           <label for="loginPassword">Password</label>
           <input type="password" id="loginPassword" placeholder="••••••••" required>
+          <button type="button" class="password-toggle" id="loginPasswordToggle">
+            <i class="far fa-eye"></i>
+          </button>
+        </div>
+        
+        <div class="forgot-password">
+          <a href="#" id="showForgotPassword">Forgot Password?</a>
         </div>
         
         <button type="submit">Login</button>
@@ -390,46 +404,7 @@ body {
       </form>
       
       <div class="toggle-link">
-        New user? <a id="showRegisterOptions">Register Here</a>
-      </div>
-    </div>
-
-    <!-- Registration Options -->
-    <div class="form-wrapper" id="registerOptionsContainer" style="display:none;">
-      <h2>Get Started</h2>
-      
-      <div style="margin:1.5rem 0;">
-        <button style="margin-bottom:0.8rem;" id="startNewRegistration">
-          New Registration
-        </button>
-        <button style="background:#f3f4f6;color:var(--primary);" id="continueRegistration">
-          Continue Registration
-        </button>
-      </div>
-      
-      <div class="toggle-link">
-        Have an account? <a id="showLogin">Login</a>
-      </div>
-    </div>
-
-    <!-- Pre-Verification -->
-    <div class="form-wrapper" id="preVerifyContainer" style="display:none;">
-      <h2>Verify ID</h2>
-      <form id="preVerifyForm">
-        <div class="form-group">
-          <label for="preVerifyId">National ID</label>
-          <input type="text" id="preVerifyId" placeholder="12345678" required>
-        </div>
-        <div class="form-group">
-          <label for="preVerifyYear">Year of Birth</label>
-          <input type="number" id="preVerifyYear" placeholder="YYYY" min="1990" max="2006" required>
-          <small>Must be between 1990 and 2006</small>
-        </div>
-        <button type="submit">Submit for Verification</button>
-        <div id="preVerifyMsg" class="message"></div>
-      </form>
- <div class="toggle-link">
-        Already approved? <a id="showRegistration">Proceed to Registration</a>
+        New user? <a id="showRegistration">Register Here</a>
       </div>
     </div>
 
@@ -443,8 +418,8 @@ body {
       
       <form id="registrationForm">
         <div class="form-group">
-          <label for="regNationalId">National ID</label>
-          <input type="text" id="regNationalId" placeholder="12345678" readonly>
+          <label for="nationalId">National ID</label>
+          <input type="text" id="nationalId" placeholder="12345678" required>
         </div>
 
         <div class="form-group">
@@ -454,8 +429,8 @@ body {
 
         <div class="form-group">
           <label for="dobYear">Year of Birth</label>
-          <input type="number" id="dobYear" placeholder="YYYY" readonly>
-          <small>Pre-verified by admin</small>
+          <input type="number" id="dobYear" placeholder="YYYY" min="1990" max="2006" required>
+          <small>Must be between 1990 and 2006</small>
         </div>
 
         <div class="form-group">
@@ -502,16 +477,26 @@ body {
         <div class="form-group">
           <label for="password">Password</label>
           <input type="password" id="password" placeholder="••••••••" required minlength="6">
+          <button type="button" class="password-toggle" id="regPasswordToggle">
+            <i class="far fa-eye"></i>
+          </button>
         </div>
 
         <div class="form-group">
           <label for="confirmPassword">Confirm Password</label>
           <input type="password" id="confirmPassword" placeholder="••••••••" required minlength="6">
+          <button type="button" class="password-toggle" id="confirmPasswordToggle">
+            <i class="far fa-eye"></i>
+          </button>
         </div>
 
         <button type="submit">Register & Proceed to Payment</button>
         <div id="regMsg" class="message"></div>
       </form>
+      
+      <div class="toggle-link">
+        Have an account? <a id="showLogin">Login</a>
+      </div>
     </div>
 
     <!-- Payment Step -->
@@ -537,26 +522,65 @@ body {
       <div id="paymentMsg" class="message"></div>
     </div>
 
-  </div><footer class="site-footer">
-  <div class="footer-profile">
-    <img src="https://i.ibb.co/XrWV0dbP/kivuti.webp" alt="Profile" />
-    <p>Powered by <strong>Lenny Kivuti</strong></p>
   </div>
-
-  <div class="footer-socials">
-    <a href="https://www.facebook.com/share/p/1CuYqHMULi/" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-    <a href="#" title="Twitter / X"><i class="fab fa-x-twitter"></i></a>
-    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-    <a href="https://chat.whatsapp.com/CtWoN1znq1X2eiES81Eomm?mode=gi_t" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+  
+  <!-- Forgot Password Modal -->
+  <div class="modal-overlay" id="forgotPasswordModal">
+    <div class="modal">
+      <h3>Reset Password</h3>
+      <p>Enter your email address and we'll send you a password reset link.</p>
+      
+      <form id="forgotPasswordForm">
+        <div class="form-group">
+          <label for="resetEmail">Email Address</label>
+          <input type="email" id="resetEmail" placeholder="email@example.com" required>
+        </div>
+        
+        <div id="resetMsg" class="message"></div>
+        
+        <div class="modal-actions">
+          <button type="button" id="cancelForgotPassword" class="secondary">Cancel</button>
+          <button type="submit">Send Reset Link</button>
+        </div>
+      </form>
+    </div>
   </div>
+  
+  <footer class="site-footer">
+    <div class="footer-profile">
+      <img src="https://i.ibb.co/XrWV0dbP/kivuti.webp" alt="Profile" />
+      <p>Powered by <strong>Lenny Kivuti</strong></p>
+    </div>
 
-  <small>BUS Youth Ambassadors • Embu, Kenya</small>
-</footer>
+    <div class="footer-socials">
+      <a href="https://www.facebook.com/share/p/1CuYqHMULi/" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" title="Twitter / X"><i class="fab fa-x-twitter"></i></a>
+      <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://chat.whatsapp.com/CtWoN1znq1X2eiES81Eomm?mode=gi_t" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+    </div>
+
+    <small>BUS Youth Ambassadors • Embu, Kenya</small>
+    <div class="footer-links">
+  <a href="about.html" onclick="loadFooterPage('about.html')">About Us</a>
+  <a href="contact.html" onclick="loadFooterPage('contact.html')">Contact Us</a>
+  <a href="privacy.html" onclick="loadFooterPage('privacy.html')">Privacy Policy</a>
+  <a href="terms.html" onclick="loadFooterPage('terms.html')">Terms of Service</a>
+</div>
+  </footer>
+  
 
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script>
+function loadFooterPage(page) {
+  const frame = document.getElementById('footerFrame');
+  frame.src = page;
+  frame.style.display = 'block';
+  frame.scrollIntoView({ behavior: 'smooth' });
+}
+</script>
 
   <script>
     // Firebase Configuration
@@ -575,22 +599,30 @@ body {
 
     // DOM Elements
     const loginContainer = document.getElementById('loginContainer');
-    const registerOptionsContainer = document.getElementById('registerOptionsContainer');
-    const preVerifyContainer = document.getElementById('preVerifyContainer');
     const registrationContainer = document.getElementById('registrationContainer');
     const paymentContainer = document.getElementById('paymentContainer');
+    const forgotPasswordModal = document.getElementById('forgotPasswordModal');
     
     const loginForm = document.getElementById('loginForm');
-    const preVerifyForm = document.getElementById('preVerifyForm');
     const registrationForm = document.getElementById('registrationForm');
+    const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+    
+    // Password toggle buttons
+    const loginPasswordToggle = document.getElementById('loginPasswordToggle');
+    const regPasswordToggle = document.getElementById('regPasswordToggle');
+    const confirmPasswordToggle = document.getElementById('confirmPasswordToggle');
+    
+    // Password fields
+    const loginPassword = document.getElementById('loginPassword');
+    const regPassword = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirmPassword');
     
     // Navigation elements
-    document.getElementById('showRegisterOptions').onclick = showRegisterOptionsScreen;
-    document.getElementById('showLogin').onclick = showLoginScreen;
-    document.getElementById('startNewRegistration').onclick = startNewRegistration;
-    document.getElementById('continueRegistration').onclick = handleContinueRegistration;
     document.getElementById('showRegistration').onclick = showRegistrationScreen;
+    document.getElementById('showLogin').onclick = showLoginScreen;
     document.getElementById('refreshStatus').onclick = checkPaymentStatus;
+    document.getElementById('showForgotPassword').onclick = showForgotPasswordModal;
+    document.getElementById('cancelForgotPassword').onclick = hideForgotPasswordModal;
 
     // Ward data
     const wardsData = {
@@ -600,6 +632,92 @@ body {
       "Mbeere South": ["Mavuria", "Makima", "Mbeti South", "Mwea", "Kiambere"]
     };
 
+    // ==================== PASSWORD TOGGLE FUNCTIONS ====================
+    
+    loginPasswordToggle.addEventListener('click', function() {
+      const type = loginPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+      loginPassword.setAttribute('type', type);
+      this.innerHTML = type === 'password' ? '<i class="far fa-eye"></i>' : '<i class="far fa-eye-slash"></i>';
+    });
+    
+    regPasswordToggle.addEventListener('click', function() {
+      const type = regPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+      regPassword.setAttribute('type', type);
+      this.innerHTML = type === 'password' ? '<i class="far fa-eye"></i>' : '<i class="far fa-eye-slash"></i>';
+    });
+    
+    confirmPasswordToggle.addEventListener('click', function() {
+      const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+      confirmPassword.setAttribute('type', type);
+      this.innerHTML = type === 'password' ? '<i class="far fa-eye"></i>' : '<i class="far fa-eye-slash"></i>';
+    });
+
+    // ==================== FORGOT PASSWORD FUNCTIONS ====================
+    
+    function showForgotPasswordModal() {
+      forgotPasswordModal.style.display = 'flex';
+      document.getElementById('resetMsg').style.display = 'none';
+      document.getElementById('resetEmail').value = '';
+    }
+    
+    function hideForgotPasswordModal() {
+      forgotPasswordModal.style.display = 'none';
+    }
+    
+    forgotPasswordForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const msg = document.getElementById('resetMsg');
+      msg.style.display = 'none';
+      
+      const email = document.getElementById('resetEmail').value.trim();
+      
+      auth.sendPasswordResetEmail(email)
+        .then(() => {
+          msg.textContent = 'Password reset email sent! Check your inbox or check  spam in your email.';
+          msg.className = 'message success';
+          msg.style.display = 'block';
+          
+          // Hide modal after 3 seconds
+          setTimeout(() => {
+            hideForgotPasswordModal();
+            showLoginScreen();
+          }, 3000);
+        })
+        .catch((error) => {
+          msg.textContent = getErrorMessage(error.code);
+          msg.className = 'message error';
+          msg.style.display = 'block';
+        });
+    });
+
+    // ==================== SCREEN MANAGEMENT ====================
+    
+    function showLoginScreen() {
+      loginContainer.style.display = 'block';
+      registrationContainer.style.display = 'none';
+      paymentContainer.style.display = 'none';
+      hideForgotPasswordModal();
+    }
+
+    function showRegistrationScreen() {
+      loginContainer.style.display = 'none';
+      registrationContainer.style.display = 'block';
+      paymentContainer.style.display = 'none';
+      hideForgotPasswordModal();
+    }
+
+    function showPaymentScreen() {
+      loginContainer.style.display = 'none';
+      registrationContainer.style.display = 'none';
+      paymentContainer.style.display = 'block';
+      hideForgotPasswordModal();
+      
+      checkPaymentStatus();
+    }
+
+    // ==================== MAIN FUNCTIONS ====================
+    
     // Ward dropdown logic
     document.getElementById('constituency').addEventListener('change', function() {
       const wardSelect = document.getElementById('ward');
@@ -613,232 +731,6 @@ body {
       });
     });
 
-    // ==================== LOCAL STORAGE FUNCTIONS ====================
-    
-    // Save form data to localStorage
-    function saveFormData(formId, data) {
-      localStorage.setItem(`form_${formId}`, JSON.stringify(data));
-      console.log(`Saved ${formId}:`, data);
-    }
-
-    // Load form data from localStorage
-    function loadFormData(formId) {
-      const data = localStorage.getItem(`form_${formId}`);
-      return data ? JSON.parse(data) : {};
-    }
-
-    // Save current step
-    function saveCurrentStep(step) {
-      localStorage.setItem('currentStep', step);
-      console.log('Saved step:', step);
-    }
-
-    // Load current step
-    function loadCurrentStep() {
-      return localStorage.getItem('currentStep') || 'login';
-    }
-
-    // Save pre-verification data
-    function savePreVerifyData(nationalId, yearOfBirth) {
-      localStorage.setItem('nationalId', nationalId);
-      localStorage.setItem('preVerifyYear', yearOfBirth);
-      localStorage.setItem('preVerifyTime', Date.now());
-    }
-
-    // Save registration form data as user types
-    function setupAutoSave() {
-      const registrationFields = ['fullName', 'phone', 'constituency', 'ward', 'tshirt', 'email'];
-      
-      registrationFields.forEach(fieldId => {
-        const element = document.getElementById(fieldId);
-        if (element) {
-          element.addEventListener('input', function() {
-            const formData = loadFormData('registration') || {};
-            formData[fieldId] = this.value;
-            saveFormData('registration', formData);
-          });
-        }
-      });
-    }
-
-    // ==================== SCREEN MANAGEMENT ====================
-    
-    function showLoginScreen() {
-      saveCurrentStep('login');
-      loginContainer.style.display = 'block';
-      registerOptionsContainer.style.display = 'none';
-      preVerifyContainer.style.display = 'none';
-      registrationContainer.style.display = 'none';
-      paymentContainer.style.display = 'none';
-    }
-
-    function showRegisterOptionsScreen() {
-      saveCurrentStep('registerOptions');
-      loginContainer.style.display = 'none';
-      registerOptionsContainer.style.display = 'block';
-      preVerifyContainer.style.display = 'none';
-      registrationContainer.style.display = 'none';
-      paymentContainer.style.display = 'none';
-    }
-
-    function showPreVerifyScreen() {
-      saveCurrentStep('preVerify');
-      loginContainer.style.display = 'none';
-      registerOptionsContainer.style.display = 'none';
-      preVerifyContainer.style.display = 'block';
-      registrationContainer.style.display = 'none';
-      paymentContainer.style.display = 'none';
-      
-      // Load saved pre-verify data if exists
-      const savedData = loadFormData('preVerify');
-      if (savedData.nationalId) {
-        document.getElementById('preVerifyId').value = savedData.nationalId;
-      }
-      if (savedData.yearOfBirth) {
-        document.getElementById('preVerifyYear').value = savedData.yearOfBirth;
-      }
-    }
-
-    function showRegistrationScreen() {
-      saveCurrentStep('registration');
-      loginContainer.style.display = 'none';
-      registerOptionsContainer.style.display = 'none';
-      preVerifyContainer.style.display = 'none';
-      registrationContainer.style.display = 'block';
-      paymentContainer.style.display = 'none';
-      
-      // Auto-fill from localStorage
-      const nationalId = localStorage.getItem('nationalId') || '';
-      const yearOfBirth = localStorage.getItem('preVerifyYear') || '';
-      
-      document.getElementById('regNationalId').value = nationalId;
-      document.getElementById('dobYear').value = yearOfBirth;
-      
-      // Load saved registration form data
-      const savedData = loadFormData('registration');
-      if (savedData) {
-        Object.keys(savedData).forEach(key => {
-          const element = document.getElementById(key);
-          if (element) {
-            element.value = savedData[key];
-            
-            // Update ward dropdown if constituency is set
-            if (key === 'constituency' && savedData[key]) {
-              setTimeout(() => {
-                const wardSelect = document.getElementById('ward');
-                wardSelect.innerHTML = '<option value="">Select Ward</option>';
-                const wards = wardsData[savedData[key]] || [];
-                wards.forEach(ward => {
-                  const option = document.createElement('option');
-                  option.value = ward;
-                  option.textContent = ward;
-                  wardSelect.appendChild(option);
-                });
-                
-                // Select saved ward
-                if (savedData.ward) {
-                  wardSelect.value = savedData.ward;
-                }
-              }, 100);
-            }
-          }
-        });
-      }
-      
-      // Check if already registered
-      if (nationalId) {
-        checkIfAlreadyRegistered(nationalId);
-      }
-    }
-
-    function showPaymentScreen() {
-      saveCurrentStep('payment');
-      loginContainer.style.display = 'none';
-      registerOptionsContainer.style.display = 'none';
-      preVerifyContainer.style.display = 'none';
-      registrationContainer.style.display = 'none';
-      paymentContainer.style.display = 'block';
-      
-      checkPaymentStatus();
-    }
-
-    // Show Consent Modal
-function showConsentModal(callback) {
-  consentModal.style.display = 'flex'; // show modal
-  confirmConsentBtn.disabled = !acceptCheckbox.checked;
-
-  // When user clicks confirm, hide modal and proceed
-  confirmConsentBtn.onclick = () => {
-    consentModal.style.display = 'none';
-    if (typeof callback === 'function') callback();
-  };
-}
-
-// ===== Modified Start New Registration =====
-function startNewRegistration() {
-  localStorage.clear();
-
-  // Show consent first
-  showConsentModal(() => {
-    showPreVerifyScreen(); // proceed after consent
-  });
-}
-
-// ===== Modified Continue Registration =====
-async function handleContinueRegistration() {
-  const nationalId = localStorage.getItem('nationalId');
-
-  if (!nationalId) {
-    // Show consent first
-    showConsentModal(() => {
-      showPreVerifyScreen();
-    });
-    return;
-  }
-
-  // Consent check before registration
-  showConsentModal(async () => {
-    // Existing continuation logic
-    const currentStep = loadCurrentStep();
-    const savedData = loadFormData('preVerify');
-
-    if (!savedData || !savedData.nationalId) {
-      showPreVerifyScreen();
-      return;
-    }
-
-    try {
-      const preVerifyDoc = await db.collection('preVerifications').doc(nationalId).get();
-
-      if (!preVerifyDoc.exists || !preVerifyDoc.data().approved) {
-        showPreVerifyScreen();
-        return;
-      }
-
-      const memberQuery = await db.collection('members')
-        .where('nationalId', '==', nationalId)
-        .limit(1)
-        .get();
-
-      if (memberQuery.empty) {
-        showRegistrationScreen();
-      } else {
-        const userData = memberQuery.docs[0].data();
-        if (userData.paidTill) {
-          window.location.href = 'main.html';
-        } else {
-          showPaymentScreen();
-        }
-      }
-    } catch (error) {
-      console.error('Error continuing registration:', error);
-      showPreVerifyScreen();
-    }
-  });
-}
-
-    // ==================== MAIN FUNCTIONS ====================
-    
     async function checkIfAlreadyRegistered(nationalId) {
       try {
         const query = await db.collection('members')
@@ -860,153 +752,62 @@ async function handleContinueRegistration() {
       }
     }
 
-    // Login form
-    // Login form
-loginForm.addEventListener('submit', async (e) => {
+    // Login form// Updated Login form
+loginForm.addEventListener('submit', function (e) {
   e.preventDefault();
+
   const msg = document.getElementById('loginMsg');
   msg.style.display = 'none';
-  
+
   const email = document.getElementById('loginEmail').value.trim();
   const password = document.getElementById('loginPassword').value;
-  
-  // Save login credentials for convenience
-  localStorage.setItem('savedEmail', email);
-  
-  try {
-    const userCred = await auth.signInWithEmailAndPassword(email, password);
-    const user = userCred.user;
-    
-    // Get user data - check if user exists in members collection
-    const membersQuery = await db.collection('members')
-      .where('email', '==', email)
-      .limit(1)
-      .get();
-    
-    if (!membersQuery.empty) {
-      const userData = membersQuery.docs[0].data();
-      localStorage.setItem('nationalId', userData.nationalId || '');
+
+  auth.signInWithEmailAndPassword(email, password)
+    .then((userCred) => {
+      const user = userCred.user;
+      console.log('Logged in UID:', user.uid);
+
+      const memberRef = db.collection('members').doc(user.uid);
+
+      return memberRef.get().then((memberDoc) => {
+        if (!memberDoc.exists) {
+          // NEW USER TRYING TO LOGIN DIRECTLY
+          // Sign them out and show registration form
+          auth.signOut().then(() => {
+            msg.textContent = 'No account found. Please register first.';
+            msg.className = 'message error';
+            msg.style.display = 'block';
+            showRegistrationScreen();
+          });
+          return Promise.reject(new Error('New user trying to login'));
+        }
+        return memberDoc;
+      });
+    })
+    .then((memberDoc) => {
+      if (!memberDoc) return; // Skip if memberDoc is undefined
       
+      const userData = memberDoc.data();
+
       if (userData.paidTill) {
+        // User is confirmed/approved - go directly to main page
         window.location.href = 'main.html';
       } else {
+        // User needs to complete payment
         showPaymentScreen();
       }
-    } else {
-      // Check if user exists in auth but not in members (edge case)
-      // Try to find by UID as well
-      const userByUid = await db.collection('members').doc(user.uid).get();
-      
-      if (userByUid.exists) {
-        const userData = userByUid.data();
-        localStorage.setItem('nationalId', userData.nationalId || '');
-        
-        if (userData.paidTill) {
-          window.location.href = 'main.html';
-        } else {
-          showPaymentScreen();
-        }
-      } else {
-        // User doesn't exist in members collection at all
-        await auth.signOut();
-        msg.textContent = 'No registration found. Please complete your registration first.';
-        msg.className = 'message error';
-        msg.style.display = 'block';
-        
-        // Offer to continue registration
-        setTimeout(() => {
-          showRegisterOptionsScreen();
-        }, 2000);
-      }
-    }
-  } catch (error) {
-    console.error('Login error:', error);
-    
-    // More specific error messages
-    if (error.code === 'auth/user-not-found') {
-      msg.textContent = 'No account found with this email. Please register first.';
-      msg.className = 'message error';
-      msg.style.display = 'block';
-      
-      // Automatically show registration options
-      setTimeout(() => {
-        showRegisterOptionsScreen();
-      }, 1500);
-    } else if (error.code === 'auth/wrong-password') {
-      msg.textContent = 'Incorrect password. Please try again.';
-      msg.className = 'message error';
-      msg.style.display = 'block';
-    } else {
-      msg.textContent = getErrorMessage(error.code);
-      msg.className = 'message error';
-      msg.style.display = 'block';
-    }
-  }
-});
-
-    // Pre-verification form
-    preVerifyForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const msg = document.getElementById('preVerifyMsg');
-      msg.style.display = 'none';
-      
-      const nationalId = document.getElementById('preVerifyId').value.trim();
-      const yearOfBirth = document.getElementById('preVerifyYear').value.trim();
-      
-      // Save form data
-      saveFormData('preVerify', { nationalId, yearOfBirth });
-      
-      // Validate year
-      const currentYear = new Date().getFullYear();
-      if (yearOfBirth < 1990 || yearOfBirth > (currentYear - 18)) {
-        msg.textContent = `Year must be between 1990 and ${currentYear - 18}`;
-        msg.className = 'message error';
-        msg.style.display = 'block';
-        return;
-      }
-      
-      try {
-        await db.collection('preVerifications').doc(nationalId).set({
-  nationalId,
-  yearOfBirth,
-  verifiedByUser: true,
-  createdAt: firebase.firestore.FieldValue.serverTimestamp()
-});
-
-// immediately go to registration
-savePreVerifyData(nationalId, yearOfBirth);
-showRegistrationScreen();
-        // Save to localStorage
-        savePreVerifyData(nationalId, yearOfBirth);
-        msg.textContent = 'Submitted for verification by IEBC officials. You will be redirected when approved. This may take time due to traffic. Thanks for your time.';
-        
-        msg.className = 'message success';
-        msg.style.display = 'block';
-        
-        // Start checking for approval
-        startApprovalCheck(nationalId);
-      } catch (error) {
-        msg.textContent = 'Error: ' + error.message;
+    })
+    .catch((error) => {
+      console.error('Login error:', error);
+      // Don't show error message if it's our custom "new user" error
+      if (error.message !== 'New user trying to login') {
+        msg.textContent = getErrorMessage(error.code);
         msg.className = 'message error';
         msg.style.display = 'block';
       }
     });
+});
 
-    // Check for approval
-    function startApprovalCheck(nationalId) {
-      const checkInterval = setInterval(async () => {
-        try {
-          const doc = await db.collection('preVerifications').doc(nationalId).get();
-          if (doc.exists && doc.data().approved) {
-            clearInterval(checkInterval);
-            saveCurrentStep('registration');
-            showRegistrationScreen();
-          }
-        } catch (error) {
-          console.error('Error checking approval:', error);
-        }
-      }, 5000);
-    }
 
     // Registration form
     registrationForm.addEventListener('submit', async (e) => {
@@ -1014,7 +815,7 @@ showRegistrationScreen();
       const msg = document.getElementById('regMsg');
       msg.style.display = 'none';
       
-      const nationalId = document.getElementById('regNationalId').value.trim();
+      const nationalId = document.getElementById('nationalId').value.trim();
       const fullName = document.getElementById('fullName').value.trim();
       const dobYear = document.getElementById('dobYear').value;
       const phone = document.getElementById('phone').value.trim();
@@ -1023,17 +824,10 @@ showRegistrationScreen();
       const tshirt = document.getElementById('tshirt').value;
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
-      const confirmPassword = document.getElementById('confirmPassword').value;
-      
-      // Save all data before validation
-      const formData = {
-        nationalId, fullName, dobYear, phone, constituency, 
-        ward, tshirt, email, password: '' // Don't save password
-      };
-      saveFormData('registration', formData);
+      const confirmPasswordValue = document.getElementById('confirmPassword').value;
       
       // Validation
-      if (password !== confirmPassword) {
+      if (password !== confirmPasswordValue) {
         msg.textContent = 'Passwords do not match';
         msg.className = 'message error';
         msg.style.display = 'block';
@@ -1054,24 +848,27 @@ showRegistrationScreen();
         return;
       }
       
-      // Check if approved
-      try {
-        // optional: check preVerify exists
-const preVerifyDoc = await db.collection('preVerifications').doc(nationalId).get();
-if (!preVerifyDoc.exists) {
-  msg.textContent = 'Please enter your ID first';
-  return;
-}
-
-// proceed to save registration
-      } catch (error) {
-        msg.textContent = 'Error checking approval status';
+      if (dobYear < 1990 || dobYear > 2006) {
+        msg.textContent = 'Year of birth must be between 1990 and 2006';
         msg.className = 'message error';
         msg.style.display = 'block';
         return;
       }
       
       try {
+        // Check if ID already registered
+        const existingQuery = await db.collection('members')
+          .where('nationalId', '==', nationalId)
+          .limit(1)
+          .get();
+        
+        if (!existingQuery.empty) {
+          msg.textContent = 'This National ID is already registered';
+          msg.className = 'message error';
+          msg.style.display = 'block';
+          return;
+        }
+        
         // Create user account
         const userCred = await auth.createUserWithEmailAndPassword(email, password);
         const user = userCred.user;
@@ -1097,9 +894,6 @@ if (!preVerifyDoc.exists) {
           registeredAt: firebase.firestore.FieldValue.serverTimestamp()
         });
         
-        // Clear local registration data since it's now in Firestore
-        localStorage.removeItem('form_registration');
-        
         showPaymentScreen();
       } catch (error) {
         if (error.code === 'auth/email-already-in-use') {
@@ -1119,20 +913,26 @@ if (!preVerifyDoc.exists) {
       msg.style.display = 'none';
       spinner.style.display = 'block';
       
-      const nationalId = localStorage.getItem('nationalId');
+      const user = auth.currentUser;
+      
+      if (!user) {
+        spinner.style.display = 'none';
+        msg.textContent = 'Please login first';
+        msg.className = 'message error';
+        msg.style.display = 'block';
+        return;
+      }
       
       try {
-        const query = await db.collection('members')
-          .where('nationalId', '==', nationalId)
-          .limit(1)
-          .get();
+        const userDoc = await db.collection('members').doc(user.uid).get();
         
         spinner.style.display = 'none';
         
-        if (!query.empty) {
-          const userData = query.docs[0].data();
+        if (userDoc.exists) {
+          const userData = userDoc.data();
           
           if (userData.paidTill) {
+            // User is confirmed/approved - redirect to main page
             msg.textContent = 'Payment confirmed! Redirecting...';
             msg.className = 'message success';
             msg.style.display = 'block';
@@ -1157,8 +957,8 @@ if (!preVerifyDoc.exists) {
       }
     }
 
-    // Error message helper// Error message helper
-function getErrorMessage(errorCode) {
+    // Error message helper
+    function getErrorMessage(errorCode) {
   const messages = {
     'auth/user-not-found': 'No account found with this email. Please register first.',
     'auth/wrong-password': 'Incorrect password',
@@ -1166,140 +966,37 @@ function getErrorMessage(errorCode) {
     'auth/too-many-requests': 'Too many attempts. Try again later',
     'auth/user-disabled': 'Account has been disabled',
     'auth/operation-not-allowed': 'Email/password sign-in is not enabled',
-    'auth/network-request-failed': 'Network error. Please check your connection'
+    'auth/network-request-failed': 'Network error. Please check your connection',
+    'auth/email-already-in-use': 'Email already registered',
+    'auth/weak-password': 'Password should be at least 6 characters',
+    'auth/invalid-credential': 'Invalid email or password'
   };
   return messages[errorCode] || 'An error occurred. Please try again.';
 }
-
-
+    
     // ==================== INITIALIZATION ====================
     
     window.addEventListener('DOMContentLoaded', () => {
-      // Setup auto-save for registration form
-      setupAutoSave();
-      
       // Check if user is already logged in
       auth.onAuthStateChanged(async (user) => {
         if (user) {
           const userDoc = await db.collection('members').doc(user.uid).get();
           if (userDoc.exists) {
             const userData = userDoc.data();
-            localStorage.setItem('nationalId', userData.nationalId || '');
             
             if (userData.paidTill) {
+              // User is confirmed/approved - redirect to main page
               window.location.href = 'main.html';
             } else {
+              // User needs to complete payment
               showPaymentScreen();
             }
           }
         } else {
-          // Not logged in - check if we have saved progress
-          const currentStep = loadCurrentStep();
-          const nationalId = localStorage.getItem('nationalId');
-          
-          if (nationalId && currentStep !== 'login') {
-            // We have saved progress, show register options
-            showRegisterOptionsScreen();
-          } else {
-            // No saved progress, show login
-            showLoginScreen();
-          }
-          
-          // Auto-fill saved email if exists
-          const savedEmail = localStorage.getItem('savedEmail');
-          if (savedEmail) {
-            document.getElementById('loginEmail').value = savedEmail;
-          }
+          showLoginScreen();
         }
       });
     });
-    // ===== CONSENT MODAL LOGIC =====
-
-// 1. Create modal in DOM (insert before registration form)
-const registrationContainerEl = document.getElementById('registrationContainer');
-
-const consentModalHTML = `
-<div class="consent-modal" id="consentModal">
-  <div class="consent-card">
-    <div class="consent-header">
-      <h3>Consent & Notice</h3>
-      <button type="button" id="toggleConsentBtn">Kiswahili</button>
-    </div>
-
-    <div class="consent-content official" id="officialConsent">
-      <p>
-        I understand that BUS Youth Ambassadors membership materials, including the
-        official T-shirt, are provided strictly for authorized members only.
-      </p>
-      <p>
-        I acknowledge that any misuse, misrepresentation, resale, or unauthorized use
-        of the BUS Youth Ambassadors T-shirt or identity may result in disciplinary
-        action and/or legal consequences under applicable laws.
-      </p>
-      <p>
-        I confirm that I am genuinely interested in becoming a BUS Youth Ambassadors
-        member. If I am not interested, I will not proceed with this registration.
-      </p>
-    </div>
-
-    <div class="consent-content kiswahili" id="kiswahiliConsent" style="display:none;">
-      <p>
-        Ninaelewa kuwa vifaa vya uanachama vya BUS Youth Ambassadors, ikiwa ni pamoja na
-        T-shirt rasmi, vinatolewa kwa wanachama waliothibitishwa pekee.
-      </p>
-      <p>
-        Nakitambua kuwa matumizi mabaya, kujifanya mwanachama, kuuza, au kutumia vibaya
-        T-shirt au utambulisho wa BUS Youth Ambassadors kunaweza kusababisha hatua za
-        kinidhamu na/au matokeo ya kisheria.
-      </p>
-      <p>
-        Nimeamua kujiunga kwa sababu nina nia ya kweli ya kuwa mwanachama wa BUS Youth Ambassadors. 
-        Ikiwa sivyo, sitafuatilia usajili huu.
-      </p>
-    </div>
-
-    <div class="consent-check">
-      <input type="checkbox" id="acceptConsent">
-      <label for="acceptConsent">I accept the terms above</label>
-    </div>
-
-    <button id="confirmConsentBtn" disabled>Proceed to Registration</button>
-  </div>
-</div>
-`;
-
-registrationContainerEl.insertAdjacentHTML('beforebegin', consentModalHTML);
-
-// ===== DOM Elements =====
-const consentModal = document.getElementById('consentModal');
-const toggleConsentBtn = document.getElementById('toggleConsentBtn');
-const officialConsent = document.getElementById('officialConsent');
-const kiswahiliConsent = document.getElementById('kiswahiliConsent');
-const acceptCheckbox = document.getElementById('acceptConsent');
-const confirmConsentBtn = document.getElementById('confirmConsentBtn');
-
-// ===== Language toggle =====
-toggleConsentBtn.addEventListener('click', () => {
-  if (officialConsent.style.display === 'none') {
-    officialConsent.style.display = 'block';
-    kiswahiliConsent.style.display = 'none';
-    toggleConsentBtn.textContent = 'Kiswahili';
-  } else {
-    officialConsent.style.display = 'none';
-    kiswahiliConsent.style.display = 'block';
-    toggleConsentBtn.textContent = 'Official';
-  }
-});
-
-// ===== Checkbox enable button =====
-acceptCheckbox.addEventListener('change', () => {
-  confirmConsentBtn.disabled = !acceptCheckbox.checked;
-});
-
-// ===== Confirm button =====
-confirmConsentBtn.addEventListener('click', () => {
-  consentModal.style.display = 'none';
-});
   </script>
 </body>
 </html>
