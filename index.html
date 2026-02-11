@@ -633,9 +633,9 @@ header > * {
     }
   }
 
-  // Redirect to main.html after accepting privacy
+  // Redirect to signup.html after accepting privacy
   function redirectToMainPage() {
-    window.location.href = 'main.html';
+    window.location.href = 'signup.html';
   }
 
   // Background image rotation
@@ -725,7 +725,7 @@ header > * {
     // Show acceptance message for 1 second, then redirect
     showAcceptanceMessage("Welcome! Redirecting to main page...", "success");
     
-    // Redirect to main.html after 1 second
+    // Redirect to signup.html after 1 second
     setTimeout(() => {
       redirectToMainPage();
     }, 1000);
@@ -823,8 +823,15 @@ header > * {
 
   // Show privacy modal on first visit
   document.addEventListener('DOMContentLoaded', function() {
+  if (hasAcceptedPrivacy()) {
+    // User already accepted → go directly to signup page
+    redirectToMainPage();
+  } else {
+    // First time visitor → show privacy modal
     showPrivacyModalOnFirstVisit();
-  });
+  }
+});
+
 </script>
 </body>
 </html>
